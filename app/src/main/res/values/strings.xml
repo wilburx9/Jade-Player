@@ -1,3 +1,7 @@
+<!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
 <resources>
     <string name="app_name">Jade Player</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
