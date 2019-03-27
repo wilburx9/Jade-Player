@@ -3,6 +3,7 @@
 package com.jadebyte.jadeplayer.common
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.jadebyte.jadeplayer.BuildConfig
 import timber.log.Timber
 
@@ -13,6 +14,11 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         plantTimber()
+        setupTheme()
+    }
+
+    private fun setupTheme() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     private fun plantTimber() {
