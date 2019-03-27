@@ -1,17 +1,9 @@
-# Built application files
-*.apk
-*.ap_
-*.aab
-
-# Files for the ART/Dalvik VM
-*.dex
-
-# Java class files
-*.class
 
 # Generated files
 bin/
 gen/
+
+.DS_Store
 
 # Gradle files
 .gradle/
@@ -51,7 +43,7 @@ captures/
 .externalNativeBuild
 
 # Google Services (e.g. APIs or Firebase)
- google-services.json
+google-services.json
 
 # lint
 lint/intermediates/
@@ -59,4 +51,3 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-/app/google-services.json
