@@ -7,4 +7,5 @@
     <color name="colorPrimaryDark">#03060F</color>
     <color name="colorAccent">#FF4060</color>
     <color name="colorBackground">@android:color/white</color>
+    <color name="splashBg">#070E21</color>
 </resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+    android:viewportWidth="100.165"
+    android:viewportHeight="100.165"
+    android:width="100.165dp"
+    android:height="100.165dp">
+    <group
+        android:translateX="1640"
+        android:translateY="-1858.763">
+        <group
+            android:translateX="-1640.927"
+            android:translateY="1857.685">
+            <path
+                android:pathData="M98 51.168v1.191a46.974 46.974 0 1 1 0 -1.191Z"
+                android:fillColor="#D42B36" />
+        </group>
+        <group
+            android:translateX="-1636.872"
+            android:translateY="1862.475">
+            <clip-path
+                android:pathData="M98 51.168v1.191a46.974 46.974 0 1 1 0 -1.191Z" />
+            <group
+                android:translateX="-8.89"
+                android:translateY="-11.116">
+                <path
+                    android:pathData="M102.818 58.685a47.059 47.059 0 0 1 -27.717 41.7h0L25.39 63.766 71.745 32.7Z"
+                    android:fillColor="#B7202D" />
+            </group>
+        </group>
+        <group
+            android:translateX="-1644.915"
+            android:translateY="1851.756">
+            <path
+                android:pathData="M34.914 66.857V62.348a6.45 6.45 0 0 1 6.442 -6.488 6.318 6.318 0 0 1 6.187 6.318v4.64A14.446 14.446 0 0 0 61.989 81.3a14.833 14.833 0 0 0 2.885 -0.286A14.477 14.477 0 0 0 76.428 66.857V41.7a10.75 10.75 0 0 0 -15.7 -9.543L24.543 53.176a5.939 5.939 0 0 0 0 10.193L35.254 71.2a27.625 27.625 0 0 1 -0.34 -4.346Z"
+                android:fillColor="#FFFFFF" />
+        </group>
+        <group
+            android:translateX="-1640.01"
+            android:translateY="1858.773">
+            <path
+                android:pathData="M50.093 100.155a50.083 50.083 0 1 1 50.083 -50.08v1.281A50.4 50.4 0 0 1 70.633 95.786 49.842 49.842 0 0 1 50.093 100.155Zm0 -93.971A43.9 43.9 0 1 0 93.981 51.194c0 -0.387 0 -0.773 0 -1.114A43.942 43.942 0 0 0 50.093 6.185Z"
+                android:fillColor="#FFFFFF" />
+        </group>
+    </group>
+</vector>
