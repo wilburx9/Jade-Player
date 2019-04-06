@@ -4,4 +4,19 @@
 
 <resources>
     <string name="app_name">Jade Player</string>
+
+    <!--OnBoarding Slides-->
+    <string name="got_it">Got it</string>
+    <string name="board_title_1">Best Music App</string>
+    <string name="board_description_1">Easily add your create your trip, and let people know where you’re heading.</string>
+    <string name="board_title_2">Listen</string>
+    <string name="board_description_2">Discover where people are going, and join them on their trips.</string>
+    <string name="board_title_3">Nonstop</string>
+    <string name="board_description_3">Ask people to join you on your trips.</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+
+    <!--Accessibility-->
+    <string name="on_boarding_image">On-boarding image</string>
+
 </resources>

@@ -8,5 +8,6 @@
     <color name="colorPrimaryDark">#03060F</color>
     <color name="colorAccent">#FF4060</color>
     <color name="colorBackground">@color/colorPrimary</color>
-    <color name="splashBg">#070E21</color>
+    <color name="darkPrimary">#070E21</color>
+    <color name="lightBlue">#78849E</color>
 </resources>

@@ -1,13 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onBoardingRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".onboarding.OnBoardingActivity">
+    app:layoutDescription="@xml/on_boarding_scene"
+    tools:context=".onBoarding.OnBoardingActivity"
+    tools:showPaths="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.rd.PageIndicatorView
+        android:id="@+id/pageIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xx_large"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:piv_animationType="thinWorm"
+        app:piv_count="3"
+        app:piv_interactiveAnimation="true"
+        app:piv_padding="10dp"
+        app:piv_radius="4dp"
+        app:piv_selectedColor="@color/colorAccent"
+        app:piv_unselectedColor="@color/lightBlue"
+        app:piv_viewPager="@id/viewPager" />
+
+    <Button
+        android:id="@+id/skipButton"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/skip"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_x_large"
+        android:layout_marginBottom="@dimen/margin_x_large"
+        app:layout_constraintBottom_toTopOf="@+id/gotIt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pageIndicatorView" />
+
+
+    <Button
+        android:id="@+id/gotIt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_xx_large"
+        android:background="@drawable/round_border"
+        android:minHeight="0dp"
+        android:paddingLeft="@dimen/padding_xx_large"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_xx_large"
+        android:paddingBottom="@dimen/padding_medium"
+        android:text="@string/got_it"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_xx_large"
+        android:background="@drawable/round_border"
+        android:minHeight="0dp"
+        android:paddingLeft="@dimen/padding_xx_large"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_xx_large"
+        android:paddingBottom="@dimen/padding_medium"
+        android:text="@string/next"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.motion.widget.MotionLayout>

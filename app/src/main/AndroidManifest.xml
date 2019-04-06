@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jadebyte.jadeplayer">
 
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- For Glide to restart connection requests when internet comes up -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".common.App"
         android:allowBackup="true"
@@ -10,10 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".onboarding.OnBoardingActivity"></activity>
+        <activity
+            android:name=".getStarted.GetStartedActivity"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".onBoarding.OnBoardingActivity"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

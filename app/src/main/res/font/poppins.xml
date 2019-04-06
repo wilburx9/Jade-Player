@@ -27,4 +27,9 @@
         app:font="@font/poppins_bold"
         app:fontStyle="normal"
         app:fontWeight="700" />
+
+    <font
+        app:font="@font/poppins_extra_bold"
+        app:fontStyle="normal"
+        app:fontWeight="800" />
 </font-family>
