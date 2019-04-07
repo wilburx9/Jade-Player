@@ -19,7 +19,9 @@
                 android:alpha="0"
                 app:framePosition="100"
                 app:motionTarget="@+id/skipButton" />
+        </KeyFrameSet>
 
+        <KeyFrameSet>
             <KeyAttribute
                 android:alpha="0"
                 app:framePosition="60"
@@ -49,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="1"
-            app:layout_constraintBottom_toBottomOf="@id/pageIndicatorView"
+            app:layout_constraintBottom_toBottomOf="@+id/centerCircle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/pageIndicatorView" />
+            app:layout_constraintTop_toTopOf="@+id/centerCircle" />
         <Constraint
             android:id="@+id/gotIt"
             android:layout_width="wrap_content"
@@ -71,6 +73,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
+        <Constraint
+            android:id="@+id/activeCircle"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/leftCircle"
+            app:layout_constraintTop_toTopOf="@+id/leftCircle" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -79,9 +88,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0"
-            app:layout_constraintBottom_toBottomOf="@id/pageIndicatorView"
+            app:layout_constraintBottom_toBottomOf="@+id/centerCircle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/pageIndicatorView" />
+            app:layout_constraintTop_toTopOf="@+id/centerCircle" />
         <Constraint
             android:id="@+id/gotIt"
             android:layout_width="wrap_content"
@@ -101,6 +110,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
+        <Constraint
+            android:id="@+id/activeCircle"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/rightCircle"
+            app:layout_constraintTop_toTopOf="@+id/rightCircle" />
     </ConstraintSet>
 
 </MotionScene>
