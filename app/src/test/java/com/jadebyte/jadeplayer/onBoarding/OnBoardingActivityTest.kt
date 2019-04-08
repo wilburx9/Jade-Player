@@ -4,6 +4,7 @@ package com.jadebyte.jadeplayer.onBoarding
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.getStarted.GetStartedActivity
@@ -20,6 +21,7 @@ import org.robolectric.Shadows.shadowOf
  * Created by Wilberforce on 06/04/2019 at 17:33.
  */
 @RunWith(RobolectricTestRunner::class)
+@LargeTest
 class OnBoardingActivityTest {
 
     @get:Rule

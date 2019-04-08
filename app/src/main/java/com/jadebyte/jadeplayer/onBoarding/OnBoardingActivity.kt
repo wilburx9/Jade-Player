@@ -5,13 +5,14 @@ package com.jadebyte.jadeplayer.onBoarding
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.common.BaseActivity
 import com.jadebyte.jadeplayer.getStarted.GetStartedActivity
+import com.jadebyte.jadeplayer.main.MainActivity
 import kotlinx.android.synthetic.main.activity_on_boarding.*
 
-class OnBoardingActivity : AppCompatActivity(), ViewPager.OnPageChangeListener, View.OnClickListener {
+class OnBoardingActivity : BaseActivity(), ViewPager.OnPageChangeListener, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +37,25 @@ class OnBoardingActivity : AppCompatActivity(), ViewPager.OnPageChangeListener, 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.skipButton, R.id.gotIt -> {
-                val intent = Intent(this, GetStartedActivity::class.java)
-                startActivity(intent)
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                startNextActivity()
             }
             R.id.next -> {
                 viewPager.setCurrentItem(viewPager.currentItem + 1, true)
             }
         }
+    }
+
+    private fun startNextActivity() {
+        val nextActivity =
+            if (isPermissionGranted(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                MainActivity::class.java
+            } else {
+                GetStartedActivity::class.java
+            }
+
+        val intent = Intent(this, nextActivity)
+        startActivity(intent)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     override fun onDestroy() {

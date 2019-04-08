@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:text="@string/skip"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
         android:textStyle="bold" />
 
     <androidx.viewpager.widget.ViewPager

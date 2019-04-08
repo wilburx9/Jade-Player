@@ -16,7 +16,18 @@
     <string name="skip">Skip</string>
     <string name="next">Next</string>
 
+
     <!--Accessibility-->
     <string name="on_boarding_image">On-boarding image</string>
+    <string name="app_icon">App Icon</string>
+    <string name="get_started">Get Started</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
+    <!--Others-->
+    <string name="read_storage_permission_info">We need to be authorized to access the media files on your device</string>
 
 </resources>

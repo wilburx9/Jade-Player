@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
   -->
 
@@ -10,6 +9,77 @@
     android:layout_height="match_parent"
     tools:context=".getStarted.GetStartedActivity">
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/padding_x_large"
+        android:paddingRight="@dimen/padding_x_large"
+        app:layout_constraintBottom_toBottomOf="@+id/guideLine1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideLine1">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_large"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_icon"
+            android:maxWidth="80dp"
+            android:maxHeight="80dp"
+            app:srcCompat="@drawable/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/jadeplayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_jadeplayer" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/getStarted"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_started"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/guideLine2"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideLine2" />
+
+    <TextView
+        android:id="@+id/infoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/margin_x_large"
+        android:text="@string/read_storage_permission_info"
+        app:layout_constraintBottom_toTopOf="@+id/getStarted"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
