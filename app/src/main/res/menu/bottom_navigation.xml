@@ -6,27 +6,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigationExplore"
+        android:id="@+id/exploreFragment"
         android:icon="@drawable/ic_heart"
         android:title="@string/explore" />
 
     <item
-        android:id="@+id/navigationSongs"
+        android:id="@+id/songsFragment"
         android:icon="@drawable/ic_song"
         android:title="@string/songs" />
 
     <item
-        android:id="@+id/navigationAlbums"
+        android:id="@+id/albumsFragment"
         android:icon="@drawable/ic_album"
         android:title="@string/albums" />
 
     <item
-        android:id="@+id/navigationPlaylist"
+        android:id="@+id/playlistFragment"
         android:icon="@drawable/ic_playlist"
         android:title="@string/playlist" />
 
     <item
-        android:id="@+id/navigationSearch"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
         android:title="@string/search" />
 

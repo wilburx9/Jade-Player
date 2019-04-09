@@ -1,9 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/exploreFragment">
 
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.jadebyte.jadeplayer.main.explore.ExploreFragment"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/songsFragment"
+        android:name="com.jadebyte.jadeplayer.main.songs.SongsFragment"
+        android:label="SongsFragment"
+        tools:layout="@layout/fragment_songs" />
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="com.jadebyte.jadeplayer.main.albums.AlbumsFragment"
+        android:label="AlbumsFragment"
+        tools:layout="@layout/fragment_albums" />
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.jadebyte.jadeplayer.main.playlist.PlaylistFragment"
+        android:label="PlaylistFragment"
+        tools:layout="@layout/fragment_playlist" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.jadebyte.jadeplayer.main.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search" />
 </navigation>
