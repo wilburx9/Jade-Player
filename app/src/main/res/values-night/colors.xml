@@ -10,4 +10,6 @@
     <color name="colorBackground">@color/colorPrimary</color>
     <color name="darkPrimary">#070E21</color>
     <color name="lightBlue">#78849E</color>
+    <color name="selectedNavColor">@color/colorAccent</color>
+    <color name="unSelectedNavColor">#CBC9C9</color>
 </resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigationExplore"
+        android:icon="@drawable/ic_heart"
+        android:title="@string/explore" />
+
+    <item
+        android:id="@+id/navigationSongs"
+        android:icon="@drawable/ic_song"
+        android:title="@string/songs" />
+
+    <item
+        android:id="@+id/navigationAlbums"
+        android:icon="@drawable/ic_album"
+        android:title="@string/albums" />
+
+    <item
+        android:id="@+id/navigationPlaylist"
+        android:icon="@drawable/ic_playlist"
+        android:title="@string/playlist" />
+
+    <item
+        android:id="@+id/navigationSearch"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search" />
+
+</menu>

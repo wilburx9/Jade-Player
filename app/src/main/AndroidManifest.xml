@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".main.MainActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".getStarted.GetStartedActivity"
             android:theme="@style/AppTheme.NoActionBar" />

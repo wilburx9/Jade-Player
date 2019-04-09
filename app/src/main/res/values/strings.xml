@@ -29,5 +29,10 @@
 
     <!--Others-->
     <string name="read_storage_permission_info">We need to be authorized to access the media files on your device</string>
+    <string name="explore">Explore</string>
+    <string name="songs">Songs</string>
+    <string name="albums">Albums</string>
+    <string name="playlist">Playlist</string>
+    <string name="search">Search</string>
 
 </resources>
