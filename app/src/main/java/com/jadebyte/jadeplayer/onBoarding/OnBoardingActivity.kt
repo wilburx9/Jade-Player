@@ -4,7 +4,9 @@ package com.jadebyte.jadeplayer.onBoarding
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
+import androidx.core.content.edit
 import androidx.viewpager.widget.ViewPager
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.BaseActivity
@@ -56,12 +58,20 @@ class OnBoardingActivity : BaseActivity(), ViewPager.OnPageChangeListener, View.
         val intent = Intent(this, nextActivity)
         startActivity(intent)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        PreferenceManager.getDefaultSharedPreferences(this).edit {
+            putBoolean(HAS_SEEN_ON_BOARDING, true)
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         viewPager.removeOnPageChangeListener(this)
     }
+
+    companion object {
+        const val HAS_SEEN_ON_BOARDING = "com.jadebyte.jadeplayer.onBoarding.hasSeenOnBoarding"
+    }
+
 }
 
 

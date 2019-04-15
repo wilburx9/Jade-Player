@@ -28,14 +28,9 @@ class GetStartedActivity : BaseActivity() {
 
 
     private fun handleGetStartedClick() {
-        if (isPermissionGranted(storagePermission)) {
-            startMainActivity()
-        } else
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    storagePermission
-                )
-            ) {
+        when {
+            isPermissionGranted(storagePermission) -> startMainActivity()
+            !ActivityCompat.shouldShowRequestPermissionRationale(this, storagePermission) -> {
                 // The user has denied the permission and selected the "Don't ask again"
                 // option in the permission request dialog
                 val intent = Intent()
@@ -43,13 +38,12 @@ class GetStartedActivity : BaseActivity() {
                 val uri = Uri.fromParts("package", packageName, null)
                 intent.data = uri
                 startActivity(intent)
-            } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(storagePermission),
-                    permissionRequestExternalStorage
-                )
             }
+            else -> ActivityCompat.requestPermissions(
+                this, arrayOf(storagePermission),
+                permissionRequestExternalStorage
+            )
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
