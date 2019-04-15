@@ -1,0 +1,9 @@
+<!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<vector android:height="20dp" android:viewportHeight="19.828"
+    android:viewportWidth="25" android:width="25dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#fff" android:pathData="M15.749,9.551l-4.741,-3.018a0.431,0.431 0,0 0,-0.664 0.364v6.034a0.436,0.436 0,0 0,0.223 0.379,0.457 0.457,0 0,0 0.209,0.053 0.432,0.432 0,0 0,0.232 -0.068l4.741,-3.018a0.428,0.428 0,0 0,0 -0.726ZM11.2079,12.151v-4.464L14.714,9.914ZM11.2079,12.151"/>
+    <path android:fillColor="#fff" android:pathData="M24.571,0h-24.14a0.431,0.431 0,0 0,-0.431 0.431v18.966a0.431,0.431 0,0 0,0.431 0.431h24.14a0.43,0.43 0,0 0,0.429 -0.431L25,0.431a0.43,0.43 0,0 0,-0.429 -0.431ZM4.31,9.484h-3.447v-3.882h3.447ZM0.863,10.344h3.447v3.879h-3.447ZM5.173,14.655L5.173,0.863h14.656v18.1L5.173,18.963ZM24.139,9.484h-3.45v-3.882h3.45ZM20.689,10.344h3.45v3.879h-3.45ZM24.139,0.863v3.879h-3.45v-3.879ZM0.863,0.863h3.447v3.879h-3.447ZM0.863,18.963v-3.879h3.447v3.879ZM24.139,18.963h-3.45v-3.879h3.45ZM24.139,18.963"/>
+</vector>

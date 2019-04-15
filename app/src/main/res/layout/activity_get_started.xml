@@ -52,7 +52,6 @@
         android:textSize="@dimen/text_size_large"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/guideLine2"
-        app:layout_constraintHeight_percent="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideLine2" />

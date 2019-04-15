@@ -12,7 +12,15 @@
         android:id="@+id/exploreFragment"
         android:name="com.jadebyte.jadeplayer.main.explore.ExploreFragment"
         android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore">
+        <action
+            android:id="@+id/action_exploreFragment_to_navigationDialogFragment"
+            app:destination="@id/navigationDialogFragment">
+            <argument
+                android:name="origin"
+                android:defaultValue="1" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/songsFragment"
         android:name="com.jadebyte.jadeplayer.main.songs.SongsFragment"
@@ -33,4 +41,13 @@
         android:name="com.jadebyte.jadeplayer.main.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search" />
+    <dialog-fragment
+        android:id="@+id/navigationDialogFragment"
+        android:name="com.jadebyte.jadeplayer.main.navigation.NavigationDialogFragment"
+        android:label="fragment_navigation_dialog"
+        tools:layout="@layout/fragment_navigation_dialog">
+        <argument
+            android:name="origin"
+            app:argType="integer" />
+    </dialog-fragment>
 </navigation>

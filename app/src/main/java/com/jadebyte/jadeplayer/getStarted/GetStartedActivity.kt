@@ -24,7 +24,6 @@ class GetStartedActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_started)
         getStarted.setOnClickListener { handleGetStartedClick() }
-
     }
 
 

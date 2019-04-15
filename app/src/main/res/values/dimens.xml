@@ -18,6 +18,7 @@
     <dimen name="padding_large">15dp</dimen>
     <dimen name="padding_x_large">20dp</dimen>
     <dimen name="padding_xx_large">30dp</dimen>
+    <dimen name="text_size_x_small">12sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_large">18sp</dimen>

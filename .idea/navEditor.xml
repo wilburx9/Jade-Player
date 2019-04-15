@@ -29,6 +29,27 @@
                             <option name="y" value="-222" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_exploreFragment_to_navigationDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="navigationDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-272" />
+                            <option name="y" value="-628" />
+                          </Point>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>

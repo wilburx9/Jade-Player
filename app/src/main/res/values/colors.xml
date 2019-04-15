@@ -11,4 +11,7 @@
     <color name="lightBlue">#78849E</color>
     <color name="selectedNavColor">@color/colorAccent</color>
     <color name="unSelectedNavColor">@color/darkPrimary</color>
+    <color name="colorNavItemBg">#E9E9E9</color>
+    <color name="colorNavItemBgSelected">#5EFF4060</color>
+    <color name="colorBurOverlay">#C8F5F5F5</color>
 </resources>
