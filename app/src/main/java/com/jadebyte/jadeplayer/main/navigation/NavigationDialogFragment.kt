@@ -24,17 +24,20 @@ import com.jadebyte.jadeplayer.main.common.dragSwipe.OnStartDragListener
 import com.jadebyte.jadeplayer.main.common.dragSwipe.SimpleItemTouchHelperCallback
 import com.jadebyte.jadeplayer.main.common.utils.BlurKit
 import kotlinx.android.synthetic.main.fragment_navigation_dialog.*
+import kotlinx.coroutines.*
 import java.util.*
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 
-class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter {
+class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter, CoroutineScope {
 
     private var origin: Int? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var adpater: NavAdapter
     private lateinit var viewModel: NavViewModel
     private var items: List<NavItem> = emptyList()
+    private lateinit var job: Job
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -46,6 +49,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         arguments?.let {
             origin = it.getInt("ORIGIN")
         }
+        job = Job()
     }
 
     override fun onCreateView(
@@ -105,7 +109,18 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        container.background = BitmapDrawable(resources, getBlurredBitmap())
+
+        setBlurredBackground()
+    }
+
+    private fun setBlurredBackground() {
+        var bitmap: BitmapDrawable? = null
+        launch {
+            withContext(Dispatchers.IO) {
+                bitmap = BitmapDrawable(resources, getBlurredBitmap())
+            }
+        }
+        container.background = bitmap
     }
 
     @HunterDebug
@@ -129,5 +144,13 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
             it.window?.setLayout(width, height)
         }
     }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
 }
