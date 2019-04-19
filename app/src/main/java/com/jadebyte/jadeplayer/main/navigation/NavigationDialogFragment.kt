@@ -27,30 +27,28 @@ import kotlinx.android.synthetic.main.fragment_navigation_dialog.*
 import kotlinx.coroutines.*
 import java.util.*
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 
-class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter, CoroutineScope {
+class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter {
 
     private var origin: Int? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var adpater: NavAdapter
     private lateinit var viewModel: NavViewModel
     private var items: List<NavItem> = emptyList()
-    private lateinit var job: Job
+    private val job = Job()
+    private val scope = CoroutineScope(job + Dispatchers.Main)
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
 
-    // TODO: Use  coroutine scope here. See https://youtu.be/EOjq4OIWKqM?t=809
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppTheme_FullScreenDialogStyle)
         arguments?.let {
             origin = it.getInt("ORIGIN")
         }
-        job = Job()
     }
 
     override fun onCreateView(
@@ -64,6 +62,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         super.onViewCreated(view, savedInstanceState)
         (activity?.application as App).appComponent.inject(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory)[NavViewModel::class.java]
+        viewModel.init(0)
         setupRecyclerView()
         observeViewModel()
         closeButton.setOnClickListener { findNavController().popBackStack() }
@@ -71,7 +70,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
 
 
     private fun observeViewModel() {
-        viewModel.navItems.observe(viewLifecycleOwner, Observer {
+        viewModel.navItems?.observe(viewLifecycleOwner, Observer {
             this.items = it
             adpater.updateItems(it)
         })
@@ -105,22 +104,14 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         Collections.swap(items, fromPosition, toPosition)
         adpater.updateItems(items, fromPosition, toPosition)
         viewModel.swap(items)
-       return true
+        return true
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        // TODO: Do this on onStart
-        setBlurredBackground()
-    }
 
     private fun setBlurredBackground() {
-        var bitmap: BitmapDrawable? = null
-        // TODO: Chnage this. Check https://youtu.be/EOjq4OIWKqM?t=1524
-        launch {
-            withContext(Dispatchers.IO) {
-                bitmap = BitmapDrawable(resources, getBlurredBitmap())
+        scope.launch {
+            val bitmap = withContext(Dispatchers.IO) {
+                BitmapDrawable(resources, getBlurredBitmap())
             }
             container.background = bitmap
         }
@@ -146,14 +137,12 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
             val height = ViewGroup.LayoutParams.MATCH_PARENT
             it.window?.setLayout(width, height)
         }
+        setBlurredBackground()
     }
 
     override fun onDestroy() {
         job.cancel()
         super.onDestroy()
     }
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
 
 }
