@@ -43,9 +43,10 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
 
+    // TODO: Use  coroutine scope here. See https://youtu.be/EOjq4OIWKqM?t=809
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_FullScreenDialogStyle)
+        setStyle(STYLE_NORMAL, R.style.AppTheme_FullScreenDialogStyle)
         arguments?.let {
             origin = it.getInt("ORIGIN")
         }
@@ -110,17 +111,19 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // TODO: Do this on onStart
         setBlurredBackground()
     }
 
     private fun setBlurredBackground() {
         var bitmap: BitmapDrawable? = null
+        // TODO: Chnage this. Check https://youtu.be/EOjq4OIWKqM?t=1524
         launch {
             withContext(Dispatchers.IO) {
                 bitmap = BitmapDrawable(resources, getBlurredBitmap())
             }
+            container.background = bitmap
         }
-        container.background = bitmap
     }
 
     @HunterDebug

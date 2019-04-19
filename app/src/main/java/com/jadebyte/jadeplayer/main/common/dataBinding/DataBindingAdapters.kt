@@ -11,7 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.GlideApp
-import com.jadebyte.jadeplayer.main.common.song.Song
+import com.jadebyte.jadeplayer.main.songs.Song
 
 /**
  * Created by Wilberforce on 10/04/2019 at 19:26.
