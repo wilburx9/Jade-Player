@@ -26,6 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/albumArt"
             android:src="@{song}"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/track_album_art"
             tools:src="@drawable/thumb_default" />
 

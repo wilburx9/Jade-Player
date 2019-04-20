@@ -8,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.GlideApp
@@ -25,7 +26,7 @@ object DataBindingAdapters {
         GlideApp.with(view)
             .load(song)
             .transform(
-                MultiTransformation(CenterCrop(), RoundedCorners(10))
+                MultiTransformation(CenterCrop(), CircleCrop())
             )
             .placeholder(R.drawable.thumb_default)
             .into(view)
