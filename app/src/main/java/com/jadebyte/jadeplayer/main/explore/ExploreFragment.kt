@@ -53,10 +53,10 @@ class ExploreFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adpater = ExploreAdapter(item)
-        randomSongsRV.adapter = adpater
+        randomAlbumsRV.adapter = adpater
 
         val layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
-        randomSongsRV.layoutManager = layoutManager
+        randomAlbumsRV.layoutManager = layoutManager
     }
 
 
