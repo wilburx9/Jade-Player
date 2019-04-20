@@ -10,15 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.hunter.library.debug.HunterDebug
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.dragSwipe.ItemTouchHelperAdapter
 import com.jadebyte.jadeplayer.main.common.dragSwipe.OnStartDragListener
 import com.jadebyte.jadeplayer.main.common.dragSwipe.SimpleItemTouchHelperCallback
@@ -26,7 +23,6 @@ import com.jadebyte.jadeplayer.main.common.utils.BlurKit
 import kotlinx.android.synthetic.main.fragment_navigation_dialog.*
 import kotlinx.coroutines.*
 import java.util.*
-import javax.inject.Inject
 
 
 class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter {
@@ -39,8 +35,6 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     private val job = Job()
     private val scope = CoroutineScope(job + Dispatchers.Main)
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +54,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity?.application as App).appComponent.inject(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory)[NavViewModel::class.java]
+        viewModel = ViewModelProviders.of(this)[NavViewModel::class.java]
         viewModel.init(0)
         setupRecyclerView()
         observeViewModel()
@@ -113,11 +106,10 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
             val bitmap = withContext(Dispatchers.IO) {
                 BitmapDrawable(resources, getBlurredBitmap())
             }
-            container.background = bitmap
+            rootView.background = bitmap
         }
     }
 
-    @HunterDebug
     private fun getBlurredBitmap(): Bitmap? {
         val viewGroup = activity?.findViewById<ViewGroup>(R.id.container)
         if (viewGroup != null) {

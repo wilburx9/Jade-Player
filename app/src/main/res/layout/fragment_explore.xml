@@ -38,7 +38,7 @@
         app:srcCompat="@drawable/ic_nav" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/randomSongs"
+        android:id="@+id/randomSongsRV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"

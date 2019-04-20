@@ -23,6 +23,7 @@
     <string name="get_started">Get Started</string>
     <string name="image_of_navigation_item">Image of Navigation item</string>
     <string name="navigation_icon">Navigation icon</string>
+    <string name="track_album_art">Track album art</string>
 
 
     <!--Navigation-->
@@ -44,6 +45,7 @@
 
     <!--Others-->
     <string name="read_storage_permission_info">We need to be authorized to access the media files on your device</string>
+
 
 
 </resources>

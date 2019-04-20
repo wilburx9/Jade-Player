@@ -2,16 +2,14 @@
 
 package com.jadebyte.jadeplayer.main.navigation
 
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import javax.inject.Inject
 
 
 /**
  * Created by Wilberforce on 09/04/2019 at 17:15.
  */
-class NavViewModel @Inject constructor(private val preferences: SharedPreferences) : ViewModel() {
+class NavViewModel : ViewModel() {
     private var navRepository: NavRepository? = null
     var navItems: LiveData<List<NavItem>>? = null
         private set
@@ -21,7 +19,7 @@ class NavViewModel @Inject constructor(private val preferences: SharedPreference
             return
         }
 
-        navRepository = NavRepository(preferences, origin)
+        navRepository = NavRepository(origin)
         navItems = navRepository?.liveItems
     }
 

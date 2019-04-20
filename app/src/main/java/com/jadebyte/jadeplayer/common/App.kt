@@ -4,14 +4,13 @@ package com.jadebyte.jadeplayer.common
 
 import android.app.Application
 import android.os.StrictMode
-import android.os.StrictMode.VmPolicy
 import androidx.appcompat.app.AppCompatDelegate
 import com.jadebyte.jadeplayer.BuildConfig
+import com.jadebyte.jadeplayer.main.common.injection.component.AppComponent
+import com.jadebyte.jadeplayer.main.common.injection.component.DaggerAppComponent
+import com.jadebyte.jadeplayer.main.common.injection.module.AppModule
+import com.jadebyte.jadeplayer.main.common.injection.module.CommonModule
 import com.jadebyte.jadeplayer.main.common.utils.BlurKit
-import com.jadebyte.jadeplayer.main.injection.component.AppComponent
-import com.jadebyte.jadeplayer.main.injection.component.DaggerAppComponent
-import com.jadebyte.jadeplayer.main.injection.module.AppModule
-import com.jadebyte.jadeplayer.main.injection.module.CommonModule
 import com.squareup.leakcanary.LeakCanary
 import timber.log.Timber
 
@@ -20,8 +19,6 @@ import timber.log.Timber
  * Created by Wilberforce on 27/03/2019 at 22:48.
  */
 class App : Application() {
-    lateinit var appComponent: AppComponent
-        private set
 
     override fun onCreate() {
         enableStrictMode()
@@ -38,12 +35,11 @@ class App : Application() {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectAll()
-                    .permitDiskReads()
                     .penaltyLog()
                     .build()
             )
             StrictMode.setVmPolicy(
-                VmPolicy.Builder()
+                StrictMode.VmPolicy.Builder()
                     .detectAll()
                     .penaltyLog()
                     .build()
@@ -80,5 +76,9 @@ class App : Application() {
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 
-
+    companion object {
+        @JvmStatic
+        lateinit var appComponent: AppComponent
+            private set
+    }
 }

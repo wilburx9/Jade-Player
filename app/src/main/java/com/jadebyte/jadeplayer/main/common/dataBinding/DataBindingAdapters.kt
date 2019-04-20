@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.GlideApp
+import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.songs.Song
 
 /**
@@ -20,9 +21,21 @@ object DataBindingAdapters {
 
     @BindingAdapter("android:src")
     @JvmStatic
-    fun setImageUri(view: ImageView, song: Song) {
+    fun setAlbumCover(view: ImageView, song: Song) {
         GlideApp.with(view)
             .load(song)
+            .transform(
+                MultiTransformation(CenterCrop(), RoundedCorners(10))
+            )
+            .placeholder(R.drawable.thumb_default)
+            .into(view)
+    }
+
+    @BindingAdapter("android:src")
+    @JvmStatic
+    fun setAlbumCover(view: ImageView, album: Album) {
+        GlideApp.with(view)
+            .load(album)
             .transform(
                 MultiTransformation(CenterCrop(), RoundedCorners(10))
             )

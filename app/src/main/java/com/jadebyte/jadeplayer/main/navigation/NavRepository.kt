@@ -5,11 +5,19 @@ package com.jadebyte.jadeplayer.main.navigation
 import android.content.SharedPreferences
 import androidx.lifecycle.MediatorLiveData
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.common.App
+import javax.inject.Inject
 
 /**
  * Created by Wilberforce on 09/04/2019 at 17:16.
  */
-class NavRepository(private val preferences: SharedPreferences, private var origin: Int) {
+class NavRepository(private var origin: Int) {
+    @Inject
+    lateinit var preferences: SharedPreferences
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     val liveItems = MediatorLiveData<List<NavItem>>()
 
