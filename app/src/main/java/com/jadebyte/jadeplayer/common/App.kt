@@ -69,7 +69,7 @@ class App : Application() {
     }
 
     private fun setupTheme() {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     private fun plantTimber() {

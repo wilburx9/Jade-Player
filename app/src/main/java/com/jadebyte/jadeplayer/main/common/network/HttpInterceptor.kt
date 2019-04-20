@@ -44,7 +44,7 @@ class HttpInterceptor : Interceptor {
         }
 
 
-        if (TextUtils.isEmpty(cloudKeys.spotifySecret)) {
+        if (TextUtils.isEmpty(cloudKeys.spotifySecret) || TextUtils.isEmpty(cloudKeys.spotifyClientId)) {
             Timber.w("intercept: Spotify secret is empty")
             return chain.proceed(request)
         }
@@ -91,7 +91,7 @@ class HttpInterceptor : Interceptor {
     private fun refreshToken(): Int {
         //Refresh token, synchronously, save it, and return result code
         //you might use retrofit here
-        val base64 = ConvertUtils.stringToBase64(cloudKeys.spotifySecret!!)
+        val base64 = ConvertUtils.stringToBase64("${cloudKeys.spotifyClientId!!}:${cloudKeys.spotifySecret!!}")
 
         val mediaType = MediaType.parse("application/x-www-form-urlencoded")
         val body = RequestBody.create(mediaType, "grant_type=client_credentials")
@@ -99,13 +99,12 @@ class HttpInterceptor : Interceptor {
             .url("https://accounts.spotify.com/api/token")
             .post(body)
             .addHeader("content-type", "application/x-www-form-urlencoded")
-            .addHeader("authorization", String.format("Basic %s", base64))
+            .addHeader("authorization", "Basic $base64")
             .build()
 
         try {
             val response = okHttpClient.get().newCall(request).execute()
             val jsonObject = JSONObject(response.body()!!.string())
-            Timber.i("refreshToken: $jsonObject")
             val accessToken = jsonObject.getString("access_token")
             preferences.edit {
                 putString(spotifyToken, accessToken)
