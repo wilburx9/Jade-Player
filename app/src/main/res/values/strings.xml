@@ -47,6 +47,7 @@
     <string name="read_storage_permission_info">We need to be authorized to access the media files on your device</string>
     <string name="recentlyPlayed">Recently Played</string>
     <string name="empty_playlist">You have not played any song yet</string>
+    <string name="play">Play</string>
 
 
 </resources>

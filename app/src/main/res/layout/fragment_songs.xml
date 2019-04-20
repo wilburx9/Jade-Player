@@ -1,18 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.songs.SongsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Songs" />
+        android:id="@+id/songs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:padding="@dimen/margin_large"
+        android:text="@string/songs"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/navigationIcon"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/navigationIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/navigation_icon"
+        android:padding="@dimen/padding_large"
+        app:layout_constraintBottom_toBottomOf="@id/songs"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toRightOf="@+id/songs"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/songs"
+        app:srcCompat="@drawable/ic_nav" />
+
+
+    <TextView
+        android:id="@+id/tracks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_large"
+        android:paddingRight="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/play"
+        app:layout_constraintTop_toBottomOf="@+id/songs"
+        tools:text="118 tracks" />
+
+    <Button
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play"
+        android:minHeight="@null"
+        android:drawablePadding="@dimen/padding_large"
+        android:paddingLeft="@dimen/padding_x_large"
+        android:paddingRight="@dimen/padding_x_large"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:textSize="@dimen/text_size_x_small"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:drawableStart="@drawable/ic_play_white"
+        app:layout_constraintBottom_toBottomOf="@+id/tracks"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tracks"
+        app:layout_constraintTop_toTopOf="@+id/tracks" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/padding_small"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tracks"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
