@@ -21,7 +21,7 @@
         android:id="@+id/songsFragment"
         android:name="com.jadebyte.jadeplayer.main.songs.SongsFragment"
         android:label="SongsFragment"
-        tools:layout="@layout/fragment_songs" >
+        tools:layout="@layout/fragment_base_player" >
         <action
             android:id="@+id/action_songsFragment_to_navigationDialogFragment"
             app:destination="@id/navigationDialogFragment" >

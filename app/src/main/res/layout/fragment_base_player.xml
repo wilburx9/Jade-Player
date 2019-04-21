@@ -10,12 +10,12 @@
     tools:context=".main.songs.SongsFragment">
 
     <TextView
-        android:id="@+id/songs"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:padding="@dimen/margin_large"
-        android:text="@string/songs"
+        tools:text="@string/songs"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textStyle="bold"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -30,16 +30,16 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/navigation_icon"
         android:padding="@dimen/padding_large"
-        app:layout_constraintBottom_toBottomOf="@id/songs"
+        app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintLeft_toRightOf="@+id/songs"
+        app:layout_constraintLeft_toRightOf="@+id/title"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/songs"
+        app:layout_constraintTop_toTopOf="@+id/title"
         app:srcCompat="@drawable/ic_nav" />
 
 
     <TextView
-        android:id="@+id/tracks"
+        android:id="@+id/dataNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/margin_large"
@@ -49,7 +49,7 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/play"
-        app:layout_constraintTop_toBottomOf="@+id/songs"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="118 tracks" />
 
     <Button
@@ -70,20 +70,20 @@
         android:background="@drawable/accent_round_corner"
         android:textColor="@android:color/white"
         android:drawableStart="@drawable/ic_play_white"
-        app:layout_constraintBottom_toBottomOf="@+id/tracks"
+        app:layout_constraintBottom_toBottomOf="@+id/dataNum"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tracks"
-        app:layout_constraintTop_toTopOf="@+id/tracks" />
+        app:layout_constraintLeft_toRightOf="@+id/dataNum"
+        app:layout_constraintTop_toTopOf="@+id/dataNum" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingTop="@dimen/padding_small"
-        android:id="@+id/songsRV"
+        android:id="@+id/dataRV"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tracks"
+        app:layout_constraintTop_toBottomOf="@+id/dataNum"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
