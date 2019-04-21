@@ -39,6 +39,6 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
         com.jadebyte.jadeplayer.R.id.action_albumsFragment_to_navigationDialogFragment
     override var numberOfDataRes: Int = com.jadebyte.jadeplayer.R.plurals.numberOfAlbums
     override var titleRes: Int = com.jadebyte.jadeplayer.R.string.albums
-    override var animateViewHolder: Boolean = false
+    override var fadeInViewHolder: Boolean = true
 
 }

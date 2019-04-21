@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 
 
@@ -20,7 +21,7 @@ class BaseAdapter<T>(
     private val context: Context,
     private val layoutId: Int,
     private val variableId: Int,
-    private val animateItems: Boolean = true,
+    private val fadeInViewHolder: Boolean = false,
     private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
@@ -38,7 +39,7 @@ class BaseAdapter<T>(
 
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
         holder.bind(items[position])
-        if (animateItems) {
+        if (fadeInViewHolder) {
             animateItem(position, holder)
         }
     }
@@ -50,18 +51,20 @@ class BaseAdapter<T>(
 
     override fun onViewDetachedFromWindow(holder: BaseViewHolder<T>) {
         super.onViewDetachedFromWindow(holder)
-        if (animateItems) {
-            holder.itemView.clearAnimation()
-        }
+        holder.itemView.clearAnimation()
     }
 
     private fun animateItem(position: Int, holder: RecyclerView.ViewHolder) {
         val animation = AnimationUtils.loadAnimation(
             context,
-            if (position > lastPosition)
-                com.jadebyte.jadeplayer.R.anim.up_from_bottom
-            else
-                com.jadebyte.jadeplayer.R.anim.down_from_top
+            if (fadeInViewHolder) {
+                R.anim.fade_in_fast
+            } else {
+                if (position > lastPosition)
+                    R.anim.up_from_bottom
+                else
+                    R.anim.down_from_top
+            }
         )
         holder.itemView.startAnimation(animation)
         lastPosition = position

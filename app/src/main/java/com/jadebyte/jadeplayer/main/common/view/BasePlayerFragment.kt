@@ -33,7 +33,7 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemC
     @get: StringRes abstract var titleRes: Int
     @get: LayoutRes abstract var itemLayoutId: Int
     abstract var viewModelVariableId: Int
-    open var animateViewHolder = true
+    open var fadeInViewHolder = false
 
 
     override fun onCreateView(
@@ -68,7 +68,7 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemC
     private fun setupView() {
         title.setText(titleRes)
         adapter =
-            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, animateViewHolder, this)
+            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this)
         dataRV.adapter = adapter
         dataRV.layoutManager = layoutManager()
     }

@@ -55,7 +55,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setupRecyclerView() {
-        adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, false, this)
+        adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, true, this)
         randomAlbumsRV.adapter = adapter
 
         val layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
