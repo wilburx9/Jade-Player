@@ -11,7 +11,7 @@ import com.jadebyte.jadeplayer.main.albums.Album
 /**
  * Created by Wilberforce on 17/04/2019 at 03:50.
  */
-class ExploreAdapter (private var item: List<Album>?): RecyclerView.Adapter<ExploreViewHolder>() {
+class ExploreAdapter (private var items: List<Album>): RecyclerView.Adapter<ExploreViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExploreViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,15 +20,15 @@ class ExploreAdapter (private var item: List<Album>?): RecyclerView.Adapter<Expl
     }
 
     override fun getItemCount(): Int {
-        return item?.size ?: 0
+        return items.size
     }
 
     override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) {
-        holder.bind(item?.get(position))
+        holder.bind(items[position])
     }
 
-    fun updateItems(songs: List<Album>?) {
-        this.item = songs
+    fun updateItems(items: List<Album>) {
+        this.items = items
         notifyDataSetChanged()
     }
 }

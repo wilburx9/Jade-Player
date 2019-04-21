@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="50dp"
+    android:height="50.723dp"
+    android:viewportWidth="50"
+    android:viewportHeight="50.723">
+    <group
+        android:translateX="-32"
+        android:translateY="-120">
+        <group
+            android:translateX="32"
+            android:translateY="120">
+            <path
+                android:fillColor="#FF4060"
+                android:pathData="M25 0H25A25 25 0 0 1 50 25V25.723A25 25 0 0 1 25 50.723H25A25 25 0 0 1 0 25.723V25A25 25 0 0 1 25 0Z" />
+        </group>
+        <group
+            android:translateX="38.253"
+            android:translateY="126.879">
+            <group
+                android:translateX="-2.894"
+                android:translateY="-3.413">
+                <path
+                    android:fillColor="#D42B36"
+                    android:pathData="M38.909 22v0.442a17.428 17.428 0 1 1 0 -0.442Z" />
+            </group>
+            <group
+                android:translateX="1.161"
+                android:translateY="1.377">
+                <clip-path android:pathData="M38.909 22v0.442a17.428 17.428 0 1 1 0 -0.442Z" />
+                <group
+                    android:translateX="-19.268"
+                    android:translateY="-24.692">
+                    <path
+                        android:fillColor="#B7202D"
+                        android:pathData="M54.117 42.341A17.46 17.46 0 0 1 43.833 57.812h0L25.39 44.226 42.588 32.7Z" />
+                </group>
+            </group>
+            <group
+                android:translateX="-15.444"
+                android:translateY="-22.066">
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:pathData="M26.573 44.271V42.6a2.393 2.393 0 0 1 2.39 -2.407 2.344 2.344 0 0 1 2.3 2.344v1.722a5.36 5.36 0 0 0 5.36 5.371 5.5 5.5 0 0 0 1.07 -0.106 5.371 5.371 0 0 0 4.287 -5.251V34.938A3.988 3.988 0 0 0 36.151 31.4L22.726 39.2a2.2 2.2 0 0 0 0 3.782L26.7 45.884A10.25 10.25 0 0 1 26.573 44.271Z" />
+            </group>
+            <group
+                android:translateX="-0.01"
+                android:translateY="0.01">
+                <path
+                    android:fillColor="#FFFFFF"
+                    android:pathData="M18.591 37.153A18.582 18.582 0 1 1 37.172 18.573v0.475a18.7 18.7 0 0 1 -10.96 16.484A18.491 18.491 0 0 1 18.591 37.153Zm0 -34.865a16.289 16.289 0 1 0 16.283 16.7v-0.413A16.3 16.3 0 0 0 18.591 2.288Z" />
+            </group>
+        </group>
+    </group>
+</vector>

@@ -28,7 +28,7 @@
             android:src="@{song}"
             android:scaleType="centerCrop"
             android:contentDescription="@string/track_album_art"
-            tools:src="@drawable/thumb_default" />
+            tools:src="@drawable/thumb_circular_default" />
 
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{song.artist}"
+            android:text="@{song.album.artist}"
             android:layout_marginRight="@dimen/margin_medium"
             android:layout_marginLeft="@dimen/margin_medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"

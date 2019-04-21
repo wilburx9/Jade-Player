@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.fragment_explore.*
 
 class ExploreFragment : Fragment() {
 
-    private lateinit var adpater: ExploreAdapter
-    private var item: List<Album> = emptyList()
+    private lateinit var adapter: ExploreAdapter
+    private var items: List<Album> = emptyList()
     private lateinit var viewModel: ExploreViewModel
 
     override fun onCreateView(
@@ -46,14 +46,14 @@ class ExploreFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.data.observe(viewLifecycleOwner, Observer {
-            this.item = it
-            adpater.updateItems(it)
+            this.items = it
+            adapter.updateItems(it)
         })
     }
 
     private fun setupRecyclerView() {
-        adpater = ExploreAdapter(item)
-        randomAlbumsRV.adapter = adpater
+        adapter = ExploreAdapter(items)
+        randomAlbumsRV.adapter = adapter
 
         val layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
         randomAlbumsRV.layoutManager = layoutManager

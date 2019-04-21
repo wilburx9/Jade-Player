@@ -14,7 +14,7 @@ class NavViewModel : ViewModel() {
     var navItems: LiveData<List<NavItem>>? = null
         private set
 
-    fun init(origin: Int) {
+    fun init(origin: Int?) {
         if (this.navItems != null) {
             return
         }

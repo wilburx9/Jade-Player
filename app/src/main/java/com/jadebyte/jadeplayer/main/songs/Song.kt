@@ -4,6 +4,7 @@ package com.jadebyte.jadeplayer.main.songs
 
 import android.database.Cursor
 import android.provider.MediaStore
+import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 
 
@@ -12,8 +13,7 @@ import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
  */
 data class Song(
     val title: String,
-    val artist: String,
-    val album: String,
+    val album: Album,
     val path: String,
     val mediaId: Long,
     val albumId: Long,
@@ -24,8 +24,10 @@ data class Song(
 ) {
     constructor(cursor: Cursor) : this(
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
-        artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
-        album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
+        album = Album(
+            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
+            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
+        ),
         path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
         mediaId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID)),
         albumId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),

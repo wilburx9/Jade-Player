@@ -29,7 +29,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
 
     private var origin: Int? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
-    private lateinit var adpater: NavAdapter
+    private lateinit var adapter: NavAdapter
     private lateinit var viewModel: NavViewModel
     private var items: List<NavItem> = emptyList()
     private val job = Job()
@@ -55,7 +55,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this)[NavViewModel::class.java]
-        viewModel.init(0)
+        viewModel.init(origin)
         setupRecyclerView()
         observeViewModel()
         closeButton.setOnClickListener { findNavController().popBackStack() }
@@ -65,14 +65,14 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     private fun observeViewModel() {
         viewModel.navItems?.observe(viewLifecycleOwner, Observer {
             this.items = it
-            adpater.updateItems(it)
+            adapter.updateItems(it)
         })
     }
 
     private fun setupRecyclerView() {
-        adpater = NavAdapter(items, this)
+        adapter = NavAdapter(items, this)
         recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = adpater
+        recyclerView.adapter = adapter
 
         val layoutManager = GridLayoutManager(activity, 3)
         recyclerView.layoutManager = layoutManager
@@ -95,7 +95,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         // So what I am doing here is, swapping the items, notifying the adapter and notifying the repository
         // to save the new indexes in  SharePreferences
         Collections.swap(items, fromPosition, toPosition)
-        adpater.updateItems(items, fromPosition, toPosition)
+        adapter.updateItems(items, fromPosition, toPosition)
         viewModel.swap(items)
         return true
     }

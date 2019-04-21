@@ -24,11 +24,11 @@ object DataBindingAdapters {
     @JvmStatic
     fun setAlbumCover(view: ImageView, song: Song) {
         GlideApp.with(view)
-            .load(song)
+            .load(song.album)
             .transform(
                 MultiTransformation(CenterCrop(), CircleCrop())
             )
-            .placeholder(R.drawable.thumb_default)
+            .placeholder(R.drawable.thumb_circular_default)
             .into(view)
     }
 

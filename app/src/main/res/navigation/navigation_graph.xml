@@ -15,17 +15,20 @@
         tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_exploreFragment_to_navigationDialogFragment"
-            app:destination="@id/navigationDialogFragment">
-            <argument
-                android:name="origin"
-                android:defaultValue="1" />
-        </action>
+            app:destination="@id/navigationDialogFragment"/>
     </fragment>
     <fragment
         android:id="@+id/songsFragment"
         android:name="com.jadebyte.jadeplayer.main.songs.SongsFragment"
         android:label="SongsFragment"
-        tools:layout="@layout/fragment_songs" />
+        tools:layout="@layout/fragment_songs" >
+        <action
+            android:id="@+id/action_songsFragment_to_navigationDialogFragment"
+            app:destination="@id/navigationDialogFragment" />
+        <argument
+            android:name="origin"
+            android:defaultValue="1" />
+    </fragment>
     <fragment
         android:id="@+id/albumsFragment"
         android:name="com.jadebyte.jadeplayer.main.albums.AlbumsFragment"

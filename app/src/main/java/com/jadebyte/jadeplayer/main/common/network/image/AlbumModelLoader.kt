@@ -75,6 +75,10 @@ class AlbumModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>?) :
             if (response.isSuccessful) {
                 val jsonObject = JSONObject(response.body()?.string())
 
+                if (!jsonObject.has("album")) {
+                    return null
+                }
+
                 val array = jsonObject.getJSONObject("album").getJSONArray("image")
                 for (i in 0 until array.length()) {
                     val image = array.getJSONObject(i)
@@ -108,8 +112,11 @@ class AlbumModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>?) :
             if (response.isSuccessful) {
                 val jsonObject = JSONObject(response.body()?.string())
 
-                val array = jsonObject.getJSONObject("albums")
-                    .getJSONArray("items").getJSONObject(0).getJSONArray("images")
+                val items = jsonObject.getJSONObject("albums").getJSONArray("items")
+                if (items.isNull(0)) {
+                    return null
+                }
+                val array = items.getJSONObject(0).getJSONArray("images")
 
                 for (i in 0 until array.length()) {
                     val image = array.getJSONObject(i)

@@ -10,7 +10,7 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
 /**
  * Created by Wilberforce on 19/04/2019 at 15:06.
  */
-abstract class SongsViewModel(application: Application) : BaseViewModel<Song>(application, uri) {
+class SongsViewModel(application: Application) : BaseViewModel<Song>(application, uri) {
 
     override var repository: BaseRepository<Song> = SongsRepository(application, uri)
 

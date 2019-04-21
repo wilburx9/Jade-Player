@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Wilberforce on 09/04/2019 at 17:16.
  */
-class NavRepository(private var origin: Int) {
+class NavRepository(private var origin: Int?) {
     @Inject
     lateinit var preferences: SharedPreferences
 

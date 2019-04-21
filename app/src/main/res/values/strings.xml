@@ -49,6 +49,10 @@
     <string name="recentlyPlayed">Recently Played</string>
     <string name="empty_playlist">You have not played any song yet</string>
     <string name="play">Play</string>
+    <plurals name="numberOfTracks">
+        <item quantity="one">%d track</item>
+        <item quantity="other">%d tracks</item>
+    </plurals>
 
 
 </resources>
