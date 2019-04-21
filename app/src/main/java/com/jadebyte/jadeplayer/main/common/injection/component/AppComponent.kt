@@ -2,6 +2,7 @@
 
 package com.jadebyte.jadeplayer.main.common.injection.component
 
+import com.jadebyte.jadeplayer.main.albums.AlbumSongsFragment
 import com.jadebyte.jadeplayer.main.common.injection.module.AppModule
 import com.jadebyte.jadeplayer.main.common.injection.module.CommonModule
 import com.jadebyte.jadeplayer.main.common.network.HttpInterceptor
@@ -19,4 +20,5 @@ interface AppComponent {
     fun inject(interceptor: HttpInterceptor)
     fun inject(albumModelLoader: AlbumModelLoader)
     fun inject(navRepository: NavRepository)
+    fun inject(albumSongsFragment: AlbumSongsFragment)
 }

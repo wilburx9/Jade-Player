@@ -13,6 +13,7 @@ import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader
 import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
+import okhttp3.CacheControl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -25,12 +26,11 @@ import javax.inject.Inject
 class AlbumModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>?) :
     BaseGlideUrlLoader<Album>(concreteLoader) {
 
-    @Inject
-    lateinit var application: Application
-    @Inject
-    lateinit var okHttpClient: OkHttpClient
-    @Inject
-    lateinit var cloudKeys: CloudKeys
+    @Inject lateinit var application: Application
+    @Inject lateinit var okHttpClient: OkHttpClient
+    @Inject lateinit var cloudKeys: CloudKeys
+    @Inject lateinit var cacheControl: CacheControl
+
 
     init {
         App.appComponent.inject(this)
@@ -67,6 +67,7 @@ class AlbumModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>?) :
 
         val request = Request.Builder()
             .url(lastFmUrl.toString())
+            .cacheControl(cacheControl)
             .build()
 
         val response = okHttpClient.newCall(request).execute()
@@ -104,6 +105,7 @@ class AlbumModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>?) :
 
         val request = Request.Builder()
             .url(spotifyUrl.toString())
+            .cacheControl(cacheControl)
             .build()
 
         val response = okHttpClient.newCall(request).execute()

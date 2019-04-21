@@ -40,6 +40,7 @@ android {
     dataBinding {
         enabled = true
     }
+    androidExtensions { experimental = true }
     packagingOptions {
         pickFirst 'META-INF/atomicfu.kotlin_module'
     }

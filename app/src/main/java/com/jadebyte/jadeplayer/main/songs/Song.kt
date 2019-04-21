@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.provider.MediaStore
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
+import com.jadebyte.jadeplayer.main.common.utils.Utils.getTrackNumber
 
 
 /**
@@ -18,22 +19,21 @@ data class Song(
     val mediaId: Long,
     val albumId: Long,
     val duration: Long,
-    val number: Int,
+    val number: String,
     val artPath: String,
     val artistId: Long
 ) {
     constructor(cursor: Cursor) : this(
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
-        album = Album(
-            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
-            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
-        ),
+        album = Album(cursor, true),
         path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
         mediaId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID)),
         albumId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),
         duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
         artistId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST_ID)),
         artPath = ImageUtils.getAlbumArtUri(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))).toString(),
-        number = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.TRACK))
+        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.TRACK)))
     )
+
+
 }

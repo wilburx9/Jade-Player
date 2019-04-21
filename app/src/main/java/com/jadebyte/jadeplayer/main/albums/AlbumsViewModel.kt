@@ -13,7 +13,7 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
  */
 open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(application, uri) {
 
-    override var repository: BaseRepository<Album> = AlbumsRepository(application, uri)
+    final override var repository: BaseRepository<Album> = AlbumsRepository(application, uri)
 
     override var selection: String? = null
 
@@ -21,11 +21,12 @@ open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(appl
 
     override var sortOrder: String? = "${MediaStore.Audio.Albums.ALBUM} COLLATE NOCASE ASC"
 
-    override var projection: Array<String>? = arrayOf(
+    final override var projection: Array<String>? = arrayOf(
         MediaStore.Audio.Albums.ALBUM,
         MediaStore.Audio.Albums.ARTIST,
         MediaStore.Audio.Albums.NUMBER_OF_SONGS,
-        MediaStore.Audio.Albums._ID
+        MediaStore.Audio.Albums._ID,
+        MediaStore.Audio.Albums.FIRST_YEAR
     )
 
 }

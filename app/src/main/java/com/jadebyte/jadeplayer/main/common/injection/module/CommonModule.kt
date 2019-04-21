@@ -16,8 +16,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import okhttp3.Cache
+import okhttp3.CacheControl
 import okhttp3.OkHttpClient
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.SocketFactory.getDefault
 
@@ -90,6 +92,12 @@ class CommonModule {
             }
         }
         return cloudKeys
+    }
+
+    @Provides
+    @Singleton
+    internal fun getOkHttpCache(): CacheControl{
+        return CacheControl.Builder().maxAge(30, TimeUnit.DAYS).build()
     }
 
 }

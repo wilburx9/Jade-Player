@@ -10,9 +10,9 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
 /**
  * Created by Wilberforce on 19/04/2019 at 15:06.
  */
-class SongsViewModel(application: Application) : BaseViewModel<Song>(application, uri) {
+open class SongsViewModel(application: Application) : BaseViewModel<Song>(application, uri) {
 
-    override var repository: BaseRepository<Song> = SongsRepository(application, uri)
+    final override var repository: BaseRepository<Song> = SongsRepository(application, uri)
 
     override var selection: String? = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
 
@@ -21,7 +21,7 @@ class SongsViewModel(application: Application) : BaseViewModel<Song>(application
     // Sort with the title in ascending case-insensitive order
     override var sortOrder: String? = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
 
-    override var projection: Array<String>? = arrayOf(
+    final override var projection: Array<String>? = arrayOf(
         MediaStore.Audio.Media.TITLE,
         MediaStore.Audio.Media.ARTIST,
         MediaStore.Audio.Media.ALBUM_ID,

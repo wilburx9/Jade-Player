@@ -5,7 +5,6 @@ package com.jadebyte.jadeplayer.main.common.data
 import android.app.Application
 import android.database.ContentObserver
 import android.net.Uri
-import android.os.Handler
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,7 +15,7 @@ import kotlinx.coroutines.withContext
 /**
  * Created by Wilberforce on 19/04/2019 at 16:45.
  */
-abstract class BaseViewModel<T> (application: Application, var uri: Uri) : AndroidViewModel(application) {
+abstract class BaseViewModel<T>(application: Application, var uri: Uri) : AndroidViewModel(application) {
 
     val data = MutableLiveData<List<T>>()
     abstract var repository: BaseRepository<T>
@@ -26,16 +25,15 @@ abstract class BaseViewModel<T> (application: Application, var uri: Uri) : Andro
     abstract var sortOrder: String?
 
 
-    private val observer: ContentObserver = object : ContentObserver(Handler()) {
+    private val observer: ContentObserver = object : ContentObserver(null) {
         override fun onChange(selfChange: Boolean) {
-            super.onChange(selfChange)
             loadData()
         }
     }
 
-    init {
+    fun init() {
         observer.onChange(false)
-        application.contentResolver.registerContentObserver(uri, true, observer)
+        getApplication<Application>().contentResolver.registerContentObserver(uri, true, observer)
     }
 
 
@@ -47,7 +45,6 @@ abstract class BaseViewModel<T> (application: Application, var uri: Uri) : Andro
 
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()

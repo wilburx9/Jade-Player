@@ -7,11 +7,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
@@ -37,6 +41,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this)[ExploreViewModel::class.java]
+        viewModel.init()
         setupRecyclerView()
         observeViewModel()
         navigationIcon.setOnClickListener(
@@ -48,10 +53,14 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer {
-            this.items = it
-            adapter?.updateItems(it)
-        })
+        if (items.isEmpty()) {
+            viewModel.data.observe(viewLifecycleOwner, Observer {
+                this.items = it
+                adapter?.updateItems(it)
+            })
+        } else {
+            viewModel.data.value = items
+        }
     }
 
     private fun setupRecyclerView() {
@@ -62,11 +71,22 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         randomAlbumsRV.layoutManager = layoutManager
     }
 
-    override fun onItemClick(position: Int) {
-
+    override fun onItemClick(position: Int, albumArt: ImageView?) {
+        val transitionName = ViewCompat.getTransitionName(albumArt!!)!!
+        val extras = FragmentNavigator.Extras.Builder()
+            .addSharedElement(albumArt, transitionName)
+            .build()
+        val action =
+            ExploreFragmentDirections.actionExploreFragmentToAlbumSongsFragment(items[position], transitionName)
+        findNavController().navigate(action, extras)
     }
 
-    override fun onDestroyView() {
+
+    override fun onDestroy() {
+        // Detach the adapter from the RecyclerView. Was causing memory leaks.
+        // I am not doing this in onDestroy because it was messing-up the life cycle of the viewModel
+
+        // More info: https://stackoverflow.com/a/46957469/6181476 and https://stackoverflow.com/q/54581071/6181476
         randomAlbumsRV?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewDetachedFromWindow(v: View?) {
                 randomAlbumsRV?.adapter = null
@@ -76,7 +96,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
             override fun onViewAttachedToWindow(v: View?) {}
 
         })
-        super.onDestroyView()
+        super.onDestroy()
     }
 
 }

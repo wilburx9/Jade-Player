@@ -3,18 +3,33 @@
 package com.jadebyte.jadeplayer.main.albums
 
 import android.database.Cursor
+import android.os.Parcelable
 import android.provider.MediaStore
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by Wilberforce on 16/04/2019 at 00:49.
  */
-data class Album(val name: String, val artist: String, val tracks: Int? = 0, val id: Long? = 0) {
+@Parcelize
+data class Album(
+    val name: String,
+    val artist: String,
+    val tracks: Int? = 0,
+    val id: Long? = 0,
+    val year: String? = ""
+) : Parcelable {
 
     constructor(data: Cursor) : this(
         name = data.getString(data.getColumnIndex(MediaStore.Audio.Albums.ALBUM)),
         artist = data.getString(data.getColumnIndex(MediaStore.Audio.Albums.ARTIST)),
+        year = data.getString(data.getColumnIndex(MediaStore.Audio.Albums.FIRST_YEAR)),
         tracks = data.getInt(data.getColumnIndex(MediaStore.Audio.Albums.NUMBER_OF_SONGS)),
         id = data.getLong(data.getColumnIndex(MediaStore.Audio.Albums._ID))
+    )
+
+    constructor(cursor: Cursor, frmSong: Boolean) : this(
+        name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
+        artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
     )
 
     /**

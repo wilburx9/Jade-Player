@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.format.DateUtils" />
+
+        <import type="java.util.concurrent.TimeUnit" />
+
+        <variable
+            name="song"
+            type="com.jadebyte.jadeplayer.main.songs.Song" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/padding_large">
+
+        <!--TODO: Add playing progress indicator-->
+
+        <TextView
+            android:id="@+id/songNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:text="@{song.number}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2" />
+
+
+        <TextView
+            android:id="@+id/songTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_large"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{song.title}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintBottom_toTopOf="@+id/guideLine"
+            app:layout_constraintLeft_toRightOf="@+id/songNumber"
+            app:layout_constraintRight_toLeftOf="@+id/songDuration"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Said" />
+
+        <TextView
+            android:id="@+id/songArtist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{song.album.artist}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/songTitle"
+            app:layout_constraintRight_toRightOf="@+id/songTitle"
+            app:layout_constraintTop_toBottomOf="@+id/guideLine"
+            tools:text="Nasty C" />
+
+        <TextView
+            android:id="@+id/songDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(song.duration))}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:layout_marginEnd="@dimen/margin_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="04:57" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

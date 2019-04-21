@@ -4,6 +4,7 @@ package com.jadebyte.jadeplayer.main.songs
 
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProviders
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
@@ -14,16 +15,17 @@ class SongsFragment : BasePlayerFragment<Song>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this)[SongsViewModel::class.java]
+        viewModel.init()
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(position: Int, albumArt: ImageView?) {
 
     }
 
     override var itemLayoutId: Int = R.layout.item_song
     override var viewModelVariableId: Int = BR.song
-    override var navigationFragmentId: Int =  R.id.action_songsFragment_to_navigationDialogFragment
-    override var numberOfDataRes: Int = R.plurals.numberOfTracks
+    override var navigationFragmentId: Int = R.id.action_songsFragment_to_navigationDialogFragment
+    override var numberOfDataRes: Int = R.plurals.numberOfSongs
     override var titleRes: Int = R.string.songs
 
 }

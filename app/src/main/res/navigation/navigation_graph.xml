@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_navigationDialogFragment"
             app:destination="@id/navigationDialogFragment"/>
+        <action
+            android:id="@+id/action_exploreFragment_to_albumSongsFragment"
+            app:destination="@id/albumSongsFragment" />
     </fragment>
     <fragment
         android:id="@+id/songsFragment"
@@ -37,6 +40,9 @@
         <action
             android:id="@+id/action_albumsFragment_to_navigationDialogFragment"
             app:destination="@id/navigationDialogFragment" />
+        <action
+            android:id="@+id/action_albumsFragment_to_albumSongsFragment"
+            app:destination="@id/albumSongsFragment" />
     </fragment>
     <fragment
         android:id="@+id/playlistFragment"
@@ -58,4 +64,16 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </dialog-fragment>
+    <fragment
+        android:id="@+id/albumSongsFragment"
+        android:name="com.jadebyte.jadeplayer.main.albums.AlbumSongsFragment"
+        tools:layout="@layout/fragment_album_songs"
+        android:label="albumSongsFragment" >
+        <argument
+            android:name="album"
+            app:argType="com.jadebyte.jadeplayer.main.albums.Album" />
+        <argument
+            android:name="transitionName"
+            app:argType="string" />
+    </fragment>
 </navigation>

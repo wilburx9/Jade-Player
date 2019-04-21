@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,9 +24,9 @@ import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
 /**
  * Created by Wilberforce on 2019-04-21 at 01:48.
  */
-abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemClickListener {
+abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnItemClickListener {
     private var adapter: BaseAdapter<T>? = null
-    private var items: List<T> = emptyList()
+    var items = emptyList<T>()
     lateinit var viewModel: BaseViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int
     @get: PluralsRes abstract var numberOfDataRes: Int
@@ -52,11 +52,16 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemC
                 navigationFragmentId
             )
         )
-        play.setOnClickListener(this)
+        playButton.setOnClickListener(this)
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer(::updateViews))
+       if (items.isEmpty()) {
+           viewModel.init()
+           viewModel.data.observe(viewLifecycleOwner, Observer(::updateViews))
+       } else {
+           viewModel.data.value = items
+       }
     }
 
     private fun updateViews(items: List<T>) {
@@ -83,10 +88,14 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemC
         }
     }
 
-    abstract override fun onItemClick(position: Int)
+    abstract override fun onItemClick(position: Int, albumArt: ImageView?)
 
 
-    override fun onDestroyView() {
+    // Detach the adapter from the RecyclerView. Was causing memory leaks.
+    // I am not doing this in onDestroy because it was messing-up the life cycle of the viewModel
+
+    // More info: https://stackoverflow.com/a/46957469/6181476 and https://stackoverflow.com/q/54581071/6181476
+    override fun onDestroy() {
         dataRV?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewDetachedFromWindow(v: View?) {
                 dataRV?.adapter = null
@@ -97,6 +106,6 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemC
             override fun onViewAttachedToWindow(v: View?) {}
 
         })
-        super.onDestroyView()
+        super.onDestroy()
     }
 }
