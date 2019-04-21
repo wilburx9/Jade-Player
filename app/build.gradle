@@ -62,6 +62,7 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.0.2'
     implementation 'com.squareup.okhttp3:okhttp:3.14.1'
     implementation 'com.google.firebase:firebase-firestore-ktx:18.2.0'
+    implementation 'com.google.android:flexbox:1.1.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "android.arch.lifecycle:extensions:$arch_version"

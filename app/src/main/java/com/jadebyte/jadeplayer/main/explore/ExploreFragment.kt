@@ -13,14 +13,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.albums.Album
+import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_explore.*
 
 
-class ExploreFragment : Fragment() {
+class ExploreFragment : Fragment(), OnItemClickListener {
 
-    private lateinit var adapter: ExploreAdapter
+    private lateinit var adapter: BaseAdapter<Album>
     private var items: List<Album> = emptyList()
     private lateinit var viewModel: ExploreViewModel
 
@@ -52,12 +55,15 @@ class ExploreFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = ExploreAdapter(items)
+        adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, false, this)
         randomAlbumsRV.adapter = adapter
 
         val layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
         randomAlbumsRV.layoutManager = layoutManager
     }
 
+    override fun onItemClick(position: Int) {
+
+    }
 
 }

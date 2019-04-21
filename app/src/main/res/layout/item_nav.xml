@@ -20,6 +20,7 @@
         android:background="@{item.fromThis ? @drawable/nav_item_background_selected : @drawable/nav_item_background}"
         android:maxWidth="106dp"
         android:maxHeight="95dp"
+        android:id="@+id/container"
         tools:background="@drawable/nav_item_background_selected">
 
         <ImageView

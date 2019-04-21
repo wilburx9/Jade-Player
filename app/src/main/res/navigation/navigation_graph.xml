@@ -33,7 +33,11 @@
         android:id="@+id/albumsFragment"
         android:name="com.jadebyte.jadeplayer.main.albums.AlbumsFragment"
         android:label="AlbumsFragment"
-        tools:layout="@layout/fragment_albums" />
+        tools:layout="@layout/fragment_base_player" >
+        <action
+            android:id="@+id/action_albumsFragment_to_navigationDialogFragment"
+            app:destination="@id/navigationDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/playlistFragment"
         android:name="com.jadebyte.jadeplayer.main.playlist.PlaylistFragment"

@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 
 
 /**
@@ -18,7 +19,9 @@ class BaseAdapter<T>(
     private var items: List<T>,
     private val context: Context,
     private val layoutId: Int,
-    private val variableId: Int
+    private val variableId: Int,
+    private val animateItems: Boolean = true,
+    private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
     private var lastPosition = -1
@@ -26,7 +29,7 @@ class BaseAdapter<T>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<T> {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutId, parent, false)
-        return BaseViewHolder(itemBinding, variableId)
+        return BaseViewHolder(itemBinding, variableId, itemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +38,9 @@ class BaseAdapter<T>(
 
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
         holder.bind(items[position])
-        animateItem(position, holder)
+        if (animateItems) {
+            animateItem(position, holder)
+        }
     }
 
     fun updateItems(items: List<T>) {
@@ -45,7 +50,9 @@ class BaseAdapter<T>(
 
     override fun onViewDetachedFromWindow(holder: BaseViewHolder<T>) {
         super.onViewDetachedFromWindow(holder)
-        holder.itemView.clearAnimation()
+        if (animateItems) {
+            holder.itemView.clearAnimation()
+        }
     }
 
     private fun animateItem(position: Int, holder: RecyclerView.ViewHolder) {

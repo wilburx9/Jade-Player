@@ -14,7 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
 import kotlinx.android.synthetic.main.fragment_base_player.*
 import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
@@ -22,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
 /**
  * Created by Wilberforce on 2019-04-21 at 01:48.
  */
-abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener {
+abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemClickListener {
     private lateinit var adapter: BaseAdapter<T>
     private var items: List<T> = emptyList()
     lateinit var viewModel: BaseViewModel<T>
@@ -31,6 +33,7 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener {
     @get: StringRes abstract var titleRes: Int
     @get: LayoutRes abstract var itemLayoutId: Int
     abstract var viewModelVariableId: Int
+    open var animateViewHolder = true
 
 
     override fun onCreateView(
@@ -65,9 +68,13 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener {
     private fun setupView() {
         title.setText(titleRes)
         adapter =
-            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId)
+            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, animateViewHolder, this)
         dataRV.adapter = adapter
-        dataRV.layoutManager = LinearLayoutManager(activity)
+        dataRV.layoutManager = layoutManager()
+    }
+
+    open fun layoutManager(): RecyclerView.LayoutManager {
+        return LinearLayoutManager(activity)
     }
 
     override fun onClick(v: View?) {
@@ -75,4 +82,6 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener {
 
         }
     }
+
+    abstract override fun onItemClick(position: Int)
 }
