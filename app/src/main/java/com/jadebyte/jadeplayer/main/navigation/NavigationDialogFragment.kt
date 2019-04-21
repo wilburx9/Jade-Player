@@ -41,8 +41,9 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppTheme_FullScreenDialogStyle)
         arguments?.let {
-            origin = it.getInt("ORIGIN")
+            origin = it.getInt("origin")
         }
+
     }
 
     override fun onCreateView(
