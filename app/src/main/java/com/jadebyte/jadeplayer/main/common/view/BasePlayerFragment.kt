@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
  * Created by Wilberforce on 2019-04-21 at 01:48.
  */
 abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemClickListener {
-    private lateinit var adapter: BaseAdapter<T>
+    private var adapter: BaseAdapter<T>? = null
     private var items: List<T> = emptyList()
     lateinit var viewModel: BaseViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int
@@ -61,7 +61,7 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemC
 
     private fun updateViews(items: List<T>) {
         this.items = items
-        adapter.updateItems(items)
+        adapter?.updateItems(items)
         dataNum.text = resources.getQuantityString(numberOfDataRes, items.count(), items.count())
     }
 
@@ -84,4 +84,19 @@ abstract class BasePlayerFragment<T> : Fragment(), View.OnClickListener, OnItemC
     }
 
     abstract override fun onItemClick(position: Int)
+
+
+    override fun onDestroyView() {
+        dataRV?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewDetachedFromWindow(v: View?) {
+                dataRV?.adapter = null
+                adapter = null
+            }
+
+
+            override fun onViewAttachedToWindow(v: View?) {}
+
+        })
+        super.onDestroyView()
+    }
 }

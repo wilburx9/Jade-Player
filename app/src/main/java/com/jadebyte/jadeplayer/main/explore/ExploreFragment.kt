@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_explore.*
 
 class ExploreFragment : Fragment(), OnItemClickListener {
 
-    private lateinit var adapter: BaseAdapter<Album>
+    private var adapter: BaseAdapter<Album>? = null
     private var items: List<Album> = emptyList()
     private lateinit var viewModel: ExploreViewModel
 
@@ -50,7 +50,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     private fun observeViewModel() {
         viewModel.data.observe(viewLifecycleOwner, Observer {
             this.items = it
-            adapter.updateItems(it)
+            adapter?.updateItems(it)
         })
     }
 
@@ -64,6 +64,19 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int) {
 
+    }
+
+    override fun onDestroyView() {
+        randomAlbumsRV?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewDetachedFromWindow(v: View?) {
+                randomAlbumsRV?.adapter = null
+                adapter = null
+            }
+
+            override fun onViewAttachedToWindow(v: View?) {}
+
+        })
+        super.onDestroyView()
     }
 
 }
