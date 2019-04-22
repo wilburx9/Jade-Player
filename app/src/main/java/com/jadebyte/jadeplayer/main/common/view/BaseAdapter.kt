@@ -39,9 +39,7 @@ class BaseAdapter<T>(
 
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
         holder.bind(items[position])
-        if (fadeInViewHolder) {
-            animateItem(position, holder)
-        }
+        animateItem(position, holder)
     }
 
     fun updateItems(items: List<T>) {
