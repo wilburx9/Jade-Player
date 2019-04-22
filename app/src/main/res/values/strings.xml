@@ -47,7 +47,7 @@
 
     <!--Plurals-->
     <plurals name="numberOfSongs">
-        <item quantity="one">%d songs</item>
+        <item quantity="one">%d song</item>
         <item quantity="other">%d songs</item>
     </plurals>
     <plurals name="numberOfAlbums">
@@ -63,6 +63,13 @@
     <string name="play">Play</string>
     <string name="back">Back</string>
     <string name="two_comma_separated_values">%s, %s</string>
+    <string name="min">\u0020 minute</string>
+    <string name="mins">\u0020 minutes</string>
+    <string name="sec">\u0020 second</string>
+    <string name="secs">\u0020 seconds</string>
+    <string name="hour">\u0020 hour</string>
+    <string name="hours">\u0020 hours</string>
+    <string name="comma">,\u0020</string>
 
 
 </resources>

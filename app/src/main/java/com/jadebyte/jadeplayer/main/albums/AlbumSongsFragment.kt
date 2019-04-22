@@ -21,9 +21,11 @@ import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.databinding.FragmentAlbumSongsBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.utils.TimeUtils
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_album_songs.*
+import java.util.concurrent.TimeUnit
 
 class AlbumSongsFragment : Fragment(), OnItemClickListener {
 
@@ -74,7 +76,17 @@ class AlbumSongsFragment : Fragment(), OnItemClickListener {
 
     private fun updateViews(items: List<Song>) {
         this.items = items
+        albumSongsDuration.text = getTotalTime()
         adapter.updateItems(items)
+    }
+
+    private fun getTotalTime(): CharSequence? {
+        val secs = TimeUnit.MILLISECONDS.toSeconds(TimeUtils.getTotalSongsDuration(items))
+        return getString(
+            R.string.two_comma_separated_values,
+            resources.getQuantityString(R.plurals.numberOfSongs, items.size, items.size),
+            TimeUtils.formatElapsedTime(secs, activity)
+        )
     }
 
     private fun setupRecyclerView() {

@@ -74,17 +74,18 @@
 
         <TextView
             android:id="@+id/songDuration"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(song.duration))}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:layout_marginEnd="@dimen/margin_medium"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/songTitle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="04:57" />
+            tools:text="04:57 " />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLine"
