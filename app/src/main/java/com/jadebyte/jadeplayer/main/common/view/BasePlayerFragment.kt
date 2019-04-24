@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
  * Created by Wilberforce on 2019-04-21 at 01:48.
  */
 abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnItemClickListener {
-    private var adapter: BaseAdapter<T>? = null
     var items = emptyList<T>()
     lateinit var viewModel: BaseViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int
@@ -66,13 +65,13 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
 
     private fun updateViews(items: List<T>) {
         this.items = items
-        adapter?.updateItems(items)
+        (dataRV.adapter as BaseAdapter<T>).updateItems(items)
         dataNum.text = resources.getQuantityString(numberOfDataRes, items.count(), items.count())
     }
 
     private fun setupView() {
         title.setText(titleRes)
-        adapter =
+        val adapter =
             BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this)
         dataRV.adapter = adapter
         dataRV.layoutManager = layoutManager()
@@ -82,6 +81,7 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
         return LinearLayoutManager(activity)
     }
 
+
     override fun onClick(v: View?) {
         when (v?.id) {
 
@@ -90,22 +90,4 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
 
     abstract override fun onItemClick(position: Int, albumArt: ImageView?)
 
-
-    // Detach the adapter from the RecyclerView. Was causing memory leaks.
-    // I am not doing this in onDestroy because it was messing-up the life cycle of the viewModel
-
-    // More info: https://stackoverflow.com/a/46957469/6181476 and https://stackoverflow.com/q/54581071/6181476
-    override fun onDestroy() {
-        dataRV?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-            override fun onViewDetachedFromWindow(v: View?) {
-                dataRV?.adapter = null
-                adapter = null
-            }
-
-
-            override fun onViewAttachedToWindow(v: View?) {}
-
-        })
-        super.onDestroy()
-    }
 }

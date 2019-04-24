@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.fragment_explore.*
 
 class ExploreFragment : Fragment(), OnItemClickListener {
 
-    private var adapter: BaseAdapter<Album>? = null
     private var items: List<Album> = emptyList()
     private lateinit var viewModel: ExploreViewModel
 
@@ -56,15 +55,16 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         if (items.isEmpty()) {
             viewModel.data.observe(viewLifecycleOwner, Observer {
                 this.items = it
-                adapter?.updateItems(it)
+                (randomAlbumsRV.adapter as BaseAdapter<Album>).updateItems(it)
             })
         } else {
             viewModel.data.value = items
+
         }
     }
 
     private fun setupRecyclerView() {
-        adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, true, this)
+        val adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, true, this)
         randomAlbumsRV.adapter = adapter
 
         val layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
@@ -81,22 +81,5 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         findNavController().navigate(action, extras)
     }
 
-
-    override fun onDestroy() {
-        // Detach the adapter from the RecyclerView. Was causing memory leaks.
-        // I am not doing this in onDestroy because it was messing-up the life cycle of the viewModel
-
-        // More info: https://stackoverflow.com/a/46957469/6181476 and https://stackoverflow.com/q/54581071/6181476
-        randomAlbumsRV?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-            override fun onViewDetachedFromWindow(v: View?) {
-                randomAlbumsRV?.adapter = null
-                adapter = null
-            }
-
-            override fun onViewAttachedToWindow(v: View?) {}
-
-        })
-        super.onDestroy()
-    }
 
 }

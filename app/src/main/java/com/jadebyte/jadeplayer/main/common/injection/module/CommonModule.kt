@@ -57,6 +57,8 @@ class CommonModule {
 
     @Provides
     @Reusable
+    // This will return null the first time the app is opened. This shouldn't be so.
+    // TODO Fix: 🖕
     internal fun getCloudKey(pref: SharedPreferences): CloudKeys {
         var cloudKeys = CloudKeys(
             acrHost = pref.getString(Constants.acrHost, ""),
