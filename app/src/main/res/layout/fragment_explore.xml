@@ -11,13 +11,8 @@
 
     <TextView
         android:id="@+id/explore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:padding="@dimen/margin_large"
+        style="@style/AppTheme.SectionTile"
         android:text="@string/explore"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textStyle="bold"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/navigationIcon"
@@ -47,28 +42,23 @@
 
     <TextView
         android:id="@+id/recentlyPlayed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
-        android:padding="@dimen/margin_large"
+        style="@style/AppTheme.SectionTile"
         android:text="@string/recentlyPlayed"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/randomAlbumsRV"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/randomAlbumsRV" />
 
 
     <TextView
         android:id="@+id/emptyPlaylist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_xx_large"
+        android:text="@string/empty_playlist"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recentlyPlayed"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="@dimen/padding_xx_large"
-       android:text="@string/empty_playlist"/>
+        app:layout_constraintTop_toBottomOf="@+id/recentlyPlayed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

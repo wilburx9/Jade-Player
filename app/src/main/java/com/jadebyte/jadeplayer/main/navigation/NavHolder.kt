@@ -7,22 +7,26 @@ import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.databinding.ItemNavBinding
+import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.dragSwipe.ItemTouchHelperViewHolder
 import com.jadebyte.jadeplayer.main.common.dragSwipe.OnStartDragListener
 import kotlinx.android.synthetic.main.item_nav.view.*
-import timber.log.Timber
 
 
 /**
  * Created by Wilberforce on 09/04/2019 at 16:39.
  */
-class NavHolder(private val itemBinding: ItemNavBinding, private val dragStartListener: OnStartDragListener) :
+class NavHolder(
+    private val itemBinding: ItemNavBinding,
+    private val dragStartListener: OnStartDragListener,
+    private val onItemClickListener: OnItemClickListener
+) :
     RecyclerView.ViewHolder(itemBinding.root), ItemTouchHelperViewHolder {
 
     init {
         itemView.clipToOutline = true
         itemView.rippleView.setOnClickListener {
-            Timber.i("Clicked: $adapterPosition")
+            onItemClickListener.onItemClick(adapterPosition)
         }
 
         itemView.setOnTouchListener { _, event ->

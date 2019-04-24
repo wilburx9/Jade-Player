@@ -2,12 +2,14 @@
 
 package com.jadebyte.jadeplayer.main.navigation
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +18,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.callbacks.OnNavigationItemClickListener
 import com.jadebyte.jadeplayer.main.common.dragSwipe.ItemTouchHelperAdapter
 import com.jadebyte.jadeplayer.main.common.dragSwipe.OnStartDragListener
 import com.jadebyte.jadeplayer.main.common.dragSwipe.SimpleItemTouchHelperCallback
@@ -25,7 +29,7 @@ import kotlinx.coroutines.*
 import java.util.*
 
 
-class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter {
+class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter, OnItemClickListener {
 
     private var origin: Int? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -34,7 +38,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     private var items: List<NavItem> = emptyList()
     private val job = Job()
     private val scope = CoroutineScope(job + Dispatchers.Main)
-
+    private var onItemClickListener: OnNavigationItemClickListener? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +75,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     }
 
     private fun setupRecyclerView() {
-        adapter = NavAdapter(items, this)
+        adapter = NavAdapter(items, this, this)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
@@ -122,6 +126,10 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         return null
     }
 
+    override fun onItemClick(position: Int, albumArt: ImageView?) {
+        closeButton.performClick()
+        onItemClickListener?.onNavigationItemClicked(items[position].id)
+    }
 
     override fun onStart() {
         super.onStart()
@@ -136,6 +144,26 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     override fun onDestroy() {
         job.cancel()
         super.onDestroy()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnNavigationItemClickListener) {
+            onItemClickListener = context
+        } else {
+            throw RuntimeException("$context must implement OnNavigationItemClickListener")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        itemTouchHelper.attachToRecyclerView(null)
+        recyclerView?.adapter = null
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onItemClickListener = null
     }
 
 }

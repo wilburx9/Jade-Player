@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.MediatorLiveData
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.App
+import com.jadebyte.jadeplayer.main.common.data.Constants
 import javax.inject.Inject
 
 /**
@@ -23,18 +24,24 @@ class NavRepository(private var origin: Int?) {
 
     init {
         val items = arrayOfNulls<NavItem?>(9)
-        items[preferences.getInt(SONGS, 0)] = NavItem(SONGS, R.string.songs, R.drawable.ic_song_thin, isFrom(0))
-        items[preferences.getInt(IDENTIFY, 1)] =
-            NavItem(IDENTIFY, R.string.identify_music, R.drawable.ic_waveforms, isFrom(1))
-        items[preferences.getInt(ARTISTS, 2)] = NavItem(ARTISTS, R.string.artists, R.drawable.ic_microphone, isFrom(2))
-        items[preferences.getInt(FAVOURITES, 3)] =
-            NavItem(FAVOURITES, R.string.favourites, R.drawable.ic_heart, isFrom(3))
-        items[preferences.getInt(GENRES, 4)] = NavItem(GENRES, R.string.genres, R.drawable.ic_guiter, isFrom(4))
-        items[preferences.getInt(PLAYLIST, 5)] =
-            NavItem(PLAYLIST, R.string.playlist, R.drawable.ic_playlist2, isFrom(5))
-        items[preferences.getInt(RADIO, 6)] = NavItem(RADIO, R.string.radio, R.drawable.ic_radio, isFrom(6))
-        items[preferences.getInt(SETTINGS, 7)] = NavItem(SETTINGS, R.string.settings, R.drawable.ic_settings, isFrom(7))
-        items[preferences.getInt(VIDEOS, 8)] = NavItem(VIDEOS, R.string.videos, R.drawable.ic_video, isFrom(8))
+        items[preferences.getInt(Constants.NAV_SONGS, 0)] =
+            NavItem(Constants.NAV_SONGS, R.string.songs, R.drawable.ic_song_thin, isFrom(0))
+        items[preferences.getInt(Constants.NAV_IDENTIFY, 1)] =
+            NavItem(Constants.NAV_IDENTIFY, R.string.identify_music, R.drawable.ic_waveforms, isFrom(1))
+        items[preferences.getInt(Constants.NAV_ARTISTS, 2)] =
+            NavItem(Constants.NAV_ARTISTS, R.string.artists, R.drawable.ic_microphone, isFrom(2))
+        items[preferences.getInt(Constants.NAV_FAVOURITES, 3)] =
+            NavItem(Constants.NAV_FAVOURITES, R.string.favourites, R.drawable.ic_heart, isFrom(3))
+        items[preferences.getInt(Constants.NAV_GENRES, 4)] =
+            NavItem(Constants.NAV_GENRES, R.string.genres, R.drawable.ic_guiter, isFrom(4))
+        items[preferences.getInt(Constants.NAV_PLAYLIST, 5)] =
+            NavItem(Constants.NAV_PLAYLIST, R.string.playlist, R.drawable.ic_playlist2, isFrom(5))
+        items[preferences.getInt(Constants.NAV_RADIO, 6)] =
+            NavItem(Constants.NAV_RADIO, R.string.radio, R.drawable.ic_radio, isFrom(6))
+        items[preferences.getInt(Constants.NAV_SETTINGS, 7)] =
+            NavItem(Constants.NAV_SETTINGS, R.string.settings, R.drawable.ic_settings, isFrom(7))
+        items[preferences.getInt(Constants.NAV_VIDEOS, 8)] =
+            NavItem(Constants.NAV_VIDEOS, R.string.videos, R.drawable.ic_video, isFrom(8))
         liveItems.value = items.filterNotNull()
     }
 
@@ -56,14 +63,14 @@ class NavRepository(private var origin: Int?) {
     private fun isFrom(originalIndex: Int): Boolean = originalIndex == origin
 }
 
-const val SONGS = "com.jadebyte.jadeplayer.nav.songs"
-const val IDENTIFY = "com.jadebyte.jadeplayer.nav.identify"
-const val ARTISTS = "com.jadebyte.jadeplayer.nav.artists"
-const val FAVOURITES = "com.jadebyte.jadeplayer.nav.favourites"
-const val GENRES = "com.jadebyte.jadeplayer.nav.genres"
-const val PLAYLIST = "com.jadebyte.jadeplayer.nav.playlist"
-const val RADIO = "com.jadebyte.jadeplayer.nav.radio"
-const val SETTINGS = "com.jadebyte.jadeplayer.nav.settings"
-const val VIDEOS = "com.jadebyte.jadeplayer.nav.videos"
-
-val keys = arrayListOf(SONGS, IDENTIFY, ARTISTS, FAVOURITES, GENRES, PLAYLIST, RADIO, SETTINGS, VIDEOS)
+val keys = arrayListOf(
+    Constants.NAV_SONGS,
+    Constants.NAV_IDENTIFY,
+    Constants.NAV_ARTISTS,
+    Constants.NAV_FAVOURITES,
+    Constants.NAV_GENRES,
+    Constants.NAV_PLAYLIST,
+    Constants.NAV_RADIO,
+    Constants.NAV_SETTINGS,
+    Constants.NAV_VIDEOS
+)

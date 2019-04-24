@@ -15,4 +15,16 @@ object Constants {
     const val spotifySecret = "com.jadebyte.jadeplayer.main.common.data.spotifySecret"
     const val lastFmKey = "com.jadebyte.jadeplayer.main.common.data.lastFmKey"
     const val spotifyClientId = "com.jadebyte.jadeplayer.main.common.data.spotifyClientId"
+
+
+    // Keys for items in NavigationDialogFragment
+    const val NAV_SONGS = "com.jadebyte.jadeplayer.nav.songs"
+    const val NAV_IDENTIFY = "com.jadebyte.jadeplayer.nav.identify"
+    const val NAV_ARTISTS = "com.jadebyte.jadeplayer.nav.artists"
+    const val NAV_FAVOURITES = "com.jadebyte.jadeplayer.nav.favourites"
+    const val NAV_GENRES = "com.jadebyte.jadeplayer.nav.genres"
+    const val NAV_PLAYLIST = "com.jadebyte.jadeplayer.nav.playlist"
+    const val NAV_RADIO = "com.jadebyte.jadeplayer.nav.radio"
+    const val NAV_SETTINGS = "com.jadebyte.jadeplayer.nav.settings"
+    const val NAV_VIDEOS = "com.jadebyte.jadeplayer.nav.videos"
 }
