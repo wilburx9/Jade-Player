@@ -3,6 +3,7 @@
 package com.jadebyte.jadeplayer.main.songs
 
 import android.app.Application
+import android.net.Uri
 import android.provider.MediaStore
 import com.jadebyte.jadeplayer.main.common.data.BaseRepository
 import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
@@ -10,9 +11,9 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
 /**
  * Created by Wilberforce on 19/04/2019 at 15:06.
  */
-open class SongsViewModel(application: Application) : BaseViewModel<Song>(application, uri) {
+open class SongsViewModel(application: Application) : BaseViewModel<Song>(application) {
 
-    final override var repository: BaseRepository<Song> = SongsRepository(application, uri)
+    final override var repository: BaseRepository<Song> = SongsRepository(application)
 
     override var selection: String? = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
 
@@ -20,6 +21,8 @@ open class SongsViewModel(application: Application) : BaseViewModel<Song>(applic
 
     // Sort with the title in ascending case-insensitive order
     override var sortOrder: String? = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
+
+    override var uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 
     final override var projection: Array<String>? = arrayOf(
         MediaStore.Audio.Media.TITLE,
@@ -35,5 +38,3 @@ open class SongsViewModel(application: Application) : BaseViewModel<Song>(applic
         MediaStore.Audio.Media._ID
     )
 }
-
-private val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI

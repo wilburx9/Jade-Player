@@ -2,11 +2,11 @@
 
 package com.jadebyte.jadeplayer.main.common.callbacks
 
-import android.widget.ImageView
+import android.view.View
 
 /**
  * Created by Wilberforce on 2019-04-21 at 03:35.
  */
 interface OnItemClickListener {
-    fun onItemClick(position:Int, art: ImageView? = null)
+    fun onItemClick(position:Int, sharableView: View? = null)
 }

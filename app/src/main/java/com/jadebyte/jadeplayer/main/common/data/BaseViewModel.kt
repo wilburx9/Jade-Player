@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 /**
  * Created by Wilberforce on 19/04/2019 at 16:45.
  */
-abstract class BaseViewModel<T>(application: Application, var uri: Uri) : AndroidViewModel(application) {
+abstract class BaseViewModel<T>(application: Application) : AndroidViewModel(application) {
 
     val data = MutableLiveData<List<T>>()
     abstract var repository: BaseRepository<T>
@@ -23,6 +23,7 @@ abstract class BaseViewModel<T>(application: Application, var uri: Uri) : Androi
     abstract var selection: String?
     abstract var selectionArgs: Array<String>?
     abstract var sortOrder: String?
+    abstract var uri: Uri
 
 
     private val observer: ContentObserver = object : ContentObserver(null) {
@@ -32,6 +33,7 @@ abstract class BaseViewModel<T>(application: Application, var uri: Uri) : Androi
     }
 
     fun init() {
+        repository.uri = uri
         observer.onChange(false)
         getApplication<Application>().contentResolver.registerContentObserver(uri, true, observer)
     }

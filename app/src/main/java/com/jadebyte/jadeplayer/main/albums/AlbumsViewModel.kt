@@ -11,15 +11,17 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
 /**
  * Created by Wilberforce on 19/04/2019 at 16:34.
  */
-open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(application, uri) {
+open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(application) {
 
-    final override var repository: BaseRepository<Album> = AlbumsRepository(application, uri)
+    final override var repository: BaseRepository<Album> = AlbumsRepository(application)
 
     override var selection: String? = null
 
     override var selectionArgs: Array<String>? = null
 
     override var sortOrder: String? = "${MediaStore.Audio.Albums.ALBUM} COLLATE NOCASE ASC"
+
+    override var uri: Uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
 
     final override var projection: Array<String>? = arrayOf(
         MediaStore.Audio.Albums.ALBUM,
@@ -30,5 +32,3 @@ open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(appl
     )
 
 }
-
-var uri: Uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI

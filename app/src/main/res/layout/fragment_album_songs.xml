@@ -20,17 +20,9 @@
 
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_back"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            style="@style/AppTheme.SectionBackButton"
             app:layout_constraintTop_toTopOf="parent"
-            android:padding="@dimen/padding_medium"
-            android:text="@string/back"
-            android:textAllCaps="false"
-            android:id="@+id/backButton"
-            android:textSize="@dimen/text_size_x_small"
-            android:layout_margin="@dimen/margin_medium"
+            android:id="@+id/sectionBackButton"
             app:layout_constraintLeft_toLeftOf="parent" />
 
 
@@ -38,7 +30,7 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backButton"
+            app:layout_constraintTop_toBottomOf="@+id/sectionBackButton"
             tools:src="@drawable/thumb_default"
             android:scaleType="centerCrop"
             android:layout_marginStart="@dimen/margin_x_large"

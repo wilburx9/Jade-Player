@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.databinding.FragmentAlbumSongsBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.utils.TimeUtils
@@ -31,7 +29,6 @@ class AlbumSongsFragment : Fragment(), OnItemClickListener {
 
     lateinit var viewModel: AlbumSongsViewModel
     lateinit var album: Album
-    lateinit var adapter: BaseAdapter<Song>
     private var items = emptyList<Song>()
 
 
@@ -39,7 +36,6 @@ class AlbumSongsFragment : Fragment(), OnItemClickListener {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         album = arguments!!.getParcelable("album")!!
-        App.appComponent.inject(this)
         viewModel = ViewModelProviders.of(this)[AlbumSongsViewModel::class.java]
         viewModel.init(album.id!!)
 
@@ -65,7 +61,7 @@ class AlbumSongsFragment : Fragment(), OnItemClickListener {
         ViewCompat.setTransitionName(albumArt, arguments!!.getString("transitionName"))
         setupRecyclerView()
         observeViewModel()
-        backButton.setOnClickListener { findNavController().popBackStack() }
+        sectionBackButton.setOnClickListener { findNavController().popBackStack() }
     }
 
     private fun observeViewModel() {
@@ -74,10 +70,11 @@ class AlbumSongsFragment : Fragment(), OnItemClickListener {
         })
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun updateViews(items: List<Song>) {
         this.items = items
         albumSongsDuration.text = getTotalTime()
-        adapter.updateItems(items)
+        (albumSongsRV.adapter as BaseAdapter<Song>).updateItems(items)
     }
 
     private fun getTotalTime(): CharSequence? {
@@ -90,12 +87,12 @@ class AlbumSongsFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setupRecyclerView() {
-        adapter = BaseAdapter(items, activity!!, R.layout.item_album_song, BR.song, itemClickListener = this)
+        val adapter = BaseAdapter(items, activity!!, R.layout.item_album_song, BR.song, itemClickListener = this)
         albumSongsRV.adapter = adapter
         albumSongsRV.layoutManager = LinearLayoutManager(activity!!)
     }
 
-    override fun onItemClick(position: Int, art: ImageView?) {
+    override fun onItemClick(position: Int, sharableView: View?) {
 
     }
 }

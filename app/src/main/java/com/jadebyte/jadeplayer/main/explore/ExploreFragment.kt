@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -72,10 +71,10 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         randomAlbumsRV.layoutManager = layoutManager
     }
 
-    override fun onItemClick(position: Int, art: ImageView?) {
-        val transitionName = ViewCompat.getTransitionName(art!!)!!
+    override fun onItemClick(position: Int, sharableView: View?) {
+        val transitionName = ViewCompat.getTransitionName(sharableView!!)!!
         val extras = FragmentNavigator.Extras.Builder()
-            .addSharedElement(art, transitionName)
+            .addSharedElement(sharableView, transitionName)
             .build()
         val action =
             ExploreFragmentDirections.actionExploreFragmentToAlbumSongsFragment(items[position], transitionName)

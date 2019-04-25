@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.PluralsRes
@@ -92,6 +91,6 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
         }
     }
 
-    abstract override fun onItemClick(position: Int, art: ImageView?)
+    abstract override fun onItemClick(position: Int, sharableView: View?)
 
 }

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -124,7 +123,7 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         return null
     }
 
-    override fun onItemClick(position: Int, art: ImageView?) {
+    override fun onItemClick(position: Int, sharableView: View?) {
         val navId = when (items[position].id) {
             Constants.NAV_SONGS -> R.id.action_navigationDialogFragment_to_songsFragment
             Constants.NAV_PLAYLIST -> R.id.action_navigationDialogFragment_to_playlistFragment

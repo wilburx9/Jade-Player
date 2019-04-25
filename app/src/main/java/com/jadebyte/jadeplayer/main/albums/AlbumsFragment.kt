@@ -5,7 +5,7 @@ package com.jadebyte.jadeplayer.main.albums
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.ImageView
+import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigator
@@ -35,10 +35,10 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
         }
     }
 
-    override fun onItemClick(position: Int, art: ImageView?) {
-        val transitionName = ViewCompat.getTransitionName(art!!)!!
+    override fun onItemClick(position: Int, sharableView: View?) {
+        val transitionName = ViewCompat.getTransitionName(sharableView!!)!!
         val extras = FragmentNavigator.Extras.Builder()
-            .addSharedElement(art, transitionName)
+            .addSharedElement(sharableView, transitionName)
             .build()
         val action =
             AlbumsFragmentDirections.actionAlbumsFragmentToAlbumSongsFragment(items[position], transitionName)

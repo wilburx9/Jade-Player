@@ -20,7 +20,7 @@
         android:padding="@dimen/padding_medium">
 
         <ImageView
-            android:id="@+id/albumArt"
+            android:id="@+id/sharableView"
             android:layout_width="140dp"
             android:layout_height="160dp"
             android:contentDescription="@string/track_album_art"
@@ -45,7 +45,7 @@
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/albumArt"
+            app:layout_constraintTop_toBottomOf="@+id/sharableView"
             tools:text="Midnight Dogs" />
 
         <TextView

@@ -78,6 +78,7 @@
         <action
             android:id="@+id/action_navigationDialogFragment_to_artistsFragment"
             app:destination="@id/artistsFragment"
+            app:launchSingleTop="false"
             app:popUpTo="@+id/navigationDialogFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -104,5 +105,28 @@
             <argument android:defaultValue="2"
                 android:name="origin" />
         </action>
+        <action
+            android:id="@+id/action_artistsFragment_to_artistAlbumsFragment"
+            app:destination="@id/artistAlbumsFragment"
+            app:launchSingleTop="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistAlbumsFragment"
+        android:name="com.jadebyte.jadeplayer.main.artists.ArtistAlbumsFragment"
+        tools:layout="@layout/fragment_artist_albums"
+        android:label="ArtistAlbumsFragment" >
+        <action
+            android:id="@+id/action_artistAlbumsFragment_to_navigationDialogFragment"
+            app:destination="@id/navigationDialogFragment"
+            app:launchSingleTop="false" />
+        <argument
+            android:name="artist"
+            app:argType="com.jadebyte.jadeplayer.main.artists.Artist" />
+        <argument
+            android:name="transitionName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_artistAlbumsFragment_to_albumSongsFragment"
+            app:destination="@id/albumSongsFragment" />
     </fragment>
 </navigation>

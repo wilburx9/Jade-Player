@@ -4,7 +4,7 @@ package com.jadebyte.jadeplayer.main.songs
 
 
 import android.os.Bundle
-import android.widget.ImageView
+import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
@@ -18,7 +18,7 @@ class SongsFragment : BasePlayerFragment<Song>() {
         viewModel.init()
     }
 
-    override fun onItemClick(position: Int, art: ImageView?) {
+    override fun onItemClick(position: Int, sharableView: View?) {
 
     }
 
