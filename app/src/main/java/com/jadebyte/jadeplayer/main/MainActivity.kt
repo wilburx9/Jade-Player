@@ -7,11 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.main.common.callbacks.OnNavigationItemClickListener
-import com.jadebyte.jadeplayer.main.common.data.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), OnNavigationItemClickListener {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,10 +17,4 @@ class MainActivity : AppCompatActivity(), OnNavigationItemClickListener {
         navigationBar.setupWithNavController(findNavController(R.id.mainNavHostFragment))
     }
 
-    override fun onNavigationItemClicked(itemId: String) {
-        when (itemId) {
-            Constants.NAV_SONGS -> navigationBar.selectedItemId = R.id.songsFragment
-            Constants.NAV_PLAYLIST -> navigationBar.selectedItemId = R.id.playlistFragment
-        }
-    }
 }

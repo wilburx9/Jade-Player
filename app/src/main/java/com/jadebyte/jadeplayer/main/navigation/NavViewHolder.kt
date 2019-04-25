@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_nav.view.*
 /**
  * Created by Wilberforce on 09/04/2019 at 16:39.
  */
-class NavHolder(
+class NavViewHolder(
     private val itemBinding: ItemNavBinding,
     private val dragStartListener: OnStartDragListener,
     private val onItemClickListener: OnItemClickListener

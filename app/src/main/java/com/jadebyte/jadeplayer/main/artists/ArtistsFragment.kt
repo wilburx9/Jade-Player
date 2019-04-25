@@ -2,69 +2,74 @@
 
 package com.jadebyte.jadeplayer.main.artists
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
+import kotlinx.android.synthetic.main.fragment_artists.*
+import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ArtistsFragment : Fragment(), OnItemClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [ArtistsFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- *
- */
-class ArtistsFragment : Fragment() {
-    private var listener: OnFragmentInteractionListener? = null
+    private var items: List<Artist> = emptyList()
+    private lateinit var viewModel: ArtistsViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_artists, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProviders.of(this)[ArtistsViewModel::class.java]
+        viewModel.init()
+        setupRecyclerView()
+        observeViewModel()
+        navigationIcon.setOnClickListener(
+                Navigation.createNavigateOnClickListener(
+                        R.id.action_artistsFragment_to_navigationDialogFragment
+                )
+        )
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
+    @Suppress("UNCHECKED_CAST")
+    private fun observeViewModel() {
+        if (items.isEmpty()) {
+            viewModel.data.observe(viewLifecycleOwner, Observer {
+                this.items = it
+                (artistsRV.adapter as BaseAdapter<Artist>).updateItems(it)
+            })
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            viewModel.data.value = items
+
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
+    private fun setupRecyclerView() {
+        val adapter = BaseAdapter(items, activity!!, R.layout.item_artist, BR.artist, false, this)
+        artistsRV.adapter = adapter
+
+        val layoutManager = LinearLayoutManager(activity)
+        artistsRV.layoutManager = layoutManager
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+    override fun onItemClick(position: Int, art: ImageView?) {
+
     }
+
 
 }

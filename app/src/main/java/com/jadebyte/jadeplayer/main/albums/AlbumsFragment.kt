@@ -35,10 +35,10 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
         }
     }
 
-    override fun onItemClick(position: Int, albumArt: ImageView?) {
-        val transitionName = ViewCompat.getTransitionName(albumArt!!)!!
+    override fun onItemClick(position: Int, art: ImageView?) {
+        val transitionName = ViewCompat.getTransitionName(art!!)!!
         val extras = FragmentNavigator.Extras.Builder()
-            .addSharedElement(albumArt, transitionName)
+            .addSharedElement(art, transitionName)
             .build()
         val action =
             AlbumsFragmentDirections.actionAlbumsFragmentToAlbumSongsFragment(items[position], transitionName)
@@ -49,7 +49,7 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
     override var itemLayoutId: Int = R.layout.item_album
     override var viewModelVariableId: Int = BR.album
     override var navigationFragmentId: Int = R.id.action_albumsFragment_to_navigationDialogFragment
-    override var numberOfDataRes: Int = com.jadebyte.jadeplayer.R.plurals.numberOfAlbums
+    override var numberOfDataRes: Int = R.plurals.numberOfAlbums
     override var titleRes: Int = com.jadebyte.jadeplayer.R.string.albums
     override var fadeInViewHolder: Boolean = true
 

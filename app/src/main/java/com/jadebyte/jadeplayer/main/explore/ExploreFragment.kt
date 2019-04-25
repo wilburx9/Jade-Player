@@ -51,6 +51,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
         if (items.isEmpty()) {
             viewModel.data.observe(viewLifecycleOwner, Observer {
@@ -71,10 +72,10 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         randomAlbumsRV.layoutManager = layoutManager
     }
 
-    override fun onItemClick(position: Int, albumArt: ImageView?) {
-        val transitionName = ViewCompat.getTransitionName(albumArt!!)!!
+    override fun onItemClick(position: Int, art: ImageView?) {
+        val transitionName = ViewCompat.getTransitionName(art!!)!!
         val extras = FragmentNavigator.Extras.Builder()
-            .addSharedElement(albumArt, transitionName)
+            .addSharedElement(art, transitionName)
             .build()
         val action =
             ExploreFragmentDirections.actionExploreFragmentToAlbumSongsFragment(items[position], transitionName)

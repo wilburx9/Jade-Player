@@ -10,7 +10,7 @@
     tools:context=".main.explore.ExploreFragment">
 
     <TextView
-        android:id="@+id/explore"
+        android:id="@+id/sectionTitle"
         style="@style/AppTheme.SectionTile"
         android:text="@string/explore"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -20,16 +20,13 @@
 
     <ImageButton
         android:id="@+id/navigationIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        style="@style/AppTheme.SectionIcon"
         android:contentDescription="@string/navigation_icon"
-        android:padding="@dimen/padding_large"
-        app:layout_constraintBottom_toBottomOf="@id/explore"
+        app:layout_constraintBottom_toBottomOf="@id/sectionTitle"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintLeft_toRightOf="@+id/explore"
+        app:layout_constraintLeft_toRightOf="@+id/sectionTitle"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/explore"
+        app:layout_constraintTop_toTopOf="@+id/sectionTitle"
         app:srcCompat="@drawable/ic_nav" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -38,7 +35,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/explore" />
+        app:layout_constraintTop_toBottomOf="@+id/sectionTitle" />
 
     <TextView
         android:id="@+id/recentlyPlayed"

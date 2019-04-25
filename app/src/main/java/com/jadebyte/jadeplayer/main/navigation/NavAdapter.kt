@@ -18,20 +18,20 @@ class NavAdapter(
     private val dragStartListener: OnStartDragListener,
     private val onItemClickListener: OnItemClickListener
 ) :
-    RecyclerView.Adapter<NavHolder>() {
+    RecyclerView.Adapter<NavViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NavHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NavViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = ItemNavBinding.inflate(inflater, parent, false)
-        return NavHolder(itemBinding, dragStartListener, onItemClickListener)
+        return NavViewHolder(itemBinding, dragStartListener, onItemClickListener)
     }
 
     override fun getItemCount(): Int {
         return items?.size ?: 0
     }
 
-    override fun onBindViewHolder(holder: NavHolder, position: Int) {
-        holder.bind(items?.get(position))
+    override fun onBindViewHolder(viewHolder: NavViewHolder, position: Int) {
+        viewHolder.bind(items?.get(position))
     }
 
     fun updateItems(items: List<NavItem>, fromPosition: Int? = null, toPosition: Int? = null) {

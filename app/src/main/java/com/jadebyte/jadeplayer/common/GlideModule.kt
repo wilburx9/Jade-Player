@@ -8,7 +8,9 @@ import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule
 import com.jadebyte.jadeplayer.main.albums.Album
-import com.jadebyte.jadeplayer.main.common.network.image.AlbumModelLoaderFactory
+import com.jadebyte.jadeplayer.main.artists.Artist
+import com.jadebyte.jadeplayer.main.common.network.image.album.AlbumModelLoaderFactory
+import com.jadebyte.jadeplayer.main.common.network.image.artist.ArtistModelLoaderFactory
 import java.io.InputStream
 
 /**
@@ -19,5 +21,7 @@ import java.io.InputStream
 class MyAppGlideModule : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         registry.prepend(Album::class.java, InputStream::class.java, AlbumModelLoaderFactory())
+        registry.prepend(Artist::class.java, InputStream::class.java, ArtistModelLoaderFactory())
+
     }
 }

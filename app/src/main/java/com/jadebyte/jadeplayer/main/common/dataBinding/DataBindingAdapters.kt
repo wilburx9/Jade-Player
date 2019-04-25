@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.GlideApp
 import com.jadebyte.jadeplayer.main.albums.Album
+import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.songs.Song
 
 /**
@@ -25,6 +26,18 @@ object DataBindingAdapters {
     fun setAlbumCover(view: ImageView, song: Song) {
         GlideApp.with(view)
             .load(song.album)
+            .transform(
+                MultiTransformation(CenterCrop(), CircleCrop())
+            )
+            .placeholder(R.drawable.thumb_circular_default)
+            .into(view)
+    }
+
+    @BindingAdapter("android:src")
+    @JvmStatic
+    fun setArtistAvatar(view: ImageView, artist: Artist) {
+        GlideApp.with(view)
+            .load(artist)
             .transform(
                 MultiTransformation(CenterCrop(), CircleCrop())
             )

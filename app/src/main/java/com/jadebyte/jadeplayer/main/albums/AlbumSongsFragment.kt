@@ -95,7 +95,7 @@ class AlbumSongsFragment : Fragment(), OnItemClickListener {
         albumSongsRV.layoutManager = LinearLayoutManager(activity!!)
     }
 
-    override fun onItemClick(position: Int, albumArt: ImageView?) {
+    override fun onItemClick(position: Int, art: ImageView?) {
 
     }
 }

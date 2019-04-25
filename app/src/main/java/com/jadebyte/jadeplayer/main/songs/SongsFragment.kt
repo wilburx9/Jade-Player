@@ -18,7 +18,7 @@ class SongsFragment : BasePlayerFragment<Song>() {
         viewModel.init()
     }
 
-    override fun onItemClick(position: Int, albumArt: ImageView?) {
+    override fun onItemClick(position: Int, art: ImageView?) {
 
     }
 

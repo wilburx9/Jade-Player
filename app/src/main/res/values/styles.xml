@@ -50,4 +50,13 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
     </style>
 
+    <style name="AppTheme.SectionIcon">
+        <item name="navigationIcon" type="id">@id/navigationIcon</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:contentDescription">@string/navigation_icon</item>
+        <item name="android:padding">@dimen/padding_large</item>
+    </style>
+
 </resources>

@@ -2,7 +2,6 @@
 
 package com.jadebyte.jadeplayer.main.navigation
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
-import com.jadebyte.jadeplayer.main.common.callbacks.OnNavigationItemClickListener
+import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.main.common.dragSwipe.ItemTouchHelperAdapter
 import com.jadebyte.jadeplayer.main.common.dragSwipe.OnStartDragListener
 import com.jadebyte.jadeplayer.main.common.dragSwipe.SimpleItemTouchHelperCallback
@@ -38,7 +37,6 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
     private var items: List<NavItem> = emptyList()
     private val job = Job()
     private val scope = CoroutineScope(job + Dispatchers.Main)
-    private var onItemClickListener: OnNavigationItemClickListener? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,9 +124,18 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         return null
     }
 
-    override fun onItemClick(position: Int, albumArt: ImageView?) {
-        closeButton.performClick()
-        onItemClickListener?.onNavigationItemClicked(items[position].id)
+    override fun onItemClick(position: Int, art: ImageView?) {
+        val navId = when (items[position].id) {
+            Constants.NAV_SONGS -> R.id.action_navigationDialogFragment_to_songsFragment
+            Constants.NAV_PLAYLIST -> R.id.action_navigationDialogFragment_to_playlistFragment
+            Constants.NAV_ARTISTS -> R.id.action_navigationDialogFragment_to_artistsFragment
+            else -> null
+        }
+
+        navId?.let {
+            findNavController().navigate(navId)
+        }
+
     }
 
     override fun onStart() {
@@ -146,24 +153,10 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
         super.onDestroy()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnNavigationItemClickListener) {
-            onItemClickListener = context
-        } else {
-            throw RuntimeException("$context must implement OnNavigationItemClickListener")
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         itemTouchHelper.attachToRecyclerView(null)
         recyclerView?.adapter = null
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        onItemClickListener = null
     }
 
 }

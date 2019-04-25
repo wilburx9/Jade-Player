@@ -28,16 +28,16 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
     var items = emptyList<T>()
     lateinit var viewModel: BaseViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int
-    @get: PluralsRes abstract var numberOfDataRes: Int
-    @get: StringRes abstract var titleRes: Int
+    @get: PluralsRes open var numberOfDataRes: Int = -1
+    @get: StringRes open var titleRes: Int = -1
     @get: LayoutRes abstract var itemLayoutId: Int
     abstract var viewModelVariableId: Int
     open var fadeInViewHolder = false
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_base_player, container, false)
     }
@@ -47,22 +47,24 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
         setupView()
         observeViewModel()
         navigationIcon.setOnClickListener(
-            Navigation.createNavigateOnClickListener(
-                navigationFragmentId
-            )
+                Navigation.createNavigateOnClickListener(
+                        navigationFragmentId
+                )
         )
         playButton.setOnClickListener(this)
     }
 
     private fun observeViewModel() {
-       if (items.isEmpty()) {
-           viewModel.init()
-           viewModel.data.observe(viewLifecycleOwner, Observer(::updateViews))
-       } else {
-           viewModel.data.value = items
-       }
+        if (items.isEmpty()) {
+            viewModel.init()
+            viewModel.data.observe(viewLifecycleOwner, Observer(::updateViews))
+        } else {
+            viewModel.data.value = items
+        }
     }
 
+
+    @Suppress("UNCHECKED_CAST")
     private fun updateViews(items: List<T>) {
         this.items = items
         (dataRV.adapter as BaseAdapter<T>).updateItems(items)
@@ -70,9 +72,11 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
     }
 
     private fun setupView() {
-        title.setText(titleRes)
+        if (titleRes > -1) {
+            sectionTitle.setText(titleRes)
+        }
         val adapter =
-            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this)
+                BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this)
         dataRV.adapter = adapter
         dataRV.layoutManager = layoutManager()
     }
@@ -88,6 +92,6 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
         }
     }
 
-    abstract override fun onItemClick(position: Int, albumArt: ImageView?)
+    abstract override fun onItemClick(position: Int, art: ImageView?)
 
 }

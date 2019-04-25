@@ -46,6 +46,27 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="artistsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="189" />
+                            <option name="y" value="-610" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_artistsFragment_to_navigationDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="exploreFragment">
                     <value>
                       <LayoutPositions>
@@ -80,6 +101,25 @@
                             <option name="x" value="-272" />
                             <option name="y" value="-628" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_navigationDialogFragment_to_artistsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_navigationDialogFragment_to_playlistFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_navigationDialogFragment_to_songsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

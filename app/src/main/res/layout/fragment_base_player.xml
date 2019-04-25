@@ -10,7 +10,7 @@
     tools:context=".main.songs.SongsFragment">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/sectionTitle"
         tools:text="@string/songs"
         style="@style/AppTheme.SectionTile"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -20,16 +20,13 @@
 
     <ImageButton
         android:id="@+id/navigationIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        style="@style/AppTheme.SectionIcon"
         android:contentDescription="@string/navigation_icon"
-        android:padding="@dimen/padding_large"
-        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="@id/sectionTitle"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintLeft_toRightOf="@+id/title"
+        app:layout_constraintLeft_toRightOf="@+id/sectionTitle"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/sectionTitle"
         app:srcCompat="@drawable/ic_nav" />
 
 
@@ -44,7 +41,7 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/playButton"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/sectionTitle"
         tools:text="118 tracks" />
 
     <Button
