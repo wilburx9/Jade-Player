@@ -19,4 +19,5 @@ data class Artist(val name: String, val songsCount: Int, val id: Long) : Parcela
         songsCount = data.getInt(data.getColumnIndex(MediaStore.Audio.Artists.NUMBER_OF_TRACKS)),
         id = data.getLong(data.getColumnIndex(MediaStore.Audio.Artists._ID))
     )
+
 }

@@ -3,7 +3,6 @@
 package com.jadebyte.jadeplayer.main.common.view
 
 import android.view.View
-import androidx.core.view.ViewCompat
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
@@ -27,12 +26,6 @@ class BaseViewHolder<T>(
 
 
     fun bind(item: T) {
-        itemView.albumArt?.let {
-            ViewCompat.setTransitionName(
-                it,
-                "${itemView.context.getString(R.string.album_art)}$adapterPosition"
-            )
-        }
         binding.setVariable(variableId, item)
         binding.executePendingBindings()
     }
