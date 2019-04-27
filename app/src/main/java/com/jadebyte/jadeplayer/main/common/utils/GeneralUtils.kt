@@ -8,7 +8,7 @@ import android.provider.MediaStore
 /**
  * Created by Wilberforce on 2019-04-21 at 23:47.
  */
-object Utils {
+object GeneralUtils {
 
     /**
      * Removes the the first three character oif [MediaStore.Audio.Media.TRACK]

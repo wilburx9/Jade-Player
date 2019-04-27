@@ -15,7 +15,4 @@ class ArtistAlbumsViewModel(application: Application) : AlbumsViewModel(applicat
         uri = MediaStore.Audio.Artists.Albums.getContentUri("external", artistId)
         init()
     }
-
-
-
 }

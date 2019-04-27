@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.provider.MediaStore
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
-import com.jadebyte.jadeplayer.main.common.utils.Utils.getTrackNumber
+import com.jadebyte.jadeplayer.main.common.utils.GeneralUtils.getTrackNumber
 
 
 /**

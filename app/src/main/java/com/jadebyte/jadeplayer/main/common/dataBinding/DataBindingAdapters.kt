@@ -21,13 +21,16 @@ import com.jadebyte.jadeplayer.main.songs.Song
  */
 object DataBindingAdapters {
 
+    @JvmStatic val centerCrop = CenterCrop()
+    @JvmStatic val circleCrop = CircleCrop()
+
     @BindingAdapter("android:src")
     @JvmStatic
     fun setAlbumCover(view: ImageView, song: Song) {
         GlideApp.with(view)
             .load(song.album)
             .transform(
-                MultiTransformation(CenterCrop(), CircleCrop())
+                MultiTransformation(centerCrop, circleCrop)
             )
             .placeholder(R.drawable.thumb_circular_default)
             .into(view)
@@ -39,7 +42,7 @@ object DataBindingAdapters {
         GlideApp.with(view)
             .load(artist)
             .transform(
-                MultiTransformation(CenterCrop(), CircleCrop())
+                MultiTransformation(centerCrop, circleCrop)
             )
             .placeholder(R.drawable.thumb_circular_default)
             .into(view)
@@ -51,7 +54,7 @@ object DataBindingAdapters {
         GlideApp.with(view)
             .load(album)
             .transform(
-                MultiTransformation(CenterCrop(), RoundedCorners(10))
+                MultiTransformation(centerCrop, RoundedCorners(10))
             )
             .placeholder(R.drawable.thumb_default)
             .into(view)

@@ -4,7 +4,7 @@
 
 <resources>
     <color name="colorPrimary">#070E21</color>
-    <color name="colorPrimaryDark">#03060F</color>
+    <color name="colorPrimaryDark">#070E21</color>
     <color name="colorAccent">#FF4060</color>
     <color name="colorBackground">@android:color/white</color>
     <color name="darkPrimary">#070E21</color>
