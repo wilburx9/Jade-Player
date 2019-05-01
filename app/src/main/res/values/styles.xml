@@ -70,7 +70,7 @@
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:padding">@dimen/padding_medium</item>
         <item name="android:layout_margin">@dimen/margin_medium</item>
-        <item name="android:drawableStart">@drawable/ic_back</item>
+        <item name="android:drawableLeft">@drawable/ic_back</item>
         <item name="android:text">@string/back</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/text_size_x_small</item>

@@ -6,7 +6,7 @@
     <color name="colorPrimary">#070E21</color>
     <color name="colorPrimaryDark">#070E21</color>
     <color name="colorAccent">#FF4060</color>
-    <color name="colorBackground">@android:color/white</color>
+    <color name="colorBackground">#F3F3F3</color>
     <color name="darkPrimary">#070E21</color>
     <color name="lightBlue">#78849E</color>
     <color name="selectedNavColor">@color/colorAccent</color>
@@ -14,4 +14,5 @@
     <color name="colorNavItemBg">#E9E9E9</color>
     <color name="colorNavItemBgSelected">#5EFF4060</color>
     <color name="colorBurOverlay">#C8F5F5F5</color>
+    <color name="seek_bar_background">#454956</color>
 </resources>

@@ -29,6 +29,11 @@
     <string name="more_options">More options</string>
     <string name="go_back">Go back</string>
     <string name="enter_search_query">Enter search query</string>
+    <string name="shuffle_playlist">Shuffle playlist</string>
+    <string name="repeat_playlist">Repeat playlist</string>
+    <string name="play_and_pause_button">Play and pause button</string>
+    <string name="next_button">Next Button</string>
+    <string name="previous_button">Previous button</string>
 
 
     <!--Navigation-->
@@ -77,6 +82,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="lyrics">Lyrics</string>
+    <string name="finding_lyrics">Finding Lyrics</string>
 
 
 </resources>

@@ -1,0 +1,19 @@
+<!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="60dp"
+    android:height="60dp"
+    android:viewportWidth="54"
+    android:viewportHeight="54">
+    <path
+        android:fillColor="#ff4060"
+        android:pathData="M27,27m-27,0a27,27 0,1 1,54 0a27,27 0,1 1,-54 0" />
+    <path
+        android:fillColor="#fff"
+        android:pathData="M33.412,35.447a1.655,1.655 0,1 1,-3.31 0L30.102,17.655a1.655,1.655 0,1 1,3.31 0Z" />
+    <path
+        android:fillColor="#fff"
+        android:pathData="M24.309,35.447a1.655,1.655 0,1 1,-3.309 0L21,17.655a1.655,1.655 0,1 1,3.309 0Z" />
+</vector>

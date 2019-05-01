@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.playback.PlaybackFragment">
+
+    <Button
+        android:id="@+id/sectionBackButton"
+        style="@style/AppTheme.SectionBackButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/albumArtPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@+id/lyricsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sectionBackButton" />
+
+    <Button
+        android:id="@+id/lyricsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_border"
+        android:minHeight="0dp"
+        android:paddingLeft="@dimen/padding_x_large"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_x_large"
+        android:paddingBottom="@dimen/padding_small"
+        android:text="@string/lyrics"
+        android:textSize="@dimen/text_size_x_small"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/albumArtPager" />
+
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_border"
+        android:minHeight="0dp"
+        android:paddingLeft="@dimen/padding_x_large"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_x_large"
+        android:paddingBottom="@dimen/padding_small"
+        android:text="@string/close"
+        android:textSize="@dimen/text_size_x_small"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/quoteImg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sectionBackButton" />
+
+    <ImageView
+        android:id="@+id/quoteImg"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_quote"
+        app:layout_constraintBottom_toTopOf="@+id/lyricsText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/closeButton" />
+
+
+    <TextView
+        android:id="@+id/lyricsText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_margin="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@+id/lyricsSource"
+        app:layout_constraintEnd_toEndOf="@id/playbackSeekBar"
+        app:layout_constraintHeight_max="00dp"
+        app:layout_constraintStart_toEndOf="@+id/quoteImg"
+        app:layout_constraintTop_toTopOf="@+id/quoteImg" />
+
+
+    <Button
+        android:id="@+id/lyricsSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:minHeight="0dp"
+        android:paddingLeft="@dimen/padding_x_large"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_x_large"
+        android:paddingBottom="@dimen/padding_small"
+        android:textAllCaps="true"
+        android:textSize="@dimen/text_size_x_small"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyricsText"
+        tools:text="Genius.com" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:indeterminateDrawable="@drawable/progress"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/findingLyrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/finding_lyrics"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideLine1" />
+
+
+    <SeekBar
+        android:id="@+id/playbackSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintBottom_toTopOf="@+id/nowPlaying"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideLine" />
+
+    <TextView
+        android:id="@+id/countdownDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/nowPlaying"
+        app:layout_constraintStart_toStartOf="@+id/playbackSeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/playbackSeekBar"
+        tools:text="0:25" />
+
+    <TextView
+        android:id="@+id/totalDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        app:layout_constraintBaseline_toBaselineOf="@+id/countdownDuration"
+        app:layout_constraintEnd_toEndOf="@+id/playbackSeekBar"
+        tools:text="3:00" />
+
+
+    <TextView
+        android:id="@+id/nowPlaying"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/now_playing"
+        android:textSize="@dimen/text_size_x_small"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/songArtist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playbackSeekBar" />
+
+    <TextView
+        android:id="@+id/songArtist"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/songTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nowPlaying"
+        tools:text="Beyonce" />
+
+
+    <TextView
+        android:id="@+id/songTitle"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songArtist"
+        tools:text="Jumping over the roofs" />
+
+
+    <ImageButton
+        android:id="@+id/previousButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/previous_button"
+        android:padding="@dimen/padding_medium"
+        android:src="@drawable/ic_previous"
+        app:layout_constraintBottom_toBottomOf="@+id/playButton"
+        app:layout_constraintEnd_toStartOf="@+id/playButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/playButton" />
+
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/play_and_pause_button"
+        android:padding="@dimen/padding_medium"
+        android:src="@drawable/ic_pause_accent"
+        app:layout_constraintBottom_toTopOf="@+id/shuffleButton"
+        app:layout_constraintEnd_toStartOf="@+id/nextButton"
+        app:layout_constraintStart_toEndOf="@+id/previousButton"
+        app:layout_constraintTop_toBottomOf="@+id/songTitle" />
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/next_button"
+        android:padding="@dimen/padding_medium"
+        android:src="@drawable/ic_next"
+        app:layout_constraintBottom_toBottomOf="@+id/playButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playButton"
+        app:layout_constraintTop_toTopOf="@+id/playButton" />
+
+
+    <ImageButton
+        android:id="@+id/repeatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_xx_large"
+        android:layout_marginEnd="@dimen/margin_xx_large"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/repeat_playlist"
+        android:padding="@dimen/padding_medium"
+        android:src="@drawable/ic_repeat"
+        app:layout_constraintBottom_toBottomOf="@id/shuffleButton"
+        app:layout_constraintEnd_toStartOf="@+id/shuffleButton"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shuffleButton" />
+
+    <ImageButton
+        android:id="@+id/shuffleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/shuffle_playlist"
+        android:padding="@dimen/padding_medium"
+        android:src="@drawable/ic_shuffle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/moreOptions"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/repeatButton"
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
+    <ImageButton
+        android:id="@+id/moreOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_xx_large"
+        android:layout_marginEnd="@dimen/margin_xx_large"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/more_options"
+        android:padding="@dimen/padding_medium"
+        android:src="@drawable/ic_more_vert"
+        app:layout_constraintBottom_toBottomOf="@id/shuffleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/shuffleButton"
+        app:layout_constraintTop_toTopOf="@+id/shuffleButton" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/albumArtGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="albumArtPager, lyricsButton " />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/lyricsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="closeButton, quoteImg, lyricsText, lyricsSource" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/loadingLyricsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="findingLyrics, progressBar" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
