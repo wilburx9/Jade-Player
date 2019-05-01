@@ -16,22 +16,22 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/navigationBar"
+        app:layout_constraintBottom_toTopOf="@+id/bottomPlaybackFragment"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/navigation_graph" />
 
 
-    <include
-        android:id="@+id/bottomPlaybackRoot"
-        layout="@layout/bottom_floating_playback"
+    <fragment
+        android:id="@+id/bottomPlaybackFragment"
+        android:name="com.jadebyte.jadeplayer.main.playback.BottomPlaybackFragment"
         android:layout_width="0dp"
         android:layout_height="@dimen/floating_playback_height"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/navigationBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_bottom_playback" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

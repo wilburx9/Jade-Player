@@ -24,8 +24,7 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this)[AlbumsViewModel::class.java]
-        viewModel.init()
-    }
+}
 
     @SuppressLint("WrongConstant")
     override fun layoutManager(): RecyclerView.LayoutManager {

@@ -26,14 +26,16 @@ object DataBindingAdapters {
 
     @BindingAdapter("android:src")
     @JvmStatic
-    fun setAlbumCover(view: ImageView, song: Song) {
-        GlideApp.with(view)
-            .load(song.album)
-            .transform(
-                MultiTransformation(centerCrop, circleCrop)
-            )
-            .placeholder(R.drawable.thumb_circular_default)
-            .into(view)
+    fun setAlbumCover(view: ImageView, song: Song?) {
+        song?.let {
+            GlideApp.with(view)
+                .load(it.album)
+                .transform(
+                    MultiTransformation(centerCrop, circleCrop)
+                )
+                .placeholder(R.drawable.thumb_circular_default)
+                .into(view)
+        }
     }
 
     @BindingAdapter("android:src")

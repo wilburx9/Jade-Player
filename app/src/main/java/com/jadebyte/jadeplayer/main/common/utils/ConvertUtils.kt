@@ -41,4 +41,13 @@ object ConvertUtils {
     fun pxToDp(px: Int): Int {
         return (px / Resources.getSystem().displayMetrics.density).toInt()
     }
+
+    /**
+     *  Converts long to int. Use in xml for data binding
+     */
+    @JvmStatic
+    fun longToInt(long: Long): Int{
+        return long.toInt()
+
+    }
 }
