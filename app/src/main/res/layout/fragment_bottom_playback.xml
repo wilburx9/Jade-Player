@@ -51,6 +51,7 @@
             android:contentDescription="@string/track_album_art"
             android:scaleType="centerCrop"
             android:src="@{viewModel.song}"
+            android:transitionName="@{viewModel.song.toString()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"

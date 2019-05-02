@@ -13,6 +13,7 @@ import com.jadebyte.jadeplayer.main.songs.Song
 class BottomPlaybackRepository(val application: Application) {
 
     // For now, we are getting a random song. Later, we'll get the first song from the database of recently played songs
+    // or the first song from the list of currently playing songs
     @WorkerThread
     fun loadData(): Song {
         val cursor = application.contentResolver.query(

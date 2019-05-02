@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/albumArtPager"
+        android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/margin_medium"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideLine"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/albumArtPager" />
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
 
     <Button
@@ -319,7 +319,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="albumArtPager, lyricsButton " />
+        app:constraint_referenced_ids="viewPager, lyricsButton " />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/lyricsGroup"

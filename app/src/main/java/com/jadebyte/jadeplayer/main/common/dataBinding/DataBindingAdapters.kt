@@ -14,6 +14,7 @@ import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.GlideApp
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
+import com.jadebyte.jadeplayer.main.common.image.CircularTransparentCenter
 import com.jadebyte.jadeplayer.main.songs.Song
 
 /**
@@ -34,6 +35,21 @@ object DataBindingAdapters {
                     MultiTransformation(centerCrop, circleCrop)
                 )
                 .placeholder(R.drawable.thumb_circular_default)
+                .into(view)
+        }
+    }
+
+
+    @BindingAdapter("songSrc")
+    @JvmStatic
+    fun setAlbumCoverCompat(view: ImageView, song: Song?) {
+        song?.let {
+            GlideApp.with(view)
+                .load(it.album)
+                .transform(
+                    MultiTransformation(centerCrop, circleCrop, CircularTransparentCenter(.3F))
+                )
+                .placeholder(R.drawable.thumb_circular_default_hollow)
                 .into(view)
         }
     }
