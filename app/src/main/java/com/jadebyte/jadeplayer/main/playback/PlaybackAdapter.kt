@@ -35,7 +35,9 @@ class PlaybackAdapter(private var songs: List<Song>?) : PagerAdapter() {
         val inflater = LayoutInflater.from(container.context)
         val binding =
             DataBindingUtil.inflate<ItemPlaybackImageBinding>(inflater, R.layout.item_playback_image, container, false)
-        binding.song = songs?.get(position)
+        val song = songs?.get(position)
+        binding.song = song
+        binding.root.tag = song
         container.addView(binding.root)
         return binding.root
     }

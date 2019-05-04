@@ -7,14 +7,14 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import androidx.core.content.edit
-import androidx.viewpager.widget.ViewPager
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.BaseActivity
 import com.jadebyte.jadeplayer.getStarted.GetStartedActivity
 import com.jadebyte.jadeplayer.main.MainActivity
+import com.jadebyte.jadeplayer.main.common.callbacks.OnPageChangeListener
 import kotlinx.android.synthetic.main.activity_on_boarding.*
 
-class OnBoardingActivity : BaseActivity(), ViewPager.OnPageChangeListener, View.OnClickListener {
+class OnBoardingActivity : BaseActivity(), OnPageChangeListener, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,14 +27,11 @@ class OnBoardingActivity : BaseActivity(), ViewPager.OnPageChangeListener, View.
     }
 
 
-    override fun onPageScrollStateChanged(state: Int) {}
-
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
         val newProgress = (position + positionOffset) / (boards.size - 1)
         onBoardingRoot.progress = newProgress
     }
 
-    override fun onPageSelected(position: Int) {}
 
     override fun onClick(v: View?) {
         when (v?.id) {
