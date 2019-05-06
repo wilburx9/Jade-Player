@@ -56,7 +56,7 @@ class BaseAdapter<T>(
         val animation = AnimationUtils.loadAnimation(
             context,
             if (fadeInViewHolder) {
-                R.anim.fade_in_fast
+                R.anim.fast_fade_in
             } else {
                 if (position > lastPosition)
                     R.anim.up_from_bottom

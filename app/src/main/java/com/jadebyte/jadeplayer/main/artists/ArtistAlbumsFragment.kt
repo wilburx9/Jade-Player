@@ -22,10 +22,10 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.common.px
 import com.jadebyte.jadeplayer.databinding.FragmentArtistAlbumsBinding
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
-import com.jadebyte.jadeplayer.main.common.utils.ConvertUtils
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_artist_albums.*
 
@@ -89,7 +89,7 @@ class ArtistAlbumsFragment : Fragment(), OnItemClickListener {
     private fun setupRecyclerView() {
         val adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, itemClickListener = this)
         if(artist.albumsCount ==1) {
-            artistAlbumsRV.setPadding(ConvertUtils.dpToPx(20), 0,0, 0)
+            artistAlbumsRV.setPadding(20.px, 0,0, 0)
         }
         artistAlbumsRV.adapter = adapter
         artistAlbumsRV.layoutManager = FlexboxLayoutManager(activity).apply {

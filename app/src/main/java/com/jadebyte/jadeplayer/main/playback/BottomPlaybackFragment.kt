@@ -3,7 +3,6 @@
 package com.jadebyte.jadeplayer.main.playback
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import com.jadebyte.jadeplayer.databinding.FragmentBottomPlaybackBinding
 import com.jadebyte.jadeplayer.main.MainFragmentDirections
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_bottom_playback.*
-import timber.log.Timber
 
 class BottomPlaybackFragment : BaseFragment() {
 
@@ -59,12 +57,6 @@ class BottomPlaybackFragment : BaseFragment() {
                 MainFragmentDirections.actionMainFragmentToPlaybackFragment(viewModel.song.get()!!, transitionName)
             activity?.findNavController(R.id.mainNavHostFragment)?.navigate(action, extras)
         }
-    }
-
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Timber.w("onAttach: $context")
     }
 
 

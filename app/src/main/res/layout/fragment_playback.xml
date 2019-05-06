@@ -80,11 +80,9 @@
         android:id="@+id/lyricsText"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         android:layout_margin="@dimen/margin_medium"
         app:layout_constraintBottom_toTopOf="@+id/lyricsSource"
         app:layout_constraintEnd_toEndOf="@id/playbackSeekBar"
-        app:layout_constraintHeight_max="00dp"
         app:layout_constraintStart_toEndOf="@+id/quoteImg"
         app:layout_constraintTop_toTopOf="@+id/quoteImg" />
 
@@ -180,33 +178,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playbackSeekBar" />
 
-    <TextView
+    <TextSwitcher
         android:id="@+id/songArtist"
-        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textStyle="bold"
+        android:inAnimation="@anim/fast_fade_in"
+        android:outAnimation="@anim/fast_fade_out"
         app:layout_constraintBottom_toTopOf="@+id/songTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nowPlaying"
-        tools:text="Beyonce" />
+        app:layout_constraintTop_toBottomOf="@+id/nowPlaying" />
 
 
-    <TextView
+    <TextSwitcher
         android:id="@+id/songTitle"
-        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:textSize="@dimen/text_size_medium"
+        android:inAnimation="@anim/fast_fade_in"
+        android:outAnimation="@anim/fast_fade_out"
         app:layout_constraintBottom_toTopOf="@+id/playButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/songArtist"
-        tools:text="Jumping over the roofs" />
+        app:layout_constraintTop_toBottomOf="@+id/songArtist" />
 
 
     <ImageButton

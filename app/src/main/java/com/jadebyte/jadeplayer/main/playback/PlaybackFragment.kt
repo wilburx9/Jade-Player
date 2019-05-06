@@ -3,37 +3,49 @@
 package com.jadebyte.jadeplayer.main.playback
 
 
+import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.os.Bundle
+import android.os.Handler
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.common.*
+import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import com.jadebyte.jadeplayer.main.common.callbacks.OnPageChangeListener
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.jadebyte.jadeplayer.main.songs.Song
 import com.jadebyte.jadeplayer.main.songs.SongsViewModel
 import kotlinx.android.synthetic.main.fragment_playback.*
+import java.util.concurrent.TimeUnit
+
 
 class PlaybackFragment : BaseFragment(), View.OnClickListener {
 
-    lateinit var viewModel: SongsViewModel // Use SongsViewModel. Change later
-    lateinit var currentSong: Song
-    var items: List<Song>? = null
-    lateinit var animatorSet: AnimatorSet
+    private lateinit var viewModel: SongsViewModel // Use SongsViewModel. Change later
+    private lateinit var currentSong: Song
+    private var items: List<Song>? = null
+    private lateinit var rotationAnimSet: AnimatorSet
+    private lateinit var fadeInSlideIn: Animator
+    private lateinit var fadeOut: Animator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         viewModel = ViewModelProviders.of(this)[SongsViewModel::class.java]
         currentSong = arguments!!.getParcelable("song")!!
-        animatorSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
+        rotationAnimSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
+        fadeInSlideIn = AnimatorInflater.loadAnimator(activity, R.animator.fade_in_slide_in_up)
     }
 
 
@@ -76,18 +88,22 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
         })
         viewPager.setPageTransformer(true, ZoomOutPageTransformer())
         viewPager.adapter = PlaybackAdapter(items)
+        songTitle.setFactory { LayoutInflater.from(activity).inflate(R.layout.song_title, null) as TextView }
+        songArtist.setFactory { LayoutInflater.from(activity).inflate(R.layout.song_artist, null) as TextView }
         sectionBackButton.setOnClickListener(this)
         nextButton.setOnClickListener(this)
         previousButton.setOnClickListener(this)
         playButton.setOnClickListener(this)
+        lyricsButton.setOnClickListener(this)
+        closeButton.setOnClickListener(this)
     }
 
     private fun updateViewsAsPerSongChange(position: Int) {
         items?.get(position)?.let {
-            animatorSet.setTarget(viewPager.findViewWithTag(it))
-            songArtist.text = it.album.artist
-            songTitle.text = it.title
-            animatorSet.start()
+            rotationAnimSet.setTarget(viewPager.findViewWithTag(it))
+            songArtist.setText(it.album.artist)
+            songTitle.setText(it.title)
+            rotationAnimSet.start()
         }
     }
 
@@ -97,16 +113,106 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
             R.id.previousButton -> playPreviousTrack()
             R.id.nextButton -> playNextSong()
             R.id.playButton -> playPauseSong()
+            R.id.lyricsButton -> showFindingLyrics()
+            R.id.closeButton -> closeLyrics()
         }
     }
 
+    private fun closeLyrics() {
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(
+            viewPager.fadeInSlideDown(translationY, slideDuration),
+            lyricsButton.fadeInSlideDown(translationY, slideDuration),
+            closeButton.fadeOutSlideDown(translationY, slideDuration),
+            quoteImg.fadeOutSlideDown(translationY, slideDuration),
+            lyricsText.fadeOutSlideDown(translationY, slideDuration),
+            lyricsSource.fadeOutSlideDown(translationY, slideDuration)
+        )
+        animatorSet.interpolator = AccelerateDecelerateInterpolator()
+        animatorSet.addListener(object : AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                albumArtGroup.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                lyricsGroup.visibility = View.GONE
+                animatorSet.removeAllListeners()
+            }
+        })
+
+        animatorSet.start()
+    }
+
+    private fun showFindingLyrics() {
+        if (hasLyrics()) {
+            showFoundLyrics()
+            return
+        }
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(
+            viewPager.fadeOutSlideUp(translationY, slideDuration),
+            lyricsButton.fadeOutSlideUp(translationY, slideDuration),
+            progressBar.fadeInSlideUp(translationY, slideDuration),
+            findingLyrics.fadeInSlideUp(translationY, slideDuration)
+        )
+        animatorSet.interpolator = AccelerateDecelerateInterpolator()
+        animatorSet.addListener(object : AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                loadingLyricsGroup.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                albumArtGroup.visibility = View.GONE
+                Handler().postDelayed({
+                    showFoundLyrics(getString(R.string.dummyLyrics), getString(R.string.dummyLyricsSource))
+                }, TimeUnit.SECONDS.toMillis(4))
+                animatorSet.removeAllListeners()
+            }
+        })
+
+        animatorSet.start()
+    }
+
+    private fun showFoundLyrics(lyrics: String? = null, source: String? = null) {
+        val lyricsIsEmpty = TextUtils.isEmpty(lyrics)
+        if (!lyricsIsEmpty) {
+            lyricsText.text = lyrics
+            lyricsSource.text = source
+        }
+
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(
+            if (!lyricsIsEmpty) progressBar.fadeOutSlideUp(translationY, slideDuration) else
+                viewPager.fadeOutSlideUp(translationY, slideDuration),
+            if (!lyricsIsEmpty) findingLyrics.fadeOutSlideUp(translationY, slideDuration) else
+                lyricsButton.fadeOutSlideUp(translationY, slideDuration),
+            closeButton.fadeInSlideUp(translationY, slideDuration),
+            quoteImg.fadeInSlideUp(translationY, slideDuration),
+            lyricsText.fadeInSlideUp(translationY, slideDuration),
+            lyricsSource.fadeInSlideUp(translationY, slideDuration)
+        )
+
+        animatorSet.interpolator = AccelerateDecelerateInterpolator()
+        animatorSet.addListener(object : AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                lyricsGroup.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                if (!lyricsIsEmpty) loadingLyricsGroup.visibility = View.GONE else albumArtGroup.visibility = View.GONE
+                animatorSet.removeAllListeners()
+            }
+        })
+        animatorSet.start()
+    }
+
     private fun playPauseSong() {
-        if (!animatorSet.isStarted) {
-            animatorSet.start()
-        } else if (animatorSet.isPaused) {
-            animatorSet.resume()
+        if (!rotationAnimSet.isStarted) {
+            rotationAnimSet.start()
+        } else if (rotationAnimSet.isPaused) {
+            rotationAnimSet.resume()
         } else {
-            animatorSet.pause()
+            rotationAnimSet.pause()
         }
     }
 
@@ -121,6 +227,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
         viewPager.setCurrentItem(currentPos + 1, false)
     }
 
+
     private fun playPreviousTrack() {
         val currentPos = viewPager.currentItem
         if (currentPos == 0) {
@@ -132,5 +239,12 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
         viewPager.setCurrentItem(currentPos - 1, false)
     }
 
+    private fun hasLyrics(): Boolean {
+        return !TextUtils.isEmpty(lyricsText.text)
+    }
+
 
 }
+
+const val slideDuration = 600L
+val translationY = 110F.px
