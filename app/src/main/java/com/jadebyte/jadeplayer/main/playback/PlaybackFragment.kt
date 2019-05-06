@@ -36,8 +36,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
     private lateinit var currentSong: Song
     private var items: List<Song>? = null
     private lateinit var rotationAnimSet: AnimatorSet
-    private lateinit var fadeInSlideIn: Animator
-    private lateinit var fadeOut: Animator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +43,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
         viewModel = ViewModelProviders.of(this)[SongsViewModel::class.java]
         currentSong = arguments!!.getParcelable("song")!!
         rotationAnimSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
-        fadeInSlideIn = AnimatorInflater.loadAnimator(activity, R.animator.fade_in_slide_in_up)
     }
 
 
