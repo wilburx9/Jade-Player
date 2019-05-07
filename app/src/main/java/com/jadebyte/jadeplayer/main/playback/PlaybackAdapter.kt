@@ -10,7 +10,6 @@ import androidx.viewpager.widget.PagerAdapter
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.databinding.ItemPlaybackImageBinding
 import com.jadebyte.jadeplayer.main.songs.Song
-import timber.log.Timber
 
 /**
  * Created by Wilberforce on 2019-05-02 at 00:25.
@@ -18,7 +17,6 @@ import timber.log.Timber
 class PlaybackAdapter(private var songs: List<Song>?) : PagerAdapter() {
 
     fun updateItems(items: List<Song>?) {
-        Timber.i("updateItems: ${items!!.size}")
         this.songs = items
         notifyDataSetChanged()
     }

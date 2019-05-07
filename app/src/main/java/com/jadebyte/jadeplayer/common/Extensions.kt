@@ -8,6 +8,8 @@ import android.animation.PropertyValuesHolder
 import android.content.res.Resources
 import android.view.View
 
+
+
 /**
  * Created by Wilberforce on 2019-05-05 at 18:59.
  */
@@ -91,6 +93,7 @@ fun View.fadeOut(duration: Long = 1000, startDelay: Long = 0): Animator {
     animator.startDelay = startDelay
     return animator
 }
+
 
 
 /**

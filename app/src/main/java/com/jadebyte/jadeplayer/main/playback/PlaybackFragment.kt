@@ -42,7 +42,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         viewModel = ViewModelProviders.of(this)[SongsViewModel::class.java]
         currentSong = arguments!!.getParcelable("song")!!
-        rotationAnimSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
     }
 
 
@@ -77,6 +76,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setupViewViews() {
+        rotationAnimSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
         viewPager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 updateViewsAsPerSongChange(position)
@@ -238,6 +238,11 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
 
     private fun hasLyrics(): Boolean {
         return !TextUtils.isEmpty(lyricsText.text)
+    }
+
+    override fun onDestroyView() {
+        rotationAnimSet.cancel()
+        super.onDestroyView()
     }
 
 
