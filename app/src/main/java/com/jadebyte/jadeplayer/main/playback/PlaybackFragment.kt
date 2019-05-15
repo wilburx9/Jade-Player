@@ -93,6 +93,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
         playButton.setOnClickListener(this)
         lyricsButton.setOnClickListener(this)
         closeButton.setOnClickListener(this)
+        moreOptions.setOnClickListener(this)
     }
 
     private fun updateViewsAsPerSongChange(position: Int) {
@@ -112,6 +113,14 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
             R.id.playButton -> playPauseSong()
             R.id.lyricsButton -> showFindingLyrics()
             R.id.closeButton -> closeLyrics()
+            R.id.moreOptions -> showMenuBottomSheet()
+        }
+    }
+
+    private fun showMenuBottomSheet() {
+        items?.get(viewPager.currentItem)?.let {
+            val action = PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(it)
+            findNavController().navigate(action)
         }
     }
 

@@ -32,6 +32,9 @@
                 android:name="origin"
                 android:defaultValue="0" />
         </action>
+        <action
+            android:id="@+id/action_songsFragment_to_songsMenuBottomSheetDialogFragment2"
+            app:destination="@id/songsMenuBottomSheetDialogFragment2" />
     </fragment>
     <fragment
         android:id="@+id/albumsFragment"
@@ -56,8 +59,7 @@
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search" />
 
-    <!--Replace with dialog when available-->
-    <fragment
+    <dialog
         android:id="@+id/navigationDialogFragment"
         android:name="com.jadebyte.jadeplayer.main.navigation.NavigationDialogFragment"
         android:label="fragment_navigation_dialog"
@@ -81,7 +83,7 @@
             app:launchSingleTop="false"
             app:popUpTo="@+id/navigationDialogFragment"
             app:popUpToInclusive="true" />
-    </fragment>
+    </dialog>
     <fragment
         android:id="@+id/albumSongsFragment"
         android:name="com.jadebyte.jadeplayer.main.albums.AlbumSongsFragment"
@@ -129,5 +131,14 @@
             android:id="@+id/action_artistAlbumsFragment_to_albumSongsFragment"
             app:destination="@id/albumSongsFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/songsMenuBottomSheetDialogFragment2"
+        android:name="com.jadebyte.jadeplayer.main.songs.SongsMenuBottomSheetDialogFragment"
+        android:label="fragment_songs_menu_bottom_sheet_dialog"
+        tools:layout="@layout/fragment_songs_menu_bottom_sheet_dialog" >
+        <argument
+            android:name="song"
+            app:argType="com.jadebyte.jadeplayer.main.songs.Song" />
+    </dialog>
 
 </navigation>

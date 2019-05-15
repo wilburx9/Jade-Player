@@ -1,0 +1,30 @@
+<!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="13dp"
+    android:height="16dp"
+    android:viewportWidth="13.17"
+    android:viewportHeight="16.096">
+    <path
+        android:fillColor="#cbc9c9"
+        android:pathData="M6.585,13.721a0.271,0.271 0,0 0,0.272 -0.272v-8.96a0.272,0.272 0,1 0,-0.543 0v8.96A0.271,0.271 0,0 0,6.585 13.721Z"
+        android:strokeWidth="0.4"
+        android:strokeColor="#cbc9c9" />
+    <path
+        android:fillColor="#cbc9c9"
+        android:pathData="M3.927,13.721a0.271,0.271 0,0 0,0.272 -0.272v-8.96a0.272,0.272 0,1 0,-0.543 0v8.96A0.271,0.271 0,0 0,3.927 13.721Z"
+        android:strokeWidth="0.4"
+        android:strokeColor="#cbc9c9" />
+    <path
+        android:fillColor="#cbc9c9"
+        android:pathData="M9.243,13.721a0.271,0.271 0,0 0,0.272 -0.272v-8.96a0.272,0.272 0,1 0,-0.543 0v8.96A0.271,0.271 0,0 0,9.243 13.721Z"
+        android:strokeWidth="0.4"
+        android:strokeColor="#cbc9c9" />
+    <path
+        android:fillColor="#cbc9c9"
+        android:pathData="M12.7,1.8L8.967,1.8A2.114,2.114 0,0 0,8.485 0.543,1.125 1.125,0 0,0 7.649,0.2h-2.66a1.125,1.125 0,0 0,-0.836 0.343A2.114,2.114 0,0 0,3.67 1.8h-3.2a0.266,0.266 0,1 0,0 0.532h0.543l0.509,12.243A1.291,1.291 0,0 0,2.824 15.9h7.521a1.289,1.289 0,0 0,1.305 -1.319l0.51,-12.249L12.7,2.332A0.266,0.266 0,0 0,12.7 1.8ZM4.534,0.913a0.6,0.6 0,0 1,0.454 -0.181h2.66A0.6,0.6 0,0 1,8.1 0.913a1.566,1.566 0,0 1,0.33 0.883L4.2,1.796A1.567,1.567 0,0 1,4.534 0.913ZM11.119,14.56a0.772,0.772 0,0 1,-0.774 0.8L2.824,15.36a0.782,0.782 0,0 1,-0.774 -0.809L1.541,2.328L11.628,2.328Z"
+        android:strokeWidth="0.4"
+        android:strokeColor="#cbc9c9" />
+</vector>

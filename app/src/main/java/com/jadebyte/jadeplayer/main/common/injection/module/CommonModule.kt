@@ -18,7 +18,6 @@ import dagger.Reusable
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.SocketFactory.getDefault
@@ -70,7 +69,6 @@ class CommonModule {
             spotifyClientId = pref.getString(Constants.spotifyClientId, ""),
             spotifySecret = pref.getString(Constants.spotifySecret, "")
         )
-        Timber.w("getCloudKey Before: $cloudKeys")
         Firebase.firestore.collection("properties").document("keys").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val result = task.result!!.toObject(CloudKeys::class.java)
@@ -86,10 +84,6 @@ class CommonModule {
                         putString(Constants.spotifyClientId, it.spotifyClientId)
                         putString(Constants.spotifySecret, it.spotifySecret)
                     }
-
-                    Timber.w("getCloudKey After: $cloudKeys")
-                    Timber.i("getCloudKey it: $it")
-                    Timber.i("getCloudKey After: $result")
                 }
             }
         }

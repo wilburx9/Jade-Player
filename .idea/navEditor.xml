@@ -138,9 +138,19 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_songsFragment_to_songsMenuBottomSheetDialogFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="songsMenuBottomSheetDialogFragment2">
+                    <value>
+                      <LayoutPositions />
                     </value>
                   </entry>
                 </map>
@@ -181,6 +191,27 @@
                           <Point>
                             <option name="x" value="256" />
                             <option name="y" value="12" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_playbackFragment_to_songsMenuBottomSheetDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="songsMenuBottomSheetDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-251" />
+                            <option name="y" value="-2" />
                           </Point>
                         </option>
                       </LayoutPositions>

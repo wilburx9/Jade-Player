@@ -13,6 +13,7 @@
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -74,6 +75,30 @@
         <item name="android:text">@string/back</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/text_size_x_small</item>
+    </style>
+
+    <style name="AppTheme.MenuButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">@dimen/padding_xx_large</item>
+        <item name="android:paddingEnd">@dimen/padding_xx_large</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="TransparentBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="BottomSheetTheme" parent="@style/Theme.Design.BottomSheetDialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="bottomSheetStyle">@style/TransparentBottomSheet</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom_overshoot</item>
+        <item name="android:windowExitAnimation">@anim/slide_off_to_bottom_overshoot</item>
     </style>
 
 </resources>

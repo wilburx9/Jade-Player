@@ -63,8 +63,8 @@
         <item quantity="one">%d album</item>
         <item quantity="other">%d albums</item>
     </plurals>
-    
-    
+
+
     <!--Dummy Strings. TODO: Remove-->
     <string name="dummyLyrics">I\'m just a singer who already blew his shot I get along with old timers Cause my name\'s a reminder of a pop song people forgot And I can\'t keep a girl, no \'Cause as soon as the sun comes up I cut \'em all loose and work\'s my excuse But the truth is I can\'t open up[Chorus] Now you don\'t wanna be high like me Never really knowing why like me You don\'t ever wanna step off that roller coaster And be all alone You don\'t wanna ride the bus like this Never knowing who to trust like this You don\'t wanna be stuck up on that stage singing Stuck up on that stage singing All I know are sad songs, sad songs Darling, all I know are sad songs, sad songs</string>
     <string name="dummyLyricsSource">genus.com</string>
@@ -90,7 +90,11 @@
     <string name="now_playing">Now Playing</string>
     <string name="lyrics">Lyrics</string>
     <string name="finding_lyrics">Finding Lyrics</string>
-    
+    <string name="share">Share</string>
+    <string name="play_next">Play next</string>
+    <string name="favourite">Favourite</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="delete_frm_library">Delete from library</string>
 
 
 </resources>

@@ -33,6 +33,7 @@ class BaseViewHolder<T>(
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.container -> itemClickListener.onItemClick(adapterPosition, itemView.findViewById(R.id.sharableView))
+            R.id.moreOptions -> itemClickListener.onOverflowClick(adapterPosition)
         }
     }
 }

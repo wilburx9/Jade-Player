@@ -33,7 +33,7 @@ abstract class BaseModelLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStr
     abstract var spotifyUrlKey: String
 
     final override fun getUrl(model: M, width: Int, height: Int, options: Options?): String? {
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.LAX)
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().permitNetwork().build())
         return getImageUrl(model)
     }
 
