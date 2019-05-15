@@ -15,6 +15,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_medium"
+        android:layout_margin="@dimen/margin_medium"
+        android:contentDescription="@string/current_playing_tracks"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_playlist_current"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sectionBackButton"
+        app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="0dp"

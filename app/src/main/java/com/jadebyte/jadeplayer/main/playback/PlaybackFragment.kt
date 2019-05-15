@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -30,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_playback.*
 import java.util.concurrent.TimeUnit
 
 
-class PlaybackFragment : BaseFragment(), View.OnClickListener {
+class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListener {
 
     private lateinit var viewModel: SongsViewModel // Use SongsViewModel. Change later
     private lateinit var currentSong: Song
@@ -94,6 +95,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
         lyricsButton.setOnClickListener(this)
         closeButton.setOnClickListener(this)
         moreOptions.setOnClickListener(this)
+        viewPager.setOnTouchListener(this)
     }
 
     private fun updateViewsAsPerSongChange(position: Int) {
@@ -247,6 +249,29 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
 
     private fun hasLyrics(): Boolean {
         return !TextUtils.isEmpty(lyricsText.text)
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        return when (v?.id) {
+            R.id.viewPager -> handleViewPagerTouch(event)
+            else -> {
+                v?.performClick()
+                false
+            }
+        }
+    }
+
+    private fun handleViewPagerTouch(event: MotionEvent?): Boolean {
+        if (event?.action == MotionEvent.ACTION_UP || event?.action == MotionEvent.ACTION_CANCEL) {
+            if (rotationAnimSet.isStarted && rotationAnimSet.isPaused) {
+                rotationAnimSet.resume()
+            }
+        } else {
+            if (rotationAnimSet.isStarted && !rotationAnimSet.isPaused) {
+                rotationAnimSet.pause()
+            }
+        }
+        return false
     }
 
     override fun onDestroyView() {

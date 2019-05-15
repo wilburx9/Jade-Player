@@ -65,6 +65,7 @@
         <item name="android:padding">@dimen/padding_large</item>
     </style>
 
+
     <style name="AppTheme.SectionBackButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -97,8 +98,8 @@
     <style name="BottomSheetTheme" parent="@style/Theme.Design.BottomSheetDialog">
         <item name="android:windowIsFloating">true</item>
         <item name="bottomSheetStyle">@style/TransparentBottomSheet</item>
-        <item name="android:windowEnterAnimation">@anim/slide_in_bottom_overshoot</item>
-        <item name="android:windowExitAnimation">@anim/slide_off_to_bottom_overshoot</item>
+        <item name="android:windowEnterAnimation">@anim/bottom_sheet_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_sheet_out</item>
     </style>
 
 </resources>
