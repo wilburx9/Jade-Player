@@ -25,7 +25,8 @@ data class Song(
     val duration: Long,
     val number: String,
     val artPath: String,
-    val artistId: Long
+    val artistId: Long,
+    var isCurrent: Boolean = false
 ) : Parcelable {
     constructor(cursor: Cursor) : this(
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),

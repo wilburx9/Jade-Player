@@ -17,4 +17,6 @@
     <color name="colorBurOverlay">#ED070E21</color>
     <color name="seek_bar_background">#454956</color>
     <color name="bottomPlaybackBgColor">#161C2C</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#B2FFFFFF</color>
 </resources>

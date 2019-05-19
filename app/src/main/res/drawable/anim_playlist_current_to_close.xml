@@ -1,0 +1,46 @@
+<!--Made with Alex Lockwood's ShapeLifter (https://shapeshifter.design) -->
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="30dp"
+            android:height="30dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <group
+                android:name="group"
+                android:pivotX="12"
+                android:pivotY="12">
+                <path
+                    android:name="path"
+                    android:pathData="M 15.879 4.497 C 15.801 4.48 15.719 4.48 15.641 4.499 C 15.562 4.518 15.49 4.555 15.428 4.606 C 15.366 4.657 15.316 4.72 15.282 4.792 C 15.248 4.863 15.23 4.942 15.229 5.021 L 15.229 13.861 L 16.318 15.81 L 16.318 5.706 L 20.504 6.627 L 20.619 6.116 L 20.739 5.58 L 15.879 4.497 M 15.229 13.861 C 14.698 13.504 14.071 13.315 13.431 13.32 C 12.793 13.415 12.214 13.752 11.817 14.261 C 11.42 14.771 11.233 15.414 11.297 16.056 C 11.36 16.699 11.668 17.293 12.157 17.715 C 12.646 18.137 13.279 18.354 13.924 18.323 C 14.569 18.291 15.178 18.013 15.623 17.545 C 16.069 17.078 16.318 16.456 16.318 15.81 L 15.229 13.861 M 7.418 11.12 L 13.137 11.12 L 13.137 12.202 L 7.418 12.202 L 7.418 11.12 M 5 8.486 L 13.136 8.486 L 13.136 9.568 L 5 9.568 L 5 8.486 M 7.418 5.851 L 13.137 5.851 L 13.137 6.934 L 7.418 6.934 L 7.418 5.851"
+                    android:fillColor="?android:textColorPrimary"
+                    android:strokeWidth="1"/>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="path">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:duration="300"
+                android:valueFrom="M 15.879 4.497 C 15.801 4.48 15.719 4.48 15.641 4.499 C 15.562 4.518 15.49 4.555 15.428 4.606 C 15.366 4.657 15.316 4.72 15.282 4.792 C 15.248 4.863 15.23 4.942 15.229 5.021 L 15.229 13.861 L 16.318 15.81 L 16.318 5.706 L 20.504 6.627 L 20.619 6.116 L 20.739 5.58 L 15.879 4.497 M 15.229 13.861 C 14.698 13.504 14.071 13.315 13.431 13.32 C 12.793 13.415 12.214 13.752 11.817 14.261 C 11.42 14.771 11.233 15.414 11.297 16.056 C 11.36 16.699 11.668 17.293 12.157 17.715 C 12.646 18.137 13.279 18.354 13.924 18.323 C 14.569 18.291 15.178 18.013 15.623 17.545 C 16.069 17.078 16.318 16.456 16.318 15.81 L 15.229 13.861 M 7.418 11.12 L 13.137 11.12 L 13.137 12.202 L 7.418 12.202 L 7.418 11.12 M 5 8.486 L 13.136 8.486 L 13.136 9.568 L 5 9.568 L 5 8.486 M 7.418 5.851 L 13.137 5.851 L 13.137 6.934 L 7.418 6.934 L 7.418 5.851"
+                android:valueTo="M 18.976 6.386 C 18.749 6.159 18.522 5.932 18.295 5.705 C 18.06 5.47 17.825 5.235 17.59 5 C 17.59 5 17.59 5 17.59 5 C 15.727 6.863 13.863 8.727 12 10.59 L 11.997 10.593 L 12.79 11.382 L 12.79 11.382 L 13.41 12 L 19 6.41 L 19 6.41 L 18.976 6.386 M 11.997 10.593 C 11.792 10.798 11.586 11.004 11.381 11.209 C 11.117 11.473 10.854 11.736 10.59 12 C 10.839 12.249 11.089 12.499 11.338 12.748 C 11.559 12.969 11.779 13.189 12 13.41 C 12.163 13.247 12.327 13.083 12.49 12.92 C 12.583 12.827 12.676 12.734 12.77 12.64 C 12.983 12.427 13.197 12.213 13.41 12 L 11.997 10.593 M 19 17.59 L 13.41 12 L 12 13.41 L 17.59 19 L 19 17.59 M 10.59 12 L 5 17.59 L 6.41 19 L 12 13.41 L 10.59 12 M 12 10.59 L 6.41 5 L 5 6.41 L 10.59 12 L 12 10.59"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="group">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="rotation"
+                android:duration="300"
+                android:valueFrom="0"
+                android:valueTo="360"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>

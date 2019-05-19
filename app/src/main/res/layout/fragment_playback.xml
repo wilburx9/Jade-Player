@@ -18,14 +18,16 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_medium"
         android:layout_margin="@dimen/margin_medium"
-        android:contentDescription="@string/current_playing_tracks"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_playlist_current"
+        android:contentDescription="@string/current_playing_tracks"
+        android:padding="@dimen/padding_medium"
+        android:id="@+id/playingTracks"
+        android:src="@drawable/anim_playlist_current_to_close"
+        app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sectionBackButton"
-        app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"/>
+        app:layout_constraintTop_toTopOf="@+id/sectionBackButton" />
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
@@ -51,6 +53,7 @@
         android:text="@string/lyrics"
         android:textSize="@dimen/text_size_x_small"
         android:textStyle="bold"
+        android:stateListAnimator="@null"
         app:layout_constraintBottom_toTopOf="@+id/guideLine"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -70,6 +73,7 @@
         android:text="@string/close"
         android:textSize="@dimen/text_size_x_small"
         android:textStyle="bold"
+        android:stateListAnimator="@null"
         app:layout_constraintBottom_toTopOf="@+id/quoteImg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -111,6 +115,7 @@
         android:paddingBottom="@dimen/padding_small"
         android:textAllCaps="true"
         android:textSize="@dimen/text_size_x_small"
+        android:stateListAnimator="@null"
         app:layout_constraintBottom_toTopOf="@+id/guideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -304,6 +309,15 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@+id/shuffleButton"
         app:layout_constraintTop_toTopOf="@+id/shuffleButton" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/currentSongsContainer"
+        app:layout_constraintTop_toBottomOf="@+id/sectionBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine"/>
 
 
     <androidx.constraintlayout.widget.Guideline

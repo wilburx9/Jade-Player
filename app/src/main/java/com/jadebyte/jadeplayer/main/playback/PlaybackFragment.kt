@@ -6,9 +6,11 @@ package com.jadebyte.jadeplayer.main.playback
 import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -20,20 +22,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.*
 import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import com.jadebyte.jadeplayer.main.common.callbacks.OnPageChangeListener
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.jadebyte.jadeplayer.main.songs.Song
-import com.jadebyte.jadeplayer.main.songs.SongsViewModel
 import kotlinx.android.synthetic.main.fragment_playback.*
 import java.util.concurrent.TimeUnit
 
 
 class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListener {
 
-    private lateinit var viewModel: SongsViewModel // Use SongsViewModel. Change later
+    private lateinit var viewModel: PlaybackViewModel
     private lateinit var currentSong: Song
     private var items: List<Song>? = null
     private lateinit var rotationAnimSet: AnimatorSet
@@ -41,7 +43,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        viewModel = ViewModelProviders.of(this)[SongsViewModel::class.java]
         currentSong = arguments!!.getParcelable("song")!!
     }
 
@@ -57,16 +58,22 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ViewCompat.setTransitionName(viewPager, arguments!!.getString("transitionName"))
+        viewModel = ViewModelProviders.of(activity!!)[PlaybackViewModel::class.java]
         setupViewViews()
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        if (items.isNullOrEmpty()) {
-            viewModel.init()
-            viewModel.data.observe(viewLifecycleOwner, Observer(::updateViews))
+        viewModel.mediatorLiveData.observe(viewLifecycleOwner, dataObserver)
+    }
+
+
+    private val dataObserver = Observer<Any> {
+        if (it is Int) {
+            viewPager.setCurrentItem(it, false)
         } else {
-            viewModel.data.value = items
+            @Suppress("UNCHECKED_CAST")
+            updateViews(it as List<Song>)
         }
     }
 
@@ -96,6 +103,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         closeButton.setOnClickListener(this)
         moreOptions.setOnClickListener(this)
         viewPager.setOnTouchListener(this)
+        playingTracks.setOnClickListener(this)
     }
 
     private fun updateViewsAsPerSongChange(position: Int) {
@@ -104,6 +112,9 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
             songArtist.setText(it.album.artist)
             songTitle.setText(it.title)
             rotationAnimSet.start()
+            totalDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(it.duration))
+            // TODO: Remove the below line when songs start playing
+            countdownDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(0))
         }
     }
 
@@ -116,7 +127,29 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
             R.id.lyricsButton -> showFindingLyrics()
             R.id.closeButton -> closeLyrics()
             R.id.moreOptions -> showMenuBottomSheet()
+            R.id.playingTracks -> showCurrentTracks()
         }
+    }
+
+    private fun showCurrentTracks() {
+        if ((playingTracks.drawable as Animatable).isRunning) {
+            return
+        }
+
+        val fragment = childFragmentManager.findFragmentByTag("CurrentSongsFragment")
+        val animDrawable = AnimatedVectorDrawableCompat.create(
+            activity!!,
+            if (fragment != null) R.drawable.anim_close_to_playlist_current else R.drawable.anim_playlist_current_to_close
+        )
+        playingTracks.setImageDrawable(animDrawable);
+        (playingTracks.drawable as Animatable).start()
+        if (fragment == null) {
+            childFragmentManager.beginTransaction()
+                .replace(R.id.currentSongsContainer, CurrentSongsFragment(), "CurrentSongsFragment").commit()
+        } else {
+            childFragmentManager.beginTransaction().remove(fragment).commit()
+        }
+
     }
 
     private fun showMenuBottomSheet() {
@@ -228,11 +261,11 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         val currentPos = viewPager.currentItem
         if (currentPos == (items!!.size - 1)) {
             // If the current item is the last, start from afresh
-            viewPager.currentItem = 0
+            viewModel.updateIndexOfPlayingSong(0)
             return
         }
 
-        viewPager.setCurrentItem(currentPos + 1, false)
+        viewModel.updateIndexOfPlayingSong(currentPos + 1)
     }
 
 
@@ -240,11 +273,11 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         val currentPos = viewPager.currentItem
         if (currentPos == 0) {
             // If the current item is the first, go to the last item
-            viewPager.currentItem = (items!!.size - 1)
+            viewModel.updateIndexOfPlayingSong(items!!.size - 1)
             return
         }
 
-        viewPager.setCurrentItem(currentPos - 1, false)
+        viewModel.updateIndexOfPlayingSong(currentPos - 1)
     }
 
     private fun hasLyrics(): Boolean {
@@ -275,6 +308,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     override fun onDestroyView() {
+        viewModel.mediatorLiveData.removeObserver(dataObserver)
         rotationAnimSet.cancel()
         super.onDestroyView()
     }
@@ -282,5 +316,5 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
 }
 
-const val slideDuration = 600L
-val translationY = 110F.px
+private const val slideDuration = 600L
+private val translationY = 110F.px
