@@ -10,25 +10,26 @@ import com.jadebyte.jadeplayer.main.songs.Song
 /**
  * Created by Wilberforce on 2019-05-01 at 18:49.
  */
-class BottomPlaybackRepository(val application: Application) {
+class PlaybackRepository(val application: Application) {
 
-    // For now, we are getting a random song. Later, we'll get the first song from the database of recently played songs
-    // or the first song from the list of currently playing songs
+    // For now, we are getting all tracks in the mediastore. Later we'll use a database backed with Room to get a
+    // list of last playing tracks.
     @WorkerThread
-    fun loadData(): Song {
+    fun loadData(): List<Song> {
+        val results = mutableListOf<Song>()
         val cursor = application.contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
             null,
             "${MediaStore.Audio.Media.IS_MUSIC} != ?",
             arrayOf("0"),
-            "RANDOM() LIMIT 1"
+            "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
         )
-        var song: Song? = null
         cursor?.use {
-            it.moveToFirst()
-            song = Song(it)
+            while (it.moveToNext()) {
+                results.add(Song(it))
+            }
         }
-        return song!!
+        return results
     }
 
 }

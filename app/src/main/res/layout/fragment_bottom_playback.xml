@@ -13,8 +13,8 @@
         <import type="com.jadebyte.jadeplayer.main.common.utils.ConvertUtils" />
 
         <variable
-            name="viewModel"
-            type="com.jadebyte.jadeplayer.main.playback.BottomPlaybackViewModel" />
+            name="song"
+            type="com.jadebyte.jadeplayer.main.songs.Song" />
 
     </data>
 
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bottomPlaybackBgColor"
-        android:visibility="@{viewModel.song == null? View.GONE: View.VISIBLE}"
+        android:visibility="@{song == null? View.GONE: View.VISIBLE}"
         tools:context=".main.playback.BottomPlaybackFragment"
         tools:layout_height="@dimen/floating_playback_height"
         tools:visibility="visible">
@@ -50,8 +50,8 @@
             android:layout_marginBottom="@dimen/margin_medium"
             android:contentDescription="@string/track_album_art"
             android:scaleType="centerCrop"
-            android:src="@{viewModel.song}"
-            android:transitionName="@{viewModel.song.toString()}"
+            android:src="@{song}"
+            android:transitionName="@{song.toString()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -67,7 +67,7 @@
             android:layout_marginRight="@dimen/margin_medium"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{viewModel.song.album.artist}"
+            android:text="@{song.album.artist}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{viewModel.song.title}"
+            android:text="@{song.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             app:layout_constraintLeft_toLeftOf="@+id/songArtist"
             app:layout_constraintRight_toRightOf="@+id/songArtist"
@@ -138,7 +138,7 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginBottom="@dimen/margin_medium"
             android:background="@null"
-            android:max="@{ConvertUtils.longToInt(TimeUnit.MILLISECONDS.toSeconds(viewModel.song.duration))}"
+            android:max="@{ConvertUtils.longToInt(TimeUnit.MILLISECONDS.toSeconds(song.duration))}"
             android:paddingStart="0dp"
             android:paddingEnd="0dp"
             android:progressDrawable="@drawable/seek_bar"

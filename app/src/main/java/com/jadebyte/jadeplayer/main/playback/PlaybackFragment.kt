@@ -37,7 +37,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     private lateinit var viewModel: PlaybackViewModel
     private lateinit var currentSong: Song
-    private var items: List<Song>? = null
+    private var items = emptyList<Song>()
     private lateinit var rotationAnimSet: AnimatorSet
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +59,11 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         super.onViewCreated(view, savedInstanceState)
         ViewCompat.setTransitionName(viewPager, arguments!!.getString("transitionName"))
         viewModel = ViewModelProviders.of(activity!!)[PlaybackViewModel::class.java]
-        setupViewViews()
-        observeViewModel()
+        setupView()
+        observeViewData()
     }
 
-    private fun observeViewModel() {
+    private fun observeViewData() {
         viewModel.mediatorLiveData.observe(viewLifecycleOwner, dataObserver)
     }
 
@@ -77,13 +77,13 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         }
     }
 
-    private fun updateViews(items: List<Song>?) {
+    private fun updateViews(items: List<Song>) {
         this.items = items
         (viewPager.adapter as PlaybackAdapter).updateItems(items)
         updateViewsAsPerSongChange(viewPager.currentItem)
     }
 
-    private fun setupViewViews() {
+    private fun setupView() {
         rotationAnimSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
         viewPager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageSelected(position: Int) {
@@ -107,7 +107,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun updateViewsAsPerSongChange(position: Int) {
-        items?.get(position)?.let {
+        items[position].let {
             rotationAnimSet.setTarget(viewPager.findViewWithTag(it))
             songArtist.setText(it.album.artist)
             songTitle.setText(it.title)
@@ -141,7 +141,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
             activity!!,
             if (fragment != null) R.drawable.anim_close_to_playlist_current else R.drawable.anim_playlist_current_to_close
         )
-        playingTracks.setImageDrawable(animDrawable);
+        playingTracks.setImageDrawable(animDrawable)
         (playingTracks.drawable as Animatable).start()
         if (fragment == null) {
             childFragmentManager.beginTransaction()
@@ -153,10 +153,8 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun showMenuBottomSheet() {
-        items?.get(viewPager.currentItem)?.let {
-            val action = PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(it)
-            findNavController().navigate(action)
-        }
+        val action = PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment( items[viewPager.currentItem])
+        findNavController().navigate(action)
     }
 
     private fun closeLyrics() {
@@ -259,7 +257,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     private fun playNextSong() {
         val currentPos = viewPager.currentItem
-        if (currentPos == (items!!.size - 1)) {
+        if (currentPos == (items.size - 1)) {
             // If the current item is the last, start from afresh
             viewModel.updateIndexOfPlayingSong(0)
             return
@@ -273,7 +271,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         val currentPos = viewPager.currentItem
         if (currentPos == 0) {
             // If the current item is the first, go to the last item
-            viewModel.updateIndexOfPlayingSong(items!!.size - 1)
+            viewModel.updateIndexOfPlayingSong(items.size - 1)
             return
         }
 

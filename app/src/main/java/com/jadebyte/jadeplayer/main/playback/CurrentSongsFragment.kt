@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,12 +15,13 @@ import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.databinding.ItemCurrentBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.jadebyte.jadeplayer.main.common.view.BaseViewHolder
 import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_current_songs.*
 
 
-class CurrentSongsFragment : Fragment(), OnItemClickListener {
+class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
     private lateinit var viewModel: PlaybackViewModel
     private var items = emptyList<Song>()
@@ -99,13 +99,13 @@ private class Adapter(
 
     fun updateItems(items: List<Song>, indexOfPlayingSong: Int? = null) {
         this.items = items
-        if (indexOfPlayingSong != null) {
+        if (indexOfPlayingSong != null && this.items.isNotEmpty()) {
             // The current song is no longer current
-            items[this.indexOfPlayingSong].isCurrent = false
+            this.items[this.indexOfPlayingSong].isCurrent = false
             notifyItemChanged(this.indexOfPlayingSong)
 
             // We have a new current song
-            items[indexOfPlayingSong].isCurrent = true
+            this.items[indexOfPlayingSong].isCurrent = true
             notifyItemChanged(indexOfPlayingSong)
             this.indexOfPlayingSong = indexOfPlayingSong
         } else {
