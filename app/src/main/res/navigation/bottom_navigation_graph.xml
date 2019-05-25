@@ -59,7 +59,8 @@
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search" />
 
-    <dialog
+    <!--TODO: Use dialog-->
+    <fragment
         android:id="@+id/navigationDialogFragment"
         android:name="com.jadebyte.jadeplayer.main.navigation.NavigationDialogFragment"
         android:label="fragment_navigation_dialog"
@@ -71,7 +72,8 @@
         <action
             android:id="@+id/action_navigationDialogFragment_to_songsFragment"
             app:destination="@id/songsFragment"
-            app:popUpTo="@+id/navigationDialogFragment" />
+            app:popUpTo="@+id/navigationDialogFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_navigationDialogFragment_to_playlistFragment"
             app:destination="@id/playlistFragment"
@@ -83,7 +85,7 @@
             app:launchSingleTop="false"
             app:popUpTo="@+id/navigationDialogFragment"
             app:popUpToInclusive="true" />
-    </dialog>
+    </fragment>
     <fragment
         android:id="@+id/albumSongsFragment"
         android:name="com.jadebyte.jadeplayer.main.albums.AlbumSongsFragment"
