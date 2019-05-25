@@ -30,7 +30,7 @@ class BottomPlaybackFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this)[PlaybackViewModel::class.java]
+        viewModel = ViewModelProviders.of(activity!!)[PlaybackViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -89,6 +89,7 @@ class BottomPlaybackFragment : BaseFragment() {
 
     override fun onDestroyView() {
         viewModel.mediatorLiveData.removeObserver(dataObserver)
+        binding.unbind()
         super.onDestroyView()
     }
 

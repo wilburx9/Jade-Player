@@ -35,6 +35,7 @@
     <string name="next_button">Next Button</string>
     <string name="previous_button">Previous button</string>
     <string name="current_playing_tracks">Current playing tracks</string>
+    <string name="man_holding_an_empty_box">Man holding an empty box</string>
 
 
     <!--Navigation-->
@@ -96,6 +97,9 @@
     <string name="favourite">Favourite</string>
     <string name="add_to_playlist">Add to playlist</string>
     <string name="delete_frm_library">Delete from library</string>
+    <string name="no_playlist">No playlist here to see</string>
+    <string name="add_playlist_suggestion">How about we start by adding a some songs to your playlist?</string>
+    <string name="add_new">Add New</string>
 
 
 </resources>

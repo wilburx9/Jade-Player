@@ -29,6 +29,12 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     private var items: List<Album> = emptyList()
     private lateinit var viewModel: ExploreViewModel
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this)[ExploreViewModel::class.java]
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,8 +44,6 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this)[ExploreViewModel::class.java]
-        viewModel.init()
         setupRecyclerView()
         observeViewModel()
         navigationIcon.setOnClickListener(
@@ -53,6 +57,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
         if (items.isEmpty()) {
+            viewModel.init()
             viewModel.data.observe(viewLifecycleOwner, Observer {
                 this.items = it
                 (randomAlbumsRV.adapter as BaseAdapter<Album>).updateItems(it)
