@@ -171,6 +171,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_playlistFragment_to_playlistSongsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
