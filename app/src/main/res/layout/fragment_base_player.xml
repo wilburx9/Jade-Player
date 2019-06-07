@@ -12,7 +12,7 @@
     <TextView
         android:id="@+id/sectionTitle"
         tools:text="@string/songs"
-        style="@style/AppTheme.SectionTile"
+        style="@style/AppTheme.SectionTitle"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/navigationIcon"

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -22,12 +21,13 @@ import com.jadebyte.jadeplayer.main.common.dragSwipe.ItemTouchHelperAdapter
 import com.jadebyte.jadeplayer.main.common.dragSwipe.OnStartDragListener
 import com.jadebyte.jadeplayer.main.common.dragSwipe.SimpleItemTouchHelperCallback
 import com.jadebyte.jadeplayer.main.common.utils.BlurKit
+import com.jadebyte.jadeplayer.main.common.view.BaseFullscreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_navigation_dialog.*
 import kotlinx.coroutines.*
 import java.util.*
 
 
-class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouchHelperAdapter, OnItemClickListener {
+class NavigationDialogFragment : BaseFullscreenDialogFragment(), OnStartDragListener, ItemTouchHelperAdapter, OnItemClickListener {
 
     private var origin: Int? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -40,7 +40,6 @@ class NavigationDialogFragment : DialogFragment(), OnStartDragListener, ItemTouc
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.AppTheme_FullScreenDialogStyle)
         arguments?.let {
             origin = it.getInt("origin")
         }

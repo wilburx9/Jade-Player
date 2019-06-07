@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/sectionTitle"
-            style="@style/AppTheme.SectionTile"
+            style="@style/AppTheme.SectionTitle"
             android:layout_margin="0dp"
             android:text="@{artist.name}"
             app:layout_constraintLeft_toLeftOf="@+id/sectionBackButton"

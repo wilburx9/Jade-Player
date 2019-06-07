@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/sectionTitle"
-        style="@style/AppTheme.SectionTile"
+        style="@style/AppTheme.SectionTitle"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/navigationIcon"
@@ -81,7 +81,7 @@
 
     <ImageView
         android:id="@+id/manHoldingBox"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_xx_large"
         android:contentDescription="@string/man_holding_an_empty_box"
@@ -111,9 +111,9 @@
         android:id="@+id/addPlaylistSuggestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_x_large"
+        android:layout_marginStart="@dimen/margin_xx_large"
         android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_x_large"
+        android:layout_marginEnd="@dimen/margin_xx_large"
         android:gravity="center"
         android:text="@string/add_playlist_suggestion"
         app:layout_constraintEnd_toEndOf="@+id/manHoldingBox"

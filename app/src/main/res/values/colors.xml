@@ -15,7 +15,7 @@
     <color name="colorNavItemBgSelected">#5EFF4060</color>
     <color name="colorBurOverlay">#C8F5F5F5</color>
     <color name="seek_bar_background">#454956</color>
-    <color name="bottomPlaybackBgColor">#EEEEEE</color>
+    <color name="fadedColorPrimary">#EEEEEE</color>
     <color name="textColorPrimary">#DD000000</color>
     <color name="textColorSecondary">#89000000</color>
 </resources>

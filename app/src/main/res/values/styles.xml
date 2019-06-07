@@ -48,7 +48,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme.SectionTile">
+    <style name="AppTheme.SectionTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/padding_large</item>

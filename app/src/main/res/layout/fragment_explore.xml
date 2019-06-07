@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/sectionTitle"
-        style="@style/AppTheme.SectionTile"
+        style="@style/AppTheme.SectionTitle"
         android:text="@string/explore"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/recentlyPlayed"
-        style="@style/AppTheme.SectionTile"
+        style="@style/AppTheme.SectionTitle"
         android:text="@string/recentlyPlayed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/randomAlbumsRV" />

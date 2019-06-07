@@ -100,6 +100,10 @@
     <string name="no_playlist">No playlist here to see</string>
     <string name="add_playlist_suggestion">How about we start by adding a some songs to your playlist?</string>
     <string name="add_new">Add New</string>
+    <string name="create_a_playlist">Create a playlist</string>
+    <string name="create_playlist_thumb_text">Click here to change image</string>
+    <string name="upload_playlist_image">Upload a picture as your playlist identity</string>
+    <string name="playlist_name">Playlist name</string>
 
 
 </resources>

@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/sectionTitle"
-        style="@style/AppTheme.SectionTile"
+        style="@style/AppTheme.SectionTitle"
         android:text="@string/artists"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"

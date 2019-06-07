@@ -22,7 +22,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bottomPlaybackBgColor"
+        android:background="@color/fadedColorPrimary"
         android:visibility="@{song == null? View.GONE: View.VISIBLE}"
         tools:context=".main.playback.BottomPlaybackFragment"
         tools:layout_height="@dimen/floating_playback_height"

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_large"
+    tools:context=".main.playlist.NewPlaylistDialogFragment">
+
+
+    <ImageButton
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/go_back"
+        android:padding="@dimen/padding_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close" />
+
+
+    <TextView
+        android:id="@+id/createPlaylist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/create_a_playlist"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/closeButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/closeButton" />
+
+
+    <View
+        android:id="@+id/thumbBackground"
+        android:layout_width="100dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="@dimen/margin_xxx_large"
+        android:background="@drawable/accent_round_corner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createPlaylist" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/track_album_art"
+        android:padding="@dimen/padding_small"
+        app:layout_constraintBottom_toTopOf="@+id/thumbText"
+        app:layout_constraintEnd_toEndOf="@id/thumbBackground"
+        app:layout_constraintStart_toStartOf="@+id/thumbBackground"
+        app:layout_constraintTop_toTopOf="@+id/thumbBackground"
+        app:srcCompat="@drawable/thumb_circular_default" />
+
+    <TextView
+        android:id="@+id/thumbText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_medium"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_medium"
+        android:paddingBottom="@dimen/padding_medium"
+        android:text="@string/create_playlist_thumb_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="5sp"
+        app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
+        app:layout_constraintEnd_toEndOf="@id/thumbBackground"
+        app:layout_constraintEnd_toStartOf="@+id/uploadPicture"
+        app:layout_constraintStart_toStartOf="@+id/thumbBackground" />
+
+    <TextView
+        android:id="@+id/uploadPicture"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_large"
+        android:paddingEnd="@dimen/padding_large"
+        android:text="@string/upload_playlist_image"
+        android:textSize="@dimen/text_size_x_small"
+        app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/thumbBackground"
+        app:layout_constraintTop_toTopOf="@+id/thumbBackground" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xx_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:hintTextAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:hint="@string/playlist_name"
+        app:layout_constraintTop_toBottomOf="@+id/thumbBackground">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium"
+            android:paddingStart="@dimen/padding_x_large"
+            android:paddingEnd="@dimen/padding_x_large"
+            android:background="@drawable/edit_text_background"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
