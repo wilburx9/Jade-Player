@@ -52,15 +52,22 @@
         android:id="@+id/playlistFragment"
         android:name="com.jadebyte.jadeplayer.main.playlist.PlaylistFragment"
         android:label="PlaylistFragment"
-        tools:layout="@layout/fragment_playlist" />
+        tools:layout="@layout/fragment_playlist">
+        <action
+            android:id="@+id/action_playlistFragment_to_navigationDialogFragment"
+            app:destination="@id/navigationDialogFragment">
+            <argument
+                android:name="origin"
+                android:defaultValue="5" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.jadebyte.jadeplayer.main.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search" />
 
-    <!--TODO: Use dialog-->
-    <fragment
+    <dialog
         android:id="@+id/navigationDialogFragment"
         android:name="com.jadebyte.jadeplayer.main.navigation.NavigationDialogFragment"
         android:label="fragment_navigation_dialog"
@@ -73,7 +80,7 @@
             android:id="@+id/action_navigationDialogFragment_to_songsFragment"
             app:destination="@id/songsFragment"
             app:popUpTo="@+id/navigationDialogFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_navigationDialogFragment_to_playlistFragment"
             app:destination="@id/playlistFragment"
@@ -85,7 +92,7 @@
             app:launchSingleTop="false"
             app:popUpTo="@+id/navigationDialogFragment"
             app:popUpToInclusive="true" />
-    </fragment>
+    </dialog>
     <fragment
         android:id="@+id/albumSongsFragment"
         android:name="com.jadebyte.jadeplayer.main.albums.AlbumSongsFragment"
@@ -102,12 +109,13 @@
         android:id="@+id/artistsFragment"
         android:name="com.jadebyte.jadeplayer.main.artists.ArtistsFragment"
         android:label="fragment_artists"
-        tools:layout="@layout/fragment_artists" >
+        tools:layout="@layout/fragment_artists">
         <action
             android:id="@+id/action_artistsFragment_to_navigationDialogFragment"
-            app:destination="@id/navigationDialogFragment" >
-            <argument android:defaultValue="2"
-                android:name="origin" />
+            app:destination="@id/navigationDialogFragment">
+            <argument
+                android:name="origin"
+                android:defaultValue="2" />
         </action>
         <action
             android:id="@+id/action_artistsFragment_to_artistAlbumsFragment"
@@ -117,8 +125,8 @@
     <fragment
         android:id="@+id/artistAlbumsFragment"
         android:name="com.jadebyte.jadeplayer.main.artists.ArtistAlbumsFragment"
-        tools:layout="@layout/fragment_artist_albums"
-        android:label="ArtistAlbumsFragment" >
+        android:label="ArtistAlbumsFragment"
+        tools:layout="@layout/fragment_artist_albums">
         <action
             android:id="@+id/action_artistAlbumsFragment_to_navigationDialogFragment"
             app:destination="@id/navigationDialogFragment"
@@ -137,7 +145,7 @@
         android:id="@+id/songsMenuBottomSheetDialogFragment2"
         android:name="com.jadebyte.jadeplayer.main.songs.SongsMenuBottomSheetDialogFragment"
         android:label="fragment_songs_menu_bottom_sheet_dialog"
-        tools:layout="@layout/fragment_songs_menu_bottom_sheet_dialog" >
+        tools:layout="@layout/fragment_songs_menu_bottom_sheet_dialog">
         <argument
             android:name="song"
             app:argType="com.jadebyte.jadeplayer.main.songs.Song" />

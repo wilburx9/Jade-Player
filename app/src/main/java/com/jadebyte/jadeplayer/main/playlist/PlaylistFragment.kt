@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
@@ -38,6 +39,9 @@ class PlaylistFragment : Fragment(), OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         observeViewModel()
+        navigationIcon.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_playlistFragment_to_navigationDialogFragment)
+        )
     }
 
     @Suppress("UNCHECKED_CAST")

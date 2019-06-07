@@ -227,107 +227,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="albumSongsFragment">
-                    <value>
-                      <LayoutPositions />
-                    </value>
-                  </entry>
-                  <entry key="albumsFragment">
+                  <entry key="mainFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_albumsFragment_to_albumSongsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_albumsFragment_to_navigationDialogFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
                         </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="artistAlbumsFragment">
-                    <value>
-                      <LayoutPositions>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_artistAlbumsFragment_to_albumSongsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_artistAlbumsFragment_to_navigationDialogFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="artistsFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_artistsFragment_to_artistAlbumsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_artistsFragment_to_navigationDialogFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="exploreFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_exploreFragment_to_albumSongsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_exploreFragment_to_navigationDialogFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="navigationDialogFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_navigationDialogFragment_to_artistsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_navigationDialogFragment_to_playlistFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_navigationDialogFragment_to_songsFragment">
+                            <entry key="action_mainFragment_to_playbackFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -340,6 +251,12 @@
                   <entry key="playbackFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_playbackFragment_to_songsMenuBottomSheetDialogFragment">
@@ -352,44 +269,16 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="playlistFragment">
-                    <value>
-                      <LayoutPositions />
-                    </value>
-                  </entry>
-                  <entry key="searchFragment">
-                    <value>
-                      <LayoutPositions />
-                    </value>
-                  </entry>
-                  <entry key="songsFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_songsFragment_to_navigationDialogFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_songsFragment_to_songsMenuBottomSheetDialogFragment2">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="songsMenuBottomSheetDialogFragment">
                     <value>
-                      <LayoutPositions />
-                    </value>
-                  </entry>
-                  <entry key="songsMenuBottomSheetDialogFragment2">
-                    <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="500" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                 </map>
