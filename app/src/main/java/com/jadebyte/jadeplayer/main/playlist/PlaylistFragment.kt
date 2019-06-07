@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
@@ -77,7 +80,13 @@ class PlaylistFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {
-
+        val transitionName = ViewCompat.getTransitionName(sharableView!!)!!
+        val extras = FragmentNavigator.Extras.Builder()
+            .addSharedElement(sharableView, transitionName)
+            .build()
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistSongsFragment(transitionName, items[position])
+        findNavController().navigate(action, extras)
     }
 
 }

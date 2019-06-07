@@ -18,13 +18,13 @@ class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(appl
 
     override var selectionArgs: Array<String>? = null
 
-    override var sortOrder: String? = "${MediaStore.Audio.Playlists.DATE_ADDED} COLLATE NOCASE DESC"
+    override var sortOrder: String? = "${MediaStore.Audio.Playlists.DATE_MODIFIED} COLLATE NOCASE DESC"
 
     override var uri: Uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
 
     final override var projection: Array<String>? = arrayOf(
         MediaStore.Audio.Playlists._ID,
         MediaStore.Audio.Playlists.NAME,
-        MediaStore.Audio.Playlists.DATE_ADDED
+        MediaStore.Audio.Playlists.DATE_MODIFIED
     )
 }

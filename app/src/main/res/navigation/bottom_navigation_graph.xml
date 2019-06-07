@@ -60,6 +60,9 @@
                 android:name="origin"
                 android:defaultValue="5" />
         </action>
+        <action
+            android:id="@+id/action_playlistFragment_to_playlistSongsFragment"
+            app:destination="@id/playlistSongsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -150,5 +153,17 @@
             android:name="song"
             app:argType="com.jadebyte.jadeplayer.main.songs.Song" />
     </dialog>
+    <fragment
+        android:id="@+id/playlistSongsFragment"
+        android:name="com.jadebyte.jadeplayer.main.playlist.PlaylistSongsFragment"
+        tools:layout="@layout/fragment_playlist_songs"
+        android:label="PlaylistSongsFragment" >
+        <argument
+            android:name="transitionName"
+            app:argType="string" />
+        <argument
+            android:name="playlist"
+            app:argType="com.jadebyte.jadeplayer.main.playlist.Playlist" />
+    </fragment>
 
 </navigation>

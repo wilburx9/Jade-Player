@@ -56,6 +56,8 @@ object DataBindingAdapters {
                 .placeholder(R.drawable.thumb_circular_default_hollow)
                 .into(view)
         }
+
+
     }
 
     @BindingAdapter("android:src")
@@ -91,6 +93,18 @@ object DataBindingAdapters {
                 MultiTransformation(centerCrop, circleCrop)
             )
             .placeholder(R.drawable.thumb_circular_default)
+            .into(view)
+    }
+
+    @BindingAdapter("playlistSrc")
+    @JvmStatic
+    fun setPlaylistSrc(view: ImageView, playlist: Playlist) {
+        GlideApp.with(view)
+            .load(playlist)
+            .transform(
+                MultiTransformation(centerCrop)
+            )
+            .placeholder(R.drawable.thumb_default)
             .into(view)
     }
 

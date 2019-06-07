@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.format.DateUtils" />
+
+        <variable
+            name="playlist"
+            type="com.jadebyte.jadeplayer.main.playlist.Playlist" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".main.playlist.PlaylistSongsFragment">
+
+
+        <Button
+            android:id="@+id/sectionBackButton"
+            style="@style/AppTheme.SectionBackButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/playlistArt"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="@dimen/margin_x_large"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:contentDescription="@string/album_art"
+            android:scaleType="centerCrop"
+            app:playlistSrc="@{playlist}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sectionBackButton"
+            tools:src="@drawable/thumb_default" />
+
+        <TextView
+            android:id="@+id/playlistName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_x_large"
+            android:layout_marginRight="@dimen/margin_x_large"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{playlist.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/playlistArt"
+            app:layout_constraintLeft_toRightOf="@+id/playlistArt"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/playlistArt"
+            tools:text="My Trap" />
+
+
+        <ImageButton
+            android:id="@+id/moreOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_x_large"
+            android:layout_marginRight="@dimen/margin_x_large"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/more_options"
+            android:padding="@dimen/padding_medium"
+            android:src="@drawable/ic_more_colored"
+            app:layout_constraintBottom_toBottomOf="@+id/playlistArt"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/playlistSongsDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_x_large"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="@dimen/text_size_x_small"
+            app:layout_constraintLeft_toLeftOf="@+id/playlistArt"
+            app:layout_constraintTop_toBottomOf="@+id/playlistArt"
+            tools:text="10 songs, 56 minutes" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/playlistSongsRV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playlistSongsDuration" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
