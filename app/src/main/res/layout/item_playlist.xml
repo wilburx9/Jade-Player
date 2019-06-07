@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="playlist"
+            type="com.jadebyte.jadeplayer.main.playlist.Playlist" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/padding_large">
+
+        <ImageView
+            android:id="@+id/sharableView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/track_album_art"
+            android:scaleType="centerCrop"
+            android:src="@{playlist}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/thumb_circular_default" />
+
+
+        <TextView
+            android:id="@+id/songArtist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_large"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{playlist.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/text_size_x_small"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sharableView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="My Raps" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

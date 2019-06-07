@@ -18,6 +18,7 @@ import com.jadebyte.jadeplayer.common.GlideApp
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.common.image.CircularTransparentCenter
+import com.jadebyte.jadeplayer.main.playlist.Playlist
 import com.jadebyte.jadeplayer.main.songs.Song
 
 /**
@@ -31,9 +32,9 @@ object DataBindingAdapters {
     @BindingAdapter("android:src")
     @JvmStatic
     fun setAlbumCover(view: ImageView, song: Song?) {
-        song?.let {
+        if (song != null) {
             GlideApp.with(view)
-                .load(it.album)
+                .load(song.album)
                 .transform(
                     MultiTransformation(centerCrop, circleCrop)
                 )
@@ -46,9 +47,9 @@ object DataBindingAdapters {
     @BindingAdapter("songSrc")
     @JvmStatic
     fun setAlbumCoverCompat(view: ImageView, song: Song?) {
-        song?.let {
+        if (song != null) {
             GlideApp.with(view)
-                .load(it.album)
+                .load(song.album)
                 .transform(
                     MultiTransformation(centerCrop, circleCrop, CircularTransparentCenter(.3F))
                 )
@@ -78,6 +79,18 @@ object DataBindingAdapters {
                 MultiTransformation(centerCrop, RoundedCorners(10))
             )
             .placeholder(R.drawable.thumb_default)
+            .into(view)
+    }
+
+    @BindingAdapter("android:src")
+    @JvmStatic
+    fun setPlaylistCover(view: ImageView, playlist: Playlist) {
+        GlideApp.with(view)
+            .load(playlist)
+            .transform(
+                MultiTransformation(centerCrop, circleCrop)
+            )
+            .placeholder(R.drawable.thumb_circular_default)
             .into(view)
     }
 

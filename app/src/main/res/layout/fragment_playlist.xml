@@ -42,7 +42,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/playButton"
         app:layout_constraintTop_toBottomOf="@+id/sectionTitle"
-        tools:text="118 tracks" />
+        tools:text="118 playlists" />
 
     <Button
         android:id="@+id/playButton"
@@ -146,7 +146,8 @@
         android:id="@+id/noPlaylistGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:constraint_referenced_ids="manHoldingBox, noPlaylist, addPlaylistSuggestion, addPlayList" />
 
     <androidx.constraintlayout.widget.Group
@@ -154,6 +155,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/playlistsGroup"
         android:visibility="gone"
+        tools:visibility="visible"
         app:constraint_referenced_ids="playlistsNum, playButton, playlistRV"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

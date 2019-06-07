@@ -65,6 +65,10 @@
         <item quantity="one">%d album</item>
         <item quantity="other">%d albums</item>
     </plurals>
+    <plurals name="numberOfPlaylists">
+        <item quantity="one">%d playlist</item>
+        <item quantity="other">%d playlists</item>
+    </plurals>
 
 
     <!--Dummy Strings. TODO: Remove-->
