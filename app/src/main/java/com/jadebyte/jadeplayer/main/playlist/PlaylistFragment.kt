@@ -58,6 +58,7 @@ class PlaylistFragment : Fragment(), OnItemClickListener {
             })
         } else {
             viewModel.data.value = items
+            updateViews()
 
         }
     }
