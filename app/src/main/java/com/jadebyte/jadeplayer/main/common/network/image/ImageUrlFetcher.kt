@@ -22,7 +22,8 @@ import javax.inject.Inject
 /**
  * Created by Wilberforce on 2019-04-25 at 06:49.
  */
-abstract class BaseModelLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStream>?) : BaseGlideUrlLoader<M>(concreteLoader) {
+abstract class BaseModelLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStream>?) :
+    BaseGlideUrlLoader<M>(concreteLoader) {
     @Inject lateinit var application: Application
     @Inject lateinit var okHttpClient: OkHttpClient
     @Inject lateinit var cloudKeys: CloudKeys
@@ -48,16 +49,18 @@ abstract class BaseModelLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStr
 
 
     private fun getUrlFrmSpotify(model: M): String? {
+        val params = getSpotifyFmParams(model) ?: return null
+
         val builder = Uri.Builder()
-        getSpotifyFmParams(model).forEach {
+        params.forEach {
             builder.appendQueryParameter(it.key, it.value)
         }
         val uri = builder
-                .scheme("https")
-                .authority("api.spotify.com")
-                .appendPath("v1")
-                .appendPath("search")
-                .build()
+            .scheme("https")
+            .authority("api.spotify.com")
+            .appendPath("v1")
+            .appendPath("search")
+            .build()
 
 
 
@@ -92,18 +95,21 @@ abstract class BaseModelLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStr
         if (TextUtils.isEmpty(cloudKeys.lastFmKey)) {
             return null
         }
+
+        val params = getLastFmParams(model) ?: return null
+
         val builder = Uri.Builder()
-        getLastFmParams(model).forEach {
+        params.forEach {
             builder.appendQueryParameter(it.key, it.value)
         }
         val uri = builder
-                .scheme("http")
-                .authority("ws.audioscrobbler.com")
-                .appendPath("2.0")
-                .appendQueryParameter("method", "album.getinfo")
-                .appendQueryParameter("api_key", cloudKeys.lastFmKey)
-                .appendQueryParameter("format", "json")
-                .build()
+            .scheme("http")
+            .authority("ws.audioscrobbler.com")
+            .appendPath("2.0")
+            .appendQueryParameter("method", "album.getinfo")
+            .appendQueryParameter("api_key", cloudKeys.lastFmKey)
+            .appendQueryParameter("format", "json")
+            .build()
 
         getResponse(uri).use {
             if (it.isSuccessful) {
@@ -127,16 +133,16 @@ abstract class BaseModelLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStr
 
     private fun getResponse(uri: Uri): Response {
         val request = Request.Builder()
-                .url(uri.toString())
-                .cacheControl(cacheControl)
-                .build()
+            .url(uri.toString())
+            .cacheControl(cacheControl)
+            .build()
 
         return okHttpClient.newCall(request).execute()
     }
 
-    abstract fun getLastFmParams(model: M): Map<String, String>
+    abstract fun getLastFmParams(model: M): Map<String, String>?
 
-    abstract fun getSpotifyFmParams(model: M): Map<String, String>
+    abstract fun getSpotifyFmParams(model: M): Map<String, String>?
 
 
 }

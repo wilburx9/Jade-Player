@@ -30,7 +30,7 @@ data class Song(
 ) : Parcelable {
     constructor(cursor: Cursor) : this(
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
-        album = Album(cursor, true),
+        album = Album(cursor, cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))),
         path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
         mediaId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID)),
         albumId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),

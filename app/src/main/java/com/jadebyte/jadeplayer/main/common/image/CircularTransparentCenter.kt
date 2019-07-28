@@ -8,6 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.bumptech.glide.util.Util
 import java.security.MessageDigest
+import kotlin.math.min
 
 
 /**
@@ -39,7 +40,7 @@ class CircularTransparentCenter(private val radiusFactor: Float = defaultRadiusF
         val centerY = (srcHeight / 2).toFloat()
         val centerX = (srcWidth / 2).toFloat()
         canvas.drawBitmap(toTransform, 0F, 0F, defaultPint)
-        val innerRadius = (Math.min(centerX, centerY) * radiusFactor)
+        val innerRadius = (min(centerX, centerY) * radiusFactor)
         canvas.drawCircle(centerX, centerY, innerRadius, paint)
         return bitmap
 

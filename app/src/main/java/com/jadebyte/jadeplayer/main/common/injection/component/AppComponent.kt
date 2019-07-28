@@ -8,6 +8,7 @@ import com.jadebyte.jadeplayer.main.common.injection.module.CommonModule
 import com.jadebyte.jadeplayer.main.common.network.HttpInterceptor
 import com.jadebyte.jadeplayer.main.common.network.image.album.AlbumModelLoader
 import com.jadebyte.jadeplayer.main.common.network.image.artist.ArtistModelLoader
+import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoader
 import com.jadebyte.jadeplayer.main.navigation.NavRepository
 import dagger.Component
 import javax.inject.Singleton
@@ -21,6 +22,7 @@ interface AppComponent {
     fun inject(interceptor: HttpInterceptor)
     fun inject(modelLoader: ArtistModelLoader)
     fun inject(modelLoader: AlbumModelLoader)
+    fun inject(modelLoader: PlaylistModelLoader)
     fun inject(navRepository: NavRepository)
     fun inject(albumSongsFragment: AlbumSongsFragment)
 }

@@ -20,11 +20,11 @@ class AlbumModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>) : Bas
         App.appComponent.inject(this)
     }
 
-    override fun getLastFmParams(model: Album): Map<String, String> {
+    override fun getLastFmParams(model: Album): Map<String, String>? {
         return mapOf(Pair("method", "album.getinfo"), Pair("artist", model.artist), Pair("album", model.name))
     }
 
-    override fun getSpotifyFmParams(model: Album): Map<String, String> {
+    override fun getSpotifyFmParams(model: Album): Map<String, String>? {
         return mapOf(Pair("q",  String.format("album:%s artist:%s", model.name, model.artist)), Pair("type", "album"))
     }
 

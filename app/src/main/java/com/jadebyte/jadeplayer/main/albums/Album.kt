@@ -27,9 +27,10 @@ data class Album(
         id = data.getLong(data.getColumnIndex(MediaStore.Audio.Albums._ID))
     )
 
-    constructor(cursor: Cursor, frmSong: Boolean) : this(
+    constructor(cursor: Cursor, id: Long) : this(
         name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
-        artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
+        artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
+        id = id
     )
 
     /**

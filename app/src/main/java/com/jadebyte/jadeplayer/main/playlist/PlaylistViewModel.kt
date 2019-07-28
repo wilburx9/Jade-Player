@@ -12,7 +12,7 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
  * Created by Wilberforce on 2019-05-19 at 10:11.
  */
 class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(application) {
-    final override var repository: BaseRepository<Playlist> = PlaylistRepository(application)
+    override var repository: BaseRepository<Playlist> = PlaylistRepository(application)
 
     override var selection: String? = null
 
@@ -22,7 +22,7 @@ class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(appl
 
     override var uri: Uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
 
-    final override var projection: Array<String>? = arrayOf(
+    override var projection: Array<String>? = arrayOf(
         MediaStore.Audio.Playlists._ID,
         MediaStore.Audio.Playlists.NAME,
         MediaStore.Audio.Playlists.DATE_MODIFIED
