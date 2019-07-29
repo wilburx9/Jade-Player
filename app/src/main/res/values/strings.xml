@@ -93,6 +93,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
     <string name="now_playing">Now Playing</string>
     <string name="lyrics">Lyrics</string>
     <string name="finding_lyrics">Finding Lyrics</string>
@@ -105,9 +107,14 @@
     <string name="add_playlist_suggestion">How about we start by adding a some songs to your playlist?</string>
     <string name="add_new">Add New</string>
     <string name="create_a_playlist">Create a playlist</string>
+    <string name="create_playlist">Create playlist</string>
     <string name="create_playlist_thumb_text">Click here to change image</string>
     <string name="upload_playlist_image">Upload a picture as your playlist identity</string>
     <string name="playlist_name">Playlist name</string>
+    <string name="playlist_empty_message">Playlist cannot be empty</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="edit_songs">Edit songs</string>
+    <string name="edit_playlist">Edit Playlist</string>
 
 
 </resources>

@@ -25,7 +25,8 @@ import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_playlist_songs.*
 import java.util.concurrent.TimeUnit
 
-class PlaylistSongsFragment : Fragment(), OnItemClickListener {
+class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListener {
+
     lateinit var viewModel: PlaylistSongsViewModel
     lateinit var playlist: Playlist
     private var items = emptyList<Song>()
@@ -60,7 +61,8 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener {
         ViewCompat.setTransitionName(playlistArt, arguments!!.getString("transitionName"))
         setupRecyclerView()
         observeViewModel()
-        sectionBackButton.setOnClickListener { findNavController().popBackStack() }
+        sectionBackButton.setOnClickListener(this)
+        moreOptions.setOnClickListener(this)
     }
 
     private fun observeViewModel() {
@@ -90,6 +92,17 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener {
         playlistSongsRV.adapter = adapter
         playlistSongsRV.layoutManager = LinearLayoutManager(activity!!)
     }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.sectionBackButton -> findNavController().popBackStack()
+            R.id.moreOptions -> findNavController().navigate(
+                PlaylistSongsFragmentDirections
+                    .actionPlaylistSongsFragmentToPlaylistMenuBottomSheetDialogFragment(playlist)
+            )
+        }
+    }
+
 
     override fun onItemClick(position: Int, sharableView: View?) {
 

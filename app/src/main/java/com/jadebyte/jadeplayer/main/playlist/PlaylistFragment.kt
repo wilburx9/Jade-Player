@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +20,7 @@ import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
-class PlaylistFragment : Fragment(), OnItemClickListener {
+class PlaylistFragment : Fragment(), OnItemClickListener, View.OnClickListener {
 
     private var items: List<Playlist> = emptyList()
     private lateinit var viewModel: PlaylistViewModel
@@ -42,9 +41,6 @@ class PlaylistFragment : Fragment(), OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         observeViewModel()
-        navigationIcon.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_playlistFragment_to_navigationDialogFragment)
-        )
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -78,6 +74,10 @@ class PlaylistFragment : Fragment(), OnItemClickListener {
         playlistRV.adapter = BaseAdapter(items, activity!!, R.layout.item_playlist, BR.playlist, false, this)
         val layoutManager = LinearLayoutManager(activity)
         playlistRV.layoutManager = layoutManager
+
+        navigationIcon.setOnClickListener(this)
+        addPlayListIcon.setOnClickListener(this)
+        addPlayList.setOnClickListener(this)
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {
@@ -88,6 +88,15 @@ class PlaylistFragment : Fragment(), OnItemClickListener {
         val action =
             PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistSongsFragment(transitionName, items[position])
         findNavController().navigate(action, extras)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.navigationIcon -> findNavController().navigate(R.id.action_playlistFragment_to_navigationDialogFragment)
+            R.id.addPlayList, R.id.addPlayListIcon -> findNavController().navigate(
+                R.id.action_playlistFragment_to_newPlaylistDialogFragment
+            )
+        }
     }
 
 }

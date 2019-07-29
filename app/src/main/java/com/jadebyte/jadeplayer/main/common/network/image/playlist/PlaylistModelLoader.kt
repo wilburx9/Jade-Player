@@ -45,8 +45,7 @@ class PlaylistModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>) :
         val cursor = application.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
 
         return cursor?.use {
-            it.moveToFirst()
-            Album(it, it.getLong(it.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)))
+            if (it.moveToFirst()) Album(it, it.getLong(it.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))) else null
         }
 
     }

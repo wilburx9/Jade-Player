@@ -31,7 +31,7 @@ object TimeUtils {
      * Returns the total duration of a given list of songs
      */
     fun getTotalSongsDuration(list: List<Song>): Long {
-        return list.map { it.duration }.reduce { sum, element -> sum + element }
+        return if (list.isEmpty()) 0 else list.map { it.duration }.reduce { sum, element -> sum + element }
     }
 
 

@@ -29,4 +29,5 @@
     <dimen name="text_size_xx_large">22sp</dimen>
     <dimen name="text_size_xxx_large">30sp</dimen>
     <dimen name="floating_playback_height">80dp</dimen>
+    <dimen name="button_padding">18dp</dimen>
 </resources>

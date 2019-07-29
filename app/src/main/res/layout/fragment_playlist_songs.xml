@@ -42,7 +42,7 @@
             tools:src="@drawable/thumb_default" />
 
         <TextView
-            android:id="@+id/playlistName"
+            android:id="@+id/playlistNameField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_x_large"

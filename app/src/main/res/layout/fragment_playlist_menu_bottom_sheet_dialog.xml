@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:padding="@dimen/padding_medium"
+    tools:context=".main.playlist.PlaylistMenuBottomSheetDialogFragment">
+
+    <LinearLayout
+        android:id="@+id/buttonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bottom_sheet_round_bg"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/padding_x_large"
+        android:paddingBottom="@dimen/padding_x_large">
+
+        <Button
+            android:id="@+id/share"
+            style="@style/AppTheme.MenuButton"
+            android:drawableEnd="@drawable/ic_share"
+            android:text="@string/share" />
+
+        <Button
+            android:id="@+id/playNext"
+            style="@style/AppTheme.MenuButton"
+            android:drawableEnd="@drawable/ic_play_next"
+            android:text="@string/play_next" />
+
+        <Button
+            android:id="@+id/editSongs"
+            style="@style/AppTheme.MenuButton"
+            android:drawableEnd="@drawable/ic_edit_song"
+            android:text="@string/edit_songs" />
+
+        <Button
+            android:id="@+id/editPlaylist"
+            style="@style/AppTheme.MenuButton"
+            android:drawableEnd="@drawable/ic_edit_playlist"
+            android:text="@string/edit_playlist" />
+
+        <Button
+            android:id="@+id/delete"
+            style="@style/AppTheme.MenuButton"
+            android:drawableEnd="@drawable/ic_garbage"
+            android:text="@string/delete_frm_library" />
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

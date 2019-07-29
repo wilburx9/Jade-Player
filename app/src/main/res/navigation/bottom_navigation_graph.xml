@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_playlistFragment_to_playlistSongsFragment"
             app:destination="@id/playlistSongsFragment" />
+        <action
+            android:id="@+id/action_playlistFragment_to_newPlaylistDialogFragment"
+            app:destination="@id/newPlaylistDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -156,14 +159,31 @@
     <fragment
         android:id="@+id/playlistSongsFragment"
         android:name="com.jadebyte.jadeplayer.main.playlist.PlaylistSongsFragment"
-        tools:layout="@layout/fragment_playlist_songs"
-        android:label="PlaylistSongsFragment" >
+        android:label="PlaylistSongsFragment"
+        tools:layout="@layout/fragment_playlist_songs">
         <argument
             android:name="transitionName"
             app:argType="string" />
         <argument
             android:name="playlist"
             app:argType="com.jadebyte.jadeplayer.main.playlist.Playlist" />
+        <action
+            android:id="@+id/action_playlistSongsFragment_to_playlistMenuBottomSheetDialogFragment"
+            app:destination="@id/playlistMenuBottomSheetDialogFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/newPlaylistDialogFragment"
+        android:name="com.jadebyte.jadeplayer.main.playlist.NewPlaylistDialogFragment"
+        android:label="fragment_new_playlist_dialog"
+        tools:layout="@layout/fragment_new_playlist_dialog" />
+    <dialog
+        android:id="@+id/playlistMenuBottomSheetDialogFragment"
+        android:name="com.jadebyte.jadeplayer.main.playlist.PlaylistMenuBottomSheetDialogFragment"
+        android:label="fragment_playlist_menu_bottom_sheet_dialog"
+        tools:layout="@layout/fragment_playlist_menu_bottom_sheet_dialog" >
+        <argument
+            android:name="playlist"
+            app:argType="com.jadebyte.jadeplayer.main.playlist.Playlist" />
+    </dialog>
 
 </navigation>
