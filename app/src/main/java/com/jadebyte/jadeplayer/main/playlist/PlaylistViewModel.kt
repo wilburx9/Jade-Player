@@ -14,10 +14,6 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
 class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(application) {
     override var repository: BaseRepository<Playlist> = PlaylistRepository(application)
 
-    override var selection: String? = null
-
-    override var selectionArgs: Array<String>? = null
-
     override var sortOrder: String? = "${MediaStore.Audio.Playlists.DATE_MODIFIED} COLLATE NOCASE DESC"
 
     override var uri: Uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
@@ -27,4 +23,12 @@ class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(appl
         MediaStore.Audio.Playlists.NAME,
         MediaStore.Audio.Playlists.DATE_MODIFIED
     )
+
+
+    fun init(playlistId: Long) {
+        selection = "${MediaStore.Audio.Playlists._ID} == ?"
+        selectionArgs = arrayOf(playlistId.toString())
+        init()
+    }
+
 }

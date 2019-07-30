@@ -19,10 +19,10 @@ abstract class BaseViewModel<T>(application: Application) : AndroidViewModel(app
 
     val data = MutableLiveData<List<T>>()
     abstract var repository: BaseRepository<T>
-    abstract var projection: Array<String>?
-    abstract var selection: String?
-    abstract var selectionArgs: Array<String>?
-    abstract var sortOrder: String?
+    open var projection: Array<String>? = null
+    open var selection: String? = null
+    open var selectionArgs: Array<String>? = null
+    open var sortOrder: String? = null
     abstract var uri: Uri
 
 

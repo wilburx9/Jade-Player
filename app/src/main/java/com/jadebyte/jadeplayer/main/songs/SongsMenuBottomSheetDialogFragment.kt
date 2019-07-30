@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.view.BaseMenuBottomSheet
 
@@ -28,7 +29,7 @@ class SongsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
             R.id.addToPlayList -> addTrackToPlayList()
             R.id.delete -> deleteTrack()
         }
-        dismiss()
+        findNavController().popBackStack()
     }
 
     private fun deleteTrack() {

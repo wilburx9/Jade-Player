@@ -47,7 +47,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme.FullScreenDialogAnimation" parent="Theme.AppCompat.Dialog">
+    <style name="AppTheme.DialogAnimation" parent="Theme.AppCompat.Dialog">
         <item name="android:windowEnterAnimation">@anim/dialog_in</item>
         <item name="android:windowExitAnimation">@anim/dialog_out</item>
     </style>

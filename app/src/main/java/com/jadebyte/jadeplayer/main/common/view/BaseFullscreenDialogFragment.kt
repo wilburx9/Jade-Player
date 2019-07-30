@@ -17,7 +17,7 @@ open class BaseFullscreenDialogFragment : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialog?.window?.attributes?.windowAnimations = R.style.AppTheme_FullScreenDialogAnimation
+        dialog?.window?.attributes?.windowAnimations = R.style.AppTheme_DialogAnimation
     }
 
 }

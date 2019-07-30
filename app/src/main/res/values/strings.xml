@@ -115,6 +115,14 @@
     <string name="something_went_wrong">Something went wrong</string>
     <string name="edit_songs">Edit songs</string>
     <string name="edit_playlist">Edit Playlist</string>
+    <string name="playlist_delete_message">Do you want to permanently delete \"%1$s\"?</string>
+    <string name="no_thanks">No thanks</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="continue_">Continue</string>
+    <string name="sth_deleted">\"%1$s\" deleted</string>
+    <string name="sth_went_wrong">Oops! Something went wrong</string>
+
 
 
 </resources>

@@ -27,7 +27,9 @@ import java.util.concurrent.TimeUnit
 
 class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListener {
 
-    lateinit var viewModel: PlaylistSongsViewModel
+    lateinit var binding: FragmentPlaylistSongsBinding
+    lateinit var songsViewModel: PlaylistSongsViewModel
+    lateinit var playlistViewModel: PlaylistViewModel
     lateinit var playlist: Playlist
     private var items = emptyList<Song>()
 
@@ -36,8 +38,10 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         playlist = arguments!!.getParcelable("playlist")!!
-        viewModel = ViewModelProviders.of(this)[PlaylistSongsViewModel::class.java]
-        viewModel.init(playlist.id)
+        songsViewModel = ViewModelProviders.of(this)[PlaylistSongsViewModel::class.java]
+        playlistViewModel = ViewModelProviders.of(this)[PlaylistViewModel::class.java]
+        songsViewModel.init(playlist.id)
+        playlistViewModel.init(playlist.id)
 
     }
 
@@ -45,7 +49,7 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentPlaylistSongsBinding>(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_playlist_songs,
             container,
@@ -53,6 +57,7 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
         )
         val view = binding.root
         binding.playlist = playlist
+        binding.lifecycleOwner = viewLifecycleOwner
         return view
     }
 
@@ -66,8 +71,15 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer {
+        songsViewModel.data.observe(viewLifecycleOwner, Observer {
             updateViews(it)
+        })
+        playlistViewModel.data.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                findNavController().popBackStack()
+            } else {
+                binding.playlist = it.first()
+            }
         })
     }
 

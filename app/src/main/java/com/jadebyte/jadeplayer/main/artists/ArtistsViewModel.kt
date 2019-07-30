@@ -14,10 +14,6 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
 open class ArtistsViewModel(application: Application) : BaseViewModel<Artist>(application) {
     final override var repository: BaseRepository<Artist> = ArtistsRepository(application)
 
-    override var selection: String? = null
-
-    override var selectionArgs: Array<String>? = null
-
     override var sortOrder: String? = "${MediaStore.Audio.Albums.ARTIST} COLLATE NOCASE ASC"
 
     override var uri: Uri = MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI

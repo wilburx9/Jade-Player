@@ -15,10 +15,6 @@ open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(appl
 
     final override var repository: BaseRepository<Album> = AlbumsRepository(application)
 
-    override var selection: String? = null
-
-    override var selectionArgs: Array<String>? = null
-
     override var sortOrder: String? = "${MediaStore.Audio.Albums.ALBUM} COLLATE NOCASE ASC"
 
     override var uri: Uri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI

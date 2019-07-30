@@ -103,7 +103,7 @@ abstract class BaseModelLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStr
             builder.appendQueryParameter(it.key, it.value)
         }
         val uri = builder
-            .scheme("http")
+            .scheme("https")
             .authority("ws.audioscrobbler.com")
             .appendPath("2.0")
             .appendQueryParameter("method", "album.getinfo")
