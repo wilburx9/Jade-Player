@@ -2,12 +2,9 @@
 
 package com.jadebyte.jadeplayer.main.common.view
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import com.jadebyte.jadeplayer.main.common.utils.Utils
 
-/**
- * Created by Wilberforce on 2019-04-21 at 11:56.
- */
-open class BaseFragment: Fragment() {
+open class BaseDialogFragment : DialogFragment() {
     fun isPermissionGranted(permission: String): Boolean = Utils.isPermissionGranted(permission, activity)
 }

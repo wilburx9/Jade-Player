@@ -3,10 +3,12 @@
 package com.jadebyte.jadeplayer.main.common.utils
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.MediaStore
+import androidx.core.content.ContextCompat
 import java.lang.ref.WeakReference
 
 
@@ -34,6 +36,11 @@ object Utils {
                 vibrator.vibrate(50)
             }
         }
+    }
+
+    fun isPermissionGranted(permission: String, c: Context?): Boolean {
+        val context = WeakReference(c).get()
+        return context?.let { ContextCompat.checkSelfPermission(it, permission) } == PackageManager.PERMISSION_GRANTED
     }
 
 

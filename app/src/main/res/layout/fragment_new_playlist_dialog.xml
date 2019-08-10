@@ -36,64 +36,99 @@
         app:layout_constraintTop_toBottomOf="@+id/closeButton" />
 
 
-    <View
-        android:id="@+id/thumbBackground"
-        android:layout_width="135dp"
-        android:layout_height="139dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_xxx_large"
-        android:background="@drawable/accent_round_corner"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAPlaylist" />
+        android:id="@+id/unselectedImageGroup"
+        app:layout_constraintTop_toBottomOf="@+id/createAPlaylist">
+
+        <View
+            android:id="@+id/thumbBackground"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:background="@drawable/accent_round_corner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/playlistImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/track_album_art"
+            android:padding="@dimen/padding_small"
+            app:layout_constraintBottom_toTopOf="@+id/thumbText"
+            app:layout_constraintEnd_toEndOf="@id/thumbBackground"
+            app:layout_constraintStart_toStartOf="@+id/thumbBackground"
+            app:layout_constraintTop_toTopOf="@+id/thumbBackground"
+            app:srcCompat="@drawable/thumb_circular_default" />
+
+        <TextView
+            android:id="@+id/thumbText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="6"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium"
+            android:text="@string/create_playlist_thumb_text"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/text_size_x_small"
+            app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
+            app:layout_constraintEnd_toEndOf="@id/thumbBackground"
+            app:layout_constraintEnd_toStartOf="@+id/uploadPicture"
+            app:layout_constraintStart_toStartOf="@+id/thumbBackground" />
+
+        <TextView
+            android:id="@+id/uploadPicture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_x_large"
+            android:paddingEnd="@dimen/padding_x_large"
+            android:text="@string/upload_playlist_image"
+            android:textSize="@dimen/text_size_x_small"
+            app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/thumbBackground"
+            app:layout_constraintTop_toTopOf="@+id/thumbBackground" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
+        android:id="@+id/playlistArt"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/track_album_art"
-        android:padding="@dimen/padding_small"
-        app:layout_constraintBottom_toTopOf="@+id/thumbText"
-        app:layout_constraintEnd_toEndOf="@id/thumbBackground"
-        app:layout_constraintStart_toStartOf="@+id/thumbBackground"
-        app:layout_constraintTop_toTopOf="@+id/thumbBackground"
-        app:srcCompat="@drawable/thumb_circular_default" />
+        android:contentDescription="@string/playlist_image"
+        android:visibility="invisible"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintBottom_toBottomOf="@id/unselectedImageGroup"
+        app:layout_constraintStart_toStartOf="@id/unselectedImageGroup"
+        app:layout_constraintTop_toTopOf="@id/unselectedImageGroup" />
 
-    <TextView
-        android:id="@+id/thumbText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxEms="6"
-        android:paddingStart="@dimen/padding_medium"
-        android:paddingTop="@dimen/padding_small"
-        android:paddingEnd="@dimen/padding_medium"
-        android:paddingBottom="@dimen/padding_medium"
-        android:text="@string/create_playlist_thumb_text"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="@dimen/text_size_x_small"
-        app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
-        app:layout_constraintEnd_toEndOf="@id/thumbBackground"
-        app:layout_constraintEnd_toStartOf="@+id/uploadPicture"
-        app:layout_constraintStart_toStartOf="@+id/thumbBackground" />
-
-    <TextView
-        android:id="@+id/uploadPicture"
+    <View
+        android:id="@+id/clickableThumbBackground"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_x_large"
-        android:paddingEnd="@dimen/padding_x_large"
-        android:text="@string/upload_playlist_image"
-        android:textSize="@dimen/text_size_x_small"
-        app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thumbBackground"
-        app:layout_constraintTop_toTopOf="@+id/thumbBackground" />
+        android:layout_height="0dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintBottom_toBottomOf="@id/unselectedImageGroup"
+        app:layout_constraintStart_toStartOf="@id/unselectedImageGroup"
+        app:layout_constraintTop_toTopOf="@id/unselectedImageGroup"/>
 
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/playlistNameField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_xx_large"
         android:background="@drawable/edit_text_background"
         android:hint="@string/playlist_name"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
         android:paddingStart="@dimen/padding_x_large"
         android:paddingTop="@dimen/padding_medium"
         android:paddingEnd="@dimen/padding_x_large"
@@ -102,11 +137,7 @@
         app:hintTextAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/playlistNameField"
-        android:maxLines="1"
-        android:inputType="text"
-        android:imeOptions="actionDone"
-        app:layout_constraintTop_toBottomOf="@+id/thumbBackground" />
+        app:layout_constraintTop_toBottomOf="@+id/unselectedImageGroup" />
 
     <Button
         android:id="@+id/createPlaylist"
@@ -114,14 +145,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_x_large"
+        android:enabled="false"
         android:paddingTop="@dimen/button_padding"
         android:paddingBottom="18dp"
-        android:enabled="false"
         android:text="@string/create_playlist"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playlistNameField" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

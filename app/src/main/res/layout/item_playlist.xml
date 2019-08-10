@@ -25,7 +25,7 @@
             android:id="@+id/sharableView"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:contentDescription="@string/track_album_art"
+            android:contentDescription="@string/playlist_image"
             android:scaleType="centerCrop"
             android:src="@{playlist}"
             android:transitionName="@{playlist.toString()}"

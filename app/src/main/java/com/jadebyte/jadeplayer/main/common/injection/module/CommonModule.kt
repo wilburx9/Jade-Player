@@ -12,6 +12,7 @@ import com.jadebyte.jadeplayer.main.common.data.CloudKeys
 import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.main.common.network.DelegatingSocketFactory
 import com.jadebyte.jadeplayer.main.common.network.HttpInterceptor
+import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -92,9 +93,11 @@ class CommonModule {
 
     @Provides
     @Singleton
-    internal fun getOkHttpCache(): CacheControl{
-        return CacheControl.Builder().maxAge(30, TimeUnit.DAYS).build()
-    }
+    internal fun getOkHttpCache(): CacheControl = CacheControl.Builder().maxAge(30, TimeUnit.DAYS).build()
+
+    @Provides
+    @Singleton
+    internal fun getLastFmUrlFetcher(): ImageUrlFetcher = ImageUrlFetcher()
 
 }
 

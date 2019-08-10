@@ -24,6 +24,7 @@
     <string name="image_of_navigation_item">Image of Navigation item</string>
     <string name="navigation_icon">Navigation icon</string>
     <string name="track_album_art">Track album art</string>
+    <string name="playlist_image">Playlist image</string>
     <string name="artist_avatar">Artist avatar</string>
     <string name="album_art">Album art</string>
     <string name="more_options">More options</string>

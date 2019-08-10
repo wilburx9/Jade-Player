@@ -18,9 +18,10 @@ import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
+import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
-class PlaylistFragment : Fragment(), OnItemClickListener, View.OnClickListener {
+class PlaylistFragment : BaseFragment(), OnItemClickListener, View.OnClickListener {
 
     private var items: List<Playlist> = emptyList()
     private lateinit var viewModel: PlaylistViewModel

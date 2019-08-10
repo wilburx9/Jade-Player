@@ -3,13 +3,12 @@
 package com.jadebyte.jadeplayer.main.common.view
 
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import com.jadebyte.jadeplayer.R
 
 /**
  * Created by Wilberforce on 2019-05-25 at 18:57.
  */
-open class BaseFullscreenDialogFragment : DialogFragment() {
+open class BaseFullscreenDialogFragment : BaseDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppTheme_FullScreenDialogStyle)

@@ -24,7 +24,7 @@ class MyAppGlideModule : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         registry.prepend(Album::class.java, InputStream::class.java, AlbumModelLoaderFactory())
         registry.prepend(Artist::class.java, InputStream::class.java, ArtistModelLoaderFactory())
-        registry.prepend(Playlist::class.java, InputStream::class.java, PlaylistModelLoaderFactory(  ))
+        registry.prepend(Playlist::class.java, InputStream::class.java, PlaylistModelLoaderFactory())
 
     }
 }
