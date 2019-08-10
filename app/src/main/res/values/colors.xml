@@ -13,7 +13,7 @@
     <color name="unSelectedNavColor">@color/darkPrimary</color>
     <color name="colorNavItemBg">#E9E9E9</color>
     <color name="colorNavItemBgSelected">#5EFF4060</color>
-    <color name="colorBurOverlay">#C8F5F5F5</color>
+    <color name="colorBurOverlay">#F3F5F5F5</color>´´p
     <color name="seek_bar_background">#454956</color>
     <color name="fadedColorPrimary">#EEEEEE</color>
     <color name="textColorPrimary">#DD000000</color>

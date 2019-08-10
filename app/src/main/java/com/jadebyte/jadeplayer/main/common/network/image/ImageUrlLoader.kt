@@ -3,7 +3,6 @@
 package com.jadebyte.jadeplayer.main.common.network.image
 
 import android.os.StrictMode
-import android.text.TextUtils
 import com.bumptech.glide.load.Options
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.ModelLoader
@@ -24,7 +23,7 @@ abstract class ImageUrlLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStre
 
         val url = imageUrlFetcher.fetchLastFmUrl(lastFmUrlKey, getLastFmParams(model))
 
-        return if (TextUtils.isEmpty(url)) imageUrlFetcher.fetchSpotifyUrl(spotifyUrlKey, getSpotifyFmParams(model)) else url
+        return if (url.isNullOrEmpty()) imageUrlFetcher.fetchSpotifyUrl(spotifyUrlKey, getSpotifyFmParams(model)) else url
     }
 
     override fun handles(model: M): Boolean = true

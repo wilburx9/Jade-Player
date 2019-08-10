@@ -4,7 +4,6 @@ package com.jadebyte.jadeplayer.main.common.network.image
 
 import android.app.Application
 import android.net.Uri
-import android.text.TextUtils
 import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
 import com.jadebyte.jadeplayer.main.common.network.Connectivity
@@ -28,7 +27,7 @@ class ImageUrlFetcher {
     }
 
     fun fetchLastFmUrl(key: String, params: Map<String, String>?): String? {
-        if (TextUtils.isEmpty(cloudKeys.lastFmKey)) {
+        if (cloudKeys.lastFmKey.isNullOrEmpty()) {
             return null
         }
 

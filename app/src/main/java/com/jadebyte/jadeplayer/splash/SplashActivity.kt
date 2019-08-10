@@ -28,12 +28,11 @@ class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-
         if (CloudKeys(preferences).isValid()) {
             goToNextScreen()
             return
         }
+        setContentView(R.layout.activity_splash)
 
         Firebase.firestore.collection("properties").document("keys").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {

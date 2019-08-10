@@ -3,7 +3,6 @@
 package com.jadebyte.jadeplayer.main.common.data
 
 import android.content.SharedPreferences
-import android.text.TextUtils
 
 /**
  * Created by Wilberforce on 19/04/2019 at 23:15.
@@ -20,9 +19,9 @@ data class CloudKeys(
     val spotifyClientId: String? = null
 ) {
     fun isValid(): Boolean =
-        TextUtils.isEmpty(acrSecret) && TextUtils.isEmpty(spotifySecret) && TextUtils.isEmpty(lastFmKey) &&
-                TextUtils.isEmpty(spotifyClientId) && TextUtils.isEmpty(acrHost) && TextUtils.isEmpty(acrKey) &&
-                TextUtils.isEmpty(acrKeyFile) && TextUtils.isEmpty(acrSecretFile)
+        !acrSecret.isNullOrEmpty() && !spotifySecret.isNullOrEmpty() && !lastFmKey.isNullOrEmpty() &&
+                !spotifyClientId.isNullOrEmpty() && !acrHost.isNullOrEmpty() && !acrKey.isNullOrEmpty() &&
+                !acrKeyFile.isNullOrEmpty() && !acrSecretFile.isNullOrEmpty()
 
     constructor(pref: SharedPreferences) : this(
         acrHost = pref.getString(Constants.acrHost, null),

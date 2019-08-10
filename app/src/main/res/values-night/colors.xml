@@ -14,7 +14,7 @@
     <color name="unSelectedNavColor">#CBC9C9</color>
     <color name="colorNavItemBg">#303030</color>
     <color name="colorNavItemBgSelected">@color/colorAccent</color>
-    <color name="colorBurOverlay">#ED070E21</color>
+    <color name="colorBurOverlay">#F7070E21</color>
     <color name="seek_bar_background">#454956</color>
     <color name="fadedColorPrimary">#161C2C</color>
     <color name="textColorPrimary">#FFFFFF</color>

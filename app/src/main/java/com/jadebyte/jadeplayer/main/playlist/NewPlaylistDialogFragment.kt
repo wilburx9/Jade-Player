@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -108,7 +107,7 @@ class NewPlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClickLi
 
     private fun validatePlaylistName() {
         val playlistName = playlistNameField.text.toString()
-        if (!TextUtils.isEmpty(playlistName)) {
+        if (!playlistName.isNullOrEmpty()) {
             createPlaylist(playlistName)
         } else {
             Toast.makeText(activity, R.string.playlist_empty_message, Toast.LENGTH_SHORT).show()
@@ -121,7 +120,7 @@ class NewPlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClickLi
         values.put(MediaStore.Audio.Playlists.NAME, playlist)
         val playlistUri = activity!!.contentResolver.insert(uri, values)
 
-        if (TextUtils.isEmpty(playlistUri?.toString())) {
+        if (playlistUri?.toString().isNullOrEmpty()) {
             Toast.makeText(activity, R.string.something_went_wrong, Toast.LENGTH_SHORT).show()
         } else {
             saveImagePermanently(ContentUris.parseId(playlistUri))

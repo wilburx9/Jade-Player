@@ -3,7 +3,6 @@
 package com.jadebyte.jadeplayer.main.common.network
 
 import android.content.SharedPreferences
-import android.text.TextUtils
 import androidx.core.content.edit
 import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
@@ -12,7 +11,6 @@ import dagger.Lazy
 import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -22,12 +20,9 @@ import javax.inject.Inject
  */
 class HttpInterceptor : Interceptor {
 
-    @Inject
-    lateinit var okHttpClient: Lazy<OkHttpClient>
-    @Inject
-    lateinit var preferences: SharedPreferences
-    @Inject
-    lateinit var cloudKeys: CloudKeys
+    @Inject lateinit var okHttpClient: Lazy<OkHttpClient>
+    @Inject lateinit var preferences: SharedPreferences
+    @Inject lateinit var cloudKeys: CloudKeys
 
     init {
         App.appComponent.inject(this)
@@ -44,8 +39,7 @@ class HttpInterceptor : Interceptor {
         }
 
 
-        if (TextUtils.isEmpty(cloudKeys.spotifySecret) || TextUtils.isEmpty(cloudKeys.spotifyClientId)) {
-            Timber.w("intercept: Spotify secret is empty")
+        if (cloudKeys.spotifySecret.isNullOrEmpty() || cloudKeys.spotifyClientId.isNullOrEmpty()) {
             return chain.proceed(request)
         }
 
@@ -64,7 +58,7 @@ class HttpInterceptor : Interceptor {
                 //perform all 401 in sync blocks, to avoid multiply token updates
                 val code = refreshToken() / 100 //refresh token
                 if (code != 2) { //if refresh token failed for some reason
-                    if (code == 4) {//only if response is 400, 500 might mean that token was not updated
+                    if (code == 4) { //only if response is 400, 500 might mean that token was not updated
                         logout() //go to login screen
                     }
                     return response //if token refresh failed - show error to user

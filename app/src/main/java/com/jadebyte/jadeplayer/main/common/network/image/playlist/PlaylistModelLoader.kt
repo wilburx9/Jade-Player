@@ -5,7 +5,6 @@ package com.jadebyte.jadeplayer.main.common.network.image.playlist
 import android.app.Application
 import android.os.StrictMode
 import android.provider.MediaStore
-import android.text.TextUtils
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.Options
@@ -103,7 +102,7 @@ class PlaylistModelLoader :
 
                 var params = mapOf(Pair("method", "album.getinfo"), Pair("artist", it.artist), Pair("album", it.name))
                 val url = imageUrlFetcher.fetchLastFmUrl("album", params)
-                if (TextUtils.isEmpty(url)) return url
+                if (!url.isNullOrEmpty()) return url
 
                 params =
                     mapOf(Pair("q", String.format("album:%s artist:%s", it.name, it.artist)), Pair("type", "album"))

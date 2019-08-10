@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_xx_large"
-        android:background="@drawable/round_border"
+        android:background="@drawable/round_border_white"
         android:minHeight="0dp"
         android:paddingLeft="@dimen/padding_xx_large"
         android:paddingTop="@dimen/padding_medium"

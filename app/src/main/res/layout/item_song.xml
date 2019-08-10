@@ -7,28 +7,37 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+
+        <import type="android.view.View" />
+
         <variable
             name="song"
             type="com.jadebyte.jadeplayer.main.songs.Song" />
 
+        <variable
+            name="selectable"
+            type="boolean" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:id="@+id/container"
         android:background="?attr/selectableItemBackground"
         android:padding="@dimen/padding_large">
 
         <ImageView
+            android:id="@+id/sharableView"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:contentDescription="@string/track_album_art"
+            android:scaleType="centerCrop"
+            android:src="@{song}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/sharableView"
-            android:src="@{song}"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/track_album_art"
             tools:src="@drawable/thumb_circular_default" />
 
 
@@ -36,19 +45,19 @@
             android:id="@+id/songArtist"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{song.album.artist}"
-            android:layout_marginRight="@dimen/margin_medium"
-            android:layout_marginLeft="@dimen/margin_medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/text_size_x_small"
             android:textStyle="bold"
-            app:layout_constraintRight_toLeftOf="@+id/moreOptions"
+            app:layout_constraintBottom_toTopOf="@+id/guideLine"
             app:layout_constraintLeft_toRightOf="@+id/sharableView"
+            app:layout_constraintRight_toLeftOf="@+id/moreOptions"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.9"
-            app:layout_constraintBottom_toTopOf="@+id/guideLine"
             tools:text="Midnight Dogs" />
 
         <TextView
@@ -59,31 +68,46 @@
             android:maxLines="1"
             android:text="@{song.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/songArtist"
             app:layout_constraintRight_toRightOf="@+id/songArtist"
-            app:layout_constraintVertical_bias="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideLine"
+            app:layout_constraintVertical_bias="0.1"
             tools:text="Loved it out there" />
 
 
+        <!--We are using this view as a constraint for songArtist view, so we can't set the visibility to gone. -->
         <ImageButton
+            android:id="@+id/moreOptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/more_options"
             android:padding="@dimen/padding_medium"
-            android:id="@+id/moreOptions"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:srcCompat="@drawable/ic_more_hor" />
+            android:visibility="@{selectable? View.INVISIBLE: View.VISIBLE}"
+            app:enabled="@{selectable? false: true}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_hor"
+            tools:visibility="invisible" />
 
-        <androidx.constraintlayout.widget.Guideline
+        <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_percent="0.5"
+            android:contentDescription="@string/more_options"
+            android:visibility="@{selectable? View.VISIBLE: View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:checked="false" />
+
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLine"
-            android:orientation="horizontal"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

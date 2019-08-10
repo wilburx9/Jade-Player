@@ -9,7 +9,6 @@ import android.animation.AnimatorSet
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.Handler
-import android.text.TextUtils
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -213,7 +212,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun showFoundLyrics(lyrics: String? = null, source: String? = null) {
-        val lyricsIsEmpty = TextUtils.isEmpty(lyrics)
+        val lyricsIsEmpty = lyrics.isNullOrEmpty()
         if (!lyricsIsEmpty) {
             lyricsText.text = lyrics
             lyricsSource.text = source
@@ -279,7 +278,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun hasLyrics(): Boolean {
-        return !TextUtils.isEmpty(lyricsText.text)
+        return !lyricsText.text.isNullOrEmpty()
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {

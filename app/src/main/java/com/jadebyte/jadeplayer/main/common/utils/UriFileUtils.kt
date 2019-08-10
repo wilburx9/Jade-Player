@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.text.TextUtils
 import java.io.File
 import java.io.IOException
 import java.lang.ref.WeakReference
@@ -58,7 +57,7 @@ object UriFileUtils {
             } else if (isDownloadsDocument(uri)) {
                 val id = DocumentsContract.getDocumentId(uri)
 
-                if (!TextUtils.isEmpty(id)) {
+                if (!id.isNullOrEmpty()) {
                     return try {
                         val contentUri = ContentUris.withAppendedId(
                             Uri.parse(Environment.DIRECTORY_DOWNLOADS), id.toLong()
