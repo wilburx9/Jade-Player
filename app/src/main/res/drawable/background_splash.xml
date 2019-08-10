@@ -5,9 +5,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/darkPrimary" />
     <item
+        android:bottom="150dp"
         android:drawable="@drawable/ic_launcher"
-        android:gravity="center"
-        android:bottom="150dp" />
+        android:gravity="center" />
     <item
         android:bottom="40dp"
         android:drawable="@drawable/ic_jadeplayer"

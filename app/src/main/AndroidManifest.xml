@@ -22,12 +22,12 @@
             android:theme="@style/AppTheme.NoActionBar.ColoredStatusBar"/>
         <activity
             android:name=".getStarted.GetStartedActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.DarkTheme" />
         <activity
             android:name=".splash.SplashActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar.Splash">
+            android:theme="@style/AppTheme.NoActionBar.DarkTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

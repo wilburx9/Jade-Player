@@ -11,6 +11,7 @@ import com.jadebyte.jadeplayer.main.common.network.image.album.AlbumModelLoader
 import com.jadebyte.jadeplayer.main.common.network.image.artist.ArtistModelLoader
 import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoader
 import com.jadebyte.jadeplayer.main.navigation.NavRepository
+import com.jadebyte.jadeplayer.splash.SplashActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -28,4 +29,5 @@ interface AppComponent {
     fun inject(albumSongsFragment: AlbumSongsFragment)
     fun inject(urlFetcher: ImageUrlFetcher)
     fun inject(playlistDataFetcher: PlaylistModelLoader.PlaylistDataFetcher)
+    fun inject(splashActivity: SplashActivity)
 }

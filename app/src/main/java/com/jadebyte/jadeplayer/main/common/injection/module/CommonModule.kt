@@ -5,11 +5,7 @@ package com.jadebyte.jadeplayer.main.common.injection.module
 import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.core.content.edit
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
-import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.main.common.network.DelegatingSocketFactory
 import com.jadebyte.jadeplayer.main.common.network.HttpInterceptor
 import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
@@ -57,39 +53,7 @@ class CommonModule {
 
     @Provides
     @Reusable
-    // This will return null the first time the app is opened. This shouldn't be so.
-    // TODO Fix: 🖕
-    internal fun getCloudKey(pref: SharedPreferences): CloudKeys {
-        var cloudKeys = CloudKeys(
-            acrHost = pref.getString(Constants.acrHost, ""),
-            acrKey = pref.getString(Constants.acrKey, ""),
-            acrKeyFile = pref.getString(Constants.acrKeyFile, ""),
-            acrSecret = pref.getString(Constants.acrSecret, ""),
-            acrSecretFile = pref.getString(Constants.acrSecretFile, ""),
-            lastFmKey = pref.getString(Constants.lastFmKey, ""),
-            spotifyClientId = pref.getString(Constants.spotifyClientId, ""),
-            spotifySecret = pref.getString(Constants.spotifySecret, "")
-        )
-        Firebase.firestore.collection("properties").document("keys").get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val result = task.result!!.toObject(CloudKeys::class.java)
-                result?.let {
-                    cloudKeys = it
-                    pref.edit {
-                        putString(Constants.acrHost, it.acrHost)
-                        putString(Constants.acrKey, it.acrKey)
-                        putString(Constants.acrKeyFile, it.acrKeyFile)
-                        putString(Constants.acrSecret, it.acrSecret)
-                        putString(Constants.acrSecretFile, it.acrSecretFile)
-                        putString(Constants.lastFmKey, it.lastFmKey)
-                        putString(Constants.spotifyClientId, it.spotifyClientId)
-                        putString(Constants.spotifySecret, it.spotifySecret)
-                    }
-                }
-            }
-        }
-        return cloudKeys
-    }
+    internal fun getCloudKey(pref: SharedPreferences): CloudKeys = CloudKeys(pref)
 
     @Provides
     @Singleton

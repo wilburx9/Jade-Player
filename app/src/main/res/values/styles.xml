@@ -32,8 +32,15 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--Always dark theme-->
+    <style name="AppTheme.NoActionBar.DarkTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+    </style>
+
     <!--Splash theme-->
-    <style name="AppTheme.NoActionBar.Splash">
+    <style name="AppTheme.NoActionBar.DarkTheme.Splash">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
@@ -42,7 +49,8 @@
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:windowFullscreen">false</item> <!-- True for full screen without status bar -->
+        <item name="android:windowFullscreen">false
+        </item> <!-- True for full screen without status bar -->
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
