@@ -37,7 +37,7 @@
         <activity
             android:name=".onBoarding.OnBoardingActivity"
             android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.DarkTheme" />
     </application>
 
 </manifest>

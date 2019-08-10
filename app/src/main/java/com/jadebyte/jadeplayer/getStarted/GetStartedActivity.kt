@@ -11,11 +11,13 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.BaseActivity
+import com.jadebyte.jadeplayer.common.crossFade
+import com.jadebyte.jadeplayer.common.fadeIn
 import com.jadebyte.jadeplayer.main.MainActivity
 import kotlinx.android.synthetic.main.activity_get_started.*
 
 
-class GetStartedActivity : BaseActivity() {
+class GetStartedActivity : BaseActivity(), View.OnClickListener {
 
     private val permissionRequestExternalStorage = 0
     private val storagePermission = android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -23,27 +25,8 @@ class GetStartedActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_started)
-        getStarted.setOnClickListener { handleGetStartedClick() }
-    }
-
-
-    private fun handleGetStartedClick() {
-        when {
-            isPermissionGranted(storagePermission) -> startMainActivity()
-            !ActivityCompat.shouldShowRequestPermissionRationale(this, storagePermission) -> {
-                // The user has denied the permission and selected the "Don't ask again"
-                // option in the permission request dialog
-                val intent = Intent()
-                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                val uri = Uri.fromParts("package", packageName, null)
-                intent.data = uri
-                startActivity(intent)
-            }
-            else -> ActivityCompat.requestPermissions(
-                this, arrayOf(storagePermission),
-                permissionRequestExternalStorage
-            )
-        }
+        getStarted.setOnClickListener(this)
+        goToAppInfo.setOnClickListener(this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -53,9 +36,45 @@ class GetStartedActivity : BaseActivity() {
                 startMainActivity()
             } else {
                 // Permission request was denied.
-                infoText.visibility = View.VISIBLE
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, storagePermission)) {
+                    infoText.setText(R.string.read_storage_permission_info)
+                } else {
+                    // The user has denied the permission and selected the "Don't ask again"
+                    // option in the permission request dialog
+                    infoText.text = getString(R.string.read_storage_permission_settings, getString(R.string.app_name))
+                    goToAppInfo.crossFade(getStarted, 500)
+                }
+                if (infoText.visibility != View.VISIBLE) {
+                    infoText.fadeIn(duration = 500)
+                }
             }
         }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.getStarted -> getStarted()
+            R.id.goToAppInfo -> goToAppInfo()
+        }
+    }
+
+    private fun getStarted() {
+        if (isPermissionGranted(storagePermission)) {
+            startMainActivity()
+        } else {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(storagePermission),
+                permissionRequestExternalStorage
+            )
+        }
+    }
+
+    private fun goToAppInfo() {
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivity(intent)
     }
 
     private fun startMainActivity() {

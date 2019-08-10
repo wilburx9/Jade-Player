@@ -78,7 +78,9 @@
 
 
     <!--Others-->
-    <string name="read_storage_permission_info">We need to be authorized to access the media files on your device</string>
+    <string name="read_storage_permission_info">We need to be authorized to access the media files on your device.</string>
+    <string name="read_storage_permission_settings">Storage permission can be enabled under Settings > Apps > %s > Permission.</string>
+    <string name="goToAppInfo">Go to App Info</string>
     <string name="recentlyPlayed">Recently Played</string>
     <string name="empty_playlist">You have not played any song yet</string>
     <string name="play">Play</string>
@@ -123,7 +125,6 @@
     <string name="continue_">Continue</string>
     <string name="sth_deleted">\"%1$s\" deleted</string>
     <string name="sth_went_wrong">Oops! Something went wrong</string>
-
 
 
 </resources>

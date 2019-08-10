@@ -9,37 +9,38 @@
     android:layout_height="match_parent"
     tools:context=".getStarted.GetStartedActivity">
 
-    <LinearLayout
-        android:layout_width="0dp"
+
+    <ImageView
+        android:id="@+id/launcherIcon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/padding_x_large"
-        android:paddingRight="@dimen/padding_x_large"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_icon"
+        android:maxWidth="80dp"
+        android:maxHeight="80dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideLine1"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/jadeplayer"
+        app:layout_constraintTop_toTopOf="@+id/guideLine1"
+        app:srcCompat="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/jadeplayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:contentDescription="@string/app_name"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/launcherIcon"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@+id/launcherIcon"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideLine1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_large"
-            android:layout_marginRight="@dimen/margin_large"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/app_icon"
-            android:maxWidth="80dp"
-            android:maxHeight="80dp"
-            app:srcCompat="@drawable/ic_launcher" />
-
-        <ImageView
-            android:id="@+id/jadeplayer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
-            android:tint="@android:color/white"
-            app:srcCompat="@drawable/ic_jadeplayer" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="@+id/launcherIcon"
+        app:srcCompat="@drawable/ic_jadeplayer" />
 
     <Button
         android:id="@+id/getStarted"
@@ -57,15 +58,34 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideLine2" />
 
+    <Button
+        android:id="@+id/goToAppInfo"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goToAppInfo"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/getStarted"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/getStarted" />
+
     <TextView
         android:id="@+id/infoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_x_large"
         android:gravity="center"
         android:padding="@dimen/margin_x_large"
         android:text="@string/read_storage_permission_info"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/getStarted"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

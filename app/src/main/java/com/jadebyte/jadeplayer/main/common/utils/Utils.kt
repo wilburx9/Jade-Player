@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import java.lang.ref.WeakReference
 
 
+
+
 /**
  * Created by Wilberforce on 2019-04-21 at 23:47.
  */
@@ -42,6 +44,4 @@ object Utils {
         val context = WeakReference(c).get()
         return context?.let { ContextCompat.checkSelfPermission(it, permission) } == PackageManager.PERMISSION_GRANTED
     }
-
-
 }

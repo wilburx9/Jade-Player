@@ -57,6 +57,7 @@
         android:layout_height="wrap_content"
         android:text="@string/skip"
         android:textAllCaps="false"
+        android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
         android:textStyle="bold" />
 
@@ -85,6 +86,7 @@
         android:paddingBottom="@dimen/padding_medium"
         android:text="@string/got_it"
         android:textStyle="bold"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -102,6 +104,7 @@
         android:paddingBottom="@dimen/padding_medium"
         android:text="@string/next"
         android:textStyle="bold"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

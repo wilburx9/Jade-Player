@@ -100,6 +100,13 @@ fun View.fadeIn(duration: Long = 1000, startDelay: Long = 0) {
     val animator = ObjectAnimator.ofFloat(this, View.ALPHA, 0F, 1F)
     animator.duration = duration
     animator.startDelay = startDelay
+    animator.addListener(object : AnimatorListener {
+        override fun onAnimationStart(animation: Animator?) {
+            super.onAnimationStart(animation)
+            this@fadeIn.visibility = View.VISIBLE
+            animator.removeListener(this)
+        }
+    })
     animator.start()
 }
 
@@ -120,7 +127,7 @@ fun View.crossFade(otherView: View, duration: Long = 1000, startDelay: Long = 0)
 
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
-                otherView.visibility = View.INVISIBLE
+                otherView.visibility = View.GONE
                 this@apply.removeListener(this)
             }
         })
