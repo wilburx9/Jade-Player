@@ -15,10 +15,10 @@ abstract class BaseRepository<T>(private val application: Application) {
 
     @WorkerThread
     fun loadData(
-        projection: Array<String>?,
-        selection: String?,
-        selectionArgs: Array<String>?,
-        sortOrder: String?
+        projection: Array<String>? = null,
+        selection: String? = null,
+        selectionArgs: Array<String>? = null,
+        sortOrder: String? = null
     ): List<T> {
         val results = mutableListOf<T>()
         val cursor = application.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)

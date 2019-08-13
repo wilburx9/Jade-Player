@@ -24,7 +24,8 @@ open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(appl
         MediaStore.Audio.Albums.ARTIST,
         MediaStore.Audio.Albums.NUMBER_OF_SONGS,
         MediaStore.Audio.Albums._ID,
-        MediaStore.Audio.Albums.FIRST_YEAR
+        MediaStore.Audio.Albums.FIRST_YEAR,
+        MediaStore.Audio.Albums.ALBUM_KEY
     )
 
 }

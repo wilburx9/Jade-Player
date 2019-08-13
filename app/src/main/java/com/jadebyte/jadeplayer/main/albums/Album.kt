@@ -16,7 +16,8 @@ data class Album(
     val artist: String,
     val tracks: Int? = 0,
     val id: Long? = 0,
-    val year: String? = ""
+    val year: String? = "",
+    val key: String
 ) : Parcelable {
 
     constructor(data: Cursor) : this(
@@ -24,13 +25,15 @@ data class Album(
         artist = data.getString(data.getColumnIndex(MediaStore.Audio.Albums.ARTIST)),
         year = data.getString(data.getColumnIndex(MediaStore.Audio.Albums.FIRST_YEAR)),
         tracks = data.getInt(data.getColumnIndex(MediaStore.Audio.Albums.NUMBER_OF_SONGS)),
-        id = data.getLong(data.getColumnIndex(MediaStore.Audio.Albums._ID))
+        id = data.getLong(data.getColumnIndex(MediaStore.Audio.Albums._ID)),
+        key = data.getString(data.getColumnIndex(MediaStore.Audio.Albums.ALBUM_KEY))
     )
 
     constructor(cursor: Cursor, id: Long) : this(
         name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
         artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
-        id = id
+        id = id,
+        key = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))
     )
 
     /**

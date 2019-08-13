@@ -41,9 +41,10 @@ abstract class BaseViewModel<T>(application: Application) : AndroidViewModel(app
 
     fun loadData() {
         viewModelScope.launch {
-            data.value = withContext(Dispatchers.IO) {
+            val result = withContext(Dispatchers.IO) {
                 repository.loadData(projection, selection, selectionArgs, sortOrder)
             }
+            deliverResult(result)
 
         }
     }
@@ -51,6 +52,10 @@ abstract class BaseViewModel<T>(application: Application) : AndroidViewModel(app
     override fun onCleared() {
         super.onCleared()
         getApplication<Application>().contentResolver.unregisterContentObserver(observer)
+    }
+
+    open fun deliverResult(items: List<T>) {
+        data.value = items
     }
 }
 

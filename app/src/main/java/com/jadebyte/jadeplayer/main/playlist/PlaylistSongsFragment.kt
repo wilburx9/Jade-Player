@@ -27,10 +27,10 @@ import java.util.concurrent.TimeUnit
 
 class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListener {
 
-    lateinit var binding: FragmentPlaylistSongsBinding
-    lateinit var songsViewModel: PlaylistSongsViewModel
-    lateinit var playlistViewModel: PlaylistViewModel
-    lateinit var playlist: Playlist
+    private lateinit var binding: FragmentPlaylistSongsBinding
+    private lateinit var songsViewModel: PlaylistSongsViewModel
+    private lateinit var playlistViewModel: PlaylistViewModel
+    private lateinit var playlist: Playlist
     private var items = emptyList<Song>()
 
 

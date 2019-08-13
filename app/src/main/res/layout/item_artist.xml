@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{@plurals/numberOfSongs(artist.songsCount, artist.songsCount)}"
+            android:text="@{@string/song_in_album(@plurals/numberOfSongs(artist.songsCount, artist.songsCount), @plurals/numberOfAlbums(artist.albumsCount, artist.albumsCount))}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/sharableView"

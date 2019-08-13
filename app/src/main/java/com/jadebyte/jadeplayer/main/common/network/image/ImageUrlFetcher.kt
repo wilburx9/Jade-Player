@@ -47,7 +47,7 @@ class ImageUrlFetcher {
 
             getResponse(uri.toString())?.use { response ->
                 if (response.isSuccessful) {
-                    val jsonObject = JSONObject(response.body()?.string())
+                    val jsonObject = JSONObject(response.body?.string())
 
                     if (!jsonObject.has(key)) {
                         return null
@@ -83,7 +83,7 @@ class ImageUrlFetcher {
 
             getResponse(uri.toString())?.use { response ->
                 return if (response.isSuccessful) {
-                    val jsonObject = JSONObject(response.body()?.string())
+                    val jsonObject = JSONObject(response.body?.string())
 
                     val items = jsonObject.getJSONObject(key).getJSONArray("items")
                     if (items.isNull(0)) {

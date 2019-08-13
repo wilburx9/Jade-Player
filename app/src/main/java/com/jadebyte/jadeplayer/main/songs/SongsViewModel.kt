@@ -13,7 +13,7 @@ import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
  */
 open class SongsViewModel(application: Application) : BaseViewModel<Song>(application) {
 
-    final override var repository: BaseRepository<Song> = SongsRepository(application)
+    override var repository: BaseRepository<Song> = SongsRepository(application)
 
     override var selection: String? = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
 
@@ -24,17 +24,21 @@ open class SongsViewModel(application: Application) : BaseViewModel<Song>(applic
 
     override var uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 
-    final override var projection: Array<String>? = arrayOf(
-        MediaStore.Audio.Media.TITLE,
-        MediaStore.Audio.Media.ARTIST,
-        MediaStore.Audio.Media.ALBUM_ID,
-        MediaStore.Audio.Media.ALBUM,
-        MediaStore.Audio.Media.DURATION,
-        MediaStore.Audio.Media.DATA,
-        MediaStore.Audio.Media.ARTIST,
-        MediaStore.Audio.Media.TRACK,
-        MediaStore.Audio.Media.ALBUM_ID,
-        MediaStore.Audio.Media.ARTIST_ID,
-        MediaStore.Audio.Media._ID
-    )
+    override var projection: Array<String>? = basicSongsProjection
 }
+
+val basicSongsProjection = arrayOf(
+    MediaStore.Audio.Media.TITLE,
+    MediaStore.Audio.Media.ARTIST,
+    MediaStore.Audio.Media.ALBUM_ID,
+    MediaStore.Audio.Media.ALBUM,
+    MediaStore.Audio.Media.DURATION,
+    MediaStore.Audio.Media.DATA,
+    MediaStore.Audio.Media.ARTIST,
+    MediaStore.Audio.Media.TRACK,
+    MediaStore.Audio.Media.ALBUM_ID,
+    MediaStore.Audio.Media.ARTIST_ID,
+    MediaStore.Audio.Media.TITLE_KEY,
+    MediaStore.Audio.Media.ALBUM_KEY,
+    MediaStore.Audio.Media._ID
+)

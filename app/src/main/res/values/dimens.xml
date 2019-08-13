@@ -30,4 +30,6 @@
     <dimen name="text_size_xxx_large">30sp</dimen>
     <dimen name="floating_playback_height">80dp</dimen>
     <dimen name="button_padding">18dp</dimen>
+    <dimen name="song_image_large">60dp</dimen>
+    <dimen name="song_image_small">45dp</dimen>
 </resources>

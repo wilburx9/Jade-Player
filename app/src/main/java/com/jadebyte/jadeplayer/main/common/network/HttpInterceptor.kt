@@ -8,7 +8,12 @@ import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
 import com.jadebyte.jadeplayer.main.common.utils.ConvertUtils
 import dagger.Lazy
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -32,9 +37,9 @@ class HttpInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
 
-        if (!request.url().uri().authority.contains("spotify")) {
+        if (!request.url.toUri().authority.contains("spotify")) {
             return chain.proceed(request)
-        } else if (request.method() == "POST") {
+        } else if (request.method == "POST") {
             return chain.proceed(request)
         }
 
@@ -53,7 +58,7 @@ class HttpInterceptor : Interceptor {
         request = builder.build() //overwrite old request
         val response = chain.proceed(request) //perform request, here original request will be executed
 
-        if (response.code() == 401) { //if unauthorized
+        if (response.code == 401) { //if unauthorized
             synchronized(okHttpClient) {
                 //perform all 401 in sync blocks, to avoid multiply token updates
                 val code = refreshToken() / 100 //refresh token
@@ -87,8 +92,8 @@ class HttpInterceptor : Interceptor {
         //you might use retrofit here
         val base64 = ConvertUtils.stringToBase64("${cloudKeys.spotifyClientId!!}:${cloudKeys.spotifySecret!!}")
 
-        val mediaType = MediaType.parse("application/x-www-form-urlencoded")
-        val body = RequestBody.create(mediaType, "grant_type=client_credentials")
+        val mediaType = "application/x-www-form-urlencoded".toMediaTypeOrNull()
+        val body = "grant_type=client_credentials".toRequestBody(mediaType)
         val request = Request.Builder()
             .url("https://accounts.spotify.com/api/token")
             .post(body)
@@ -98,12 +103,12 @@ class HttpInterceptor : Interceptor {
 
         try {
             val response = okHttpClient.get().newCall(request).execute()
-            val jsonObject = JSONObject(response.body()!!.string())
+            val jsonObject = JSONObject(response.body!!.string())
             val accessToken = jsonObject.getString("access_token")
             preferences.edit {
                 putString(spotifyToken, accessToken)
             }
-            return response.code()
+            return response.code
         } catch (e: IOException) {
             e.printStackTrace()
         } catch (e: JSONException) {

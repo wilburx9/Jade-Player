@@ -98,6 +98,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/more_options"
             android:visibility="@{selectable? View.VISIBLE: View.GONE}"
+            android:checked="@{song.selected}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

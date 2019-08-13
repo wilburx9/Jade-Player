@@ -31,10 +31,10 @@ import com.jadebyte.jadeplayer.main.common.callbacks.TextWatcher
 import com.jadebyte.jadeplayer.main.common.dataBinding.DataBindingAdapters
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import com.jadebyte.jadeplayer.main.common.utils.UriFileUtils
+import com.jadebyte.jadeplayer.main.common.utils.Utils
 import com.jadebyte.jadeplayer.main.common.view.BaseFullscreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_new_playlist_dialog.*
 import kotlinx.coroutines.*
-import timber.log.Timber
 
 
 class NewPlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClickListener {
@@ -107,7 +107,7 @@ class NewPlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClickLi
 
     private fun validatePlaylistName() {
         val playlistName = playlistNameField.text.toString()
-        if (!playlistName.isNullOrEmpty()) {
+        if (playlistName.isNotEmpty()) {
             createPlaylist(playlistName)
         } else {
             Toast.makeText(activity, R.string.playlist_empty_message, Toast.LENGTH_SHORT).show()
@@ -160,19 +160,16 @@ class NewPlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClickLi
         scope.launch {
             withContext(Dispatchers.IO) {
                 if (tempThumbUri != null) {
-                    Timber.w("1: $tempThumbUri is not null")
                     val path = UriFileUtils.getPathFromUri(activity, tempThumbUri!!)
                     if (path != null) {
-                        Timber.w("2: $path is not null")
                         val resultPath = ImageUtils.getImagePathForPlaylist(playlistId, activity)
                         if (resultPath != null) {
-                            Timber.w("3: $resultPath is not null")
-                            val needed = ImageUtils.resizeImageIfNeeded(path, 300.0, 300.0, 80, resultPath)
-                            Timber.w("Saved path is $needed")
+                            ImageUtils.resizeImageIfNeeded(path, 300.0, 300.0, 80, resultPath)
                         }
                     }
                 }
             }
+            Utils.vibrateAfterAction(activity!!)
             findNavController().popBackStack()
         }
     }

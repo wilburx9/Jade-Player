@@ -17,29 +17,38 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Song(
+    val id: Long,
     val title: String,
+    val titleKey: String,
     val album: Album,
     val path: String,
-    val mediaId: Long,
-    val albumId: Long,
     val duration: Long,
     val number: String,
     val artPath: String,
-    val artistId: Long,
     var isCurrent: Boolean = false,
-    var selected: Boolean = false
+    var selected: Boolean = false,
+    var audioId: Long? = null
 ) : Parcelable {
     constructor(cursor: Cursor) : this(
+        id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID)),
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
+        titleKey = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE_KEY)),
         album = Album(cursor, cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))),
         path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-        mediaId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID)),
-        albumId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)),
         duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
-        artistId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST_ID)),
         artPath = ImageUtils.getAlbumArtUri(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))).toString(),
-        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.TRACK)))
+        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)))
     )
 
-
+    constructor(cursor: Cursor, audioId: Long?) : this(
+        id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members._ID)),
+        title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.TITLE)),
+        titleKey = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.TITLE_KEY)),
+        album = Album(cursor, cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.ALBUM_ID))),
+        path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.DATA)),
+        duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.DURATION)),
+        artPath = ImageUtils.getAlbumArtUri(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.ALBUM_ID))).toString(),
+        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.ARTIST))),
+        audioId = audioId
+    )
 }

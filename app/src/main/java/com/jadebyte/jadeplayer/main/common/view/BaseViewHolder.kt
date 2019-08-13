@@ -3,6 +3,7 @@
 package com.jadebyte.jadeplayer.main.common.view
 
 import android.view.View
+import android.widget.CheckBox
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
@@ -21,7 +22,7 @@ class BaseViewHolder<T>(
     init {
         itemView.setOnClickListener(this)
         itemView.findViewById<View>(R.id.moreOptions)?.setOnClickListener(this)
-
+        itemView.findViewById<CheckBox>(R.id.checkbox)?.setOnClickListener(this)
     }
 
 
@@ -32,7 +33,10 @@ class BaseViewHolder<T>(
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.container -> itemClickListener.onItemClick(adapterPosition, itemView.findViewById(R.id.sharableView))
+            R.id.container, R.id.checkbox -> itemClickListener.onItemClick(
+                adapterPosition,
+                itemView.findViewById(R.id.sharableView)
+            )
             R.id.moreOptions -> itemClickListener.onOverflowClick(adapterPosition)
         }
     }

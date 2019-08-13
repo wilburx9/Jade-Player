@@ -27,16 +27,16 @@
 
 
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="143dp"
+            android:layout_height="146dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sectionBackButton"
-            tools:src="@drawable/thumb_default"
+            tools:src="@drawable/thumb_default_short"
             android:scaleType="centerCrop"
             android:layout_marginStart="@dimen/margin_x_large"
             android:layout_marginTop="@dimen/margin_medium"
             android:id="@+id/albumArt"
-            android:src="@{album}"
+            app:artistSrc="@{album}"
             android:contentDescription="@string/album_art" />
 
         <TextView

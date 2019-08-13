@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/playlistArt"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="143dp"
+            android:layout_height="146dp"
             android:layout_marginStart="@dimen/margin_x_large"
             android:layout_marginTop="@dimen/margin_medium"
             android:contentDescription="@string/album_art"
@@ -39,7 +39,7 @@
             app:playlistSrc="@{playlist}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sectionBackButton"
-            tools:src="@drawable/thumb_default" />
+            tools:src="@drawable/thumb_default_short" />
 
         <TextView
             android:id="@+id/playlistNameField"

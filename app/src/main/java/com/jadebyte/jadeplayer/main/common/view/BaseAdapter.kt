@@ -6,6 +6,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.collection.SparseArrayCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,8 @@ class BaseAdapter<T>(
     private val layoutId: Int,
     private val variableId: Int,
     private val fadeInViewHolder: Boolean = false,
-    private val itemClickListener: OnItemClickListener
+    private val itemClickListener: OnItemClickListener,
+    private var variables: SparseArrayCompat<Any>? = null
 ) : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
     private var lastPosition = -1
@@ -30,6 +32,11 @@ class BaseAdapter<T>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<T> {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutId, parent, false)
+        variables?.let {
+            for (i in 0 until it.size()) {
+                itemBinding.setVariable(it.keyAt(i), it.valueAt(i))
+            }
+        }
         return BaseViewHolder(itemBinding, variableId, itemClickListener)
     }
 

@@ -17,7 +17,6 @@ import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import com.jadebyte.jadeplayer.main.playlist.Playlist
 import okhttp3.Response
-import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -62,7 +61,7 @@ class PlaylistModelLoader :
 
         override fun cleanup() {
             inputStream?.close()
-            response?.body()?.close()
+            response?.body?.close()
         }
 
         override fun getDataSource(): DataSource {
@@ -82,17 +81,13 @@ class PlaylistModelLoader :
             }
         }
 
-        private fun fetchFileInputStream(): InputStream {
-            Timber.e("Loading file ${imageFile.absolutePath}")
-            return imageFile.inputStream()
-        }
+        private fun fetchFileInputStream(): InputStream = imageFile.inputStream()
 
         private fun fetchUrlInputStream(): InputStream? {
-            Timber.w("Loading url")
             val url = getImageUrl() ?: return null
             response = imageUrlFetcher.getResponse(url)
             return response?.let {
-                if (it.isSuccessful) it.body()?.byteStream() else null
+                if (it.isSuccessful) it.body?.byteStream() else null
             }
         }
 
@@ -131,7 +126,8 @@ class PlaylistModelLoader :
 private val projection = arrayOf(
     MediaStore.Audio.Media.ARTIST,
     MediaStore.Audio.Media.ALBUM,
-    MediaStore.Audio.Media.ALBUM_ID
+    MediaStore.Audio.Media.ALBUM_ID,
+    MediaStore.Audio.Media.ALBUM_KEY
 )
 private const val selection = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
 private val selectionArgs = arrayOf("0")

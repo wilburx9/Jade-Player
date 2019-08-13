@@ -207,6 +207,27 @@
                             <option name="y" value="865" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_playlistMenuBottomSheetDialogFragment_to_playlistSongsEditorDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="playlistSongsEditorDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="780" />
+                            <option name="y" value="1080" />
+                          </Point>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -269,13 +290,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="songsMenuBottomSheetDialogFragment2">
+                  <entry key="songsMenuBottomSheetDialogFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1476" />
-                            <option name="y" value="168" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
