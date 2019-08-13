@@ -54,6 +54,8 @@ abstract class BaseViewModel<T>(application: Application) : AndroidViewModel(app
         getApplication<Application>().contentResolver.unregisterContentObserver(observer)
     }
 
+
+    // Give child classes the opportunity to intercept and modify result
     open fun deliverResult(items: List<T>) {
         data.value = items
     }

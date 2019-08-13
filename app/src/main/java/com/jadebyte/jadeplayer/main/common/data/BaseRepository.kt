@@ -21,7 +21,7 @@ abstract class BaseRepository<T>(private val application: Application) {
         sortOrder: String? = null
     ): List<T> {
         val results = mutableListOf<T>()
-        val cursor = application.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
+        val cursor = query(uri, projection, selection, selectionArgs, sortOrder)
         cursor?.use {
             while (it.moveToNext()) {
                 results.add(transform(it))
@@ -29,6 +29,14 @@ abstract class BaseRepository<T>(private val application: Application) {
         }
         return results
     }
+
+    fun query(
+        uri: Uri,
+        projection: Array<String>? = null,
+        selection: String? = null,
+        selectionArgs: Array<String>? = null,
+        sortOrder: String? = null
+    ): Cursor? = application.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
 
     abstract fun transform(cursor: Cursor): T
 

@@ -22,6 +22,7 @@ import com.jadebyte.jadeplayer.main.common.image.CircularTransparentCenter
 import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoader
 import com.jadebyte.jadeplayer.main.playlist.Playlist
 import com.jadebyte.jadeplayer.main.songs.Song
+import timber.log.Timber
 
 
 /**
@@ -102,6 +103,7 @@ object DataBindingAdapters {
     @BindingAdapter("android:src")
     @JvmStatic
     fun setPlaylistCover(view: ImageView, playlist: Playlist) {
+        Timber.w("setPlaylistSrc: $playlist")
         GlideApp.with(view)
             .load(playlist)
             .transform(

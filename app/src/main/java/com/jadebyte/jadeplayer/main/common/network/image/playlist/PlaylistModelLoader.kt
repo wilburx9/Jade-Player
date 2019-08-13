@@ -37,7 +37,7 @@ import javax.inject.Inject
  *  For playlist without a saved image file, the following steps are taken:
  *  1. A distinct list of all albums in the playlist is retrieved with ContentResolver
  *  2. If the Glide target width is greater than 100dp, we retrieve the album art of the first four successful album
- *  arts and then use [ImageUtils.merge] to merge the bitmaps. However, if the Glide target width is less than or equals
+ *  arts and then generate a collage with the bitmaps. However, if the Glide target width is less than or equals
  *  to 100dp, we load the album art of the first successful album art.
  *  3. Finally, the InputStream from any of the results in step 2 is passed to Glide
  */
@@ -101,6 +101,7 @@ class PlaylistModelLoader :
         private fun fetchFileInputStream(): InputStream = imageFile.inputStream()
 
         private fun fetchUrlInputStream(): InputStream? {
+            if (playlist.songsCount == 0) return null
             return if (width.dp > 100) {
                 fetchMergedBitmapInputStream()
             } else {

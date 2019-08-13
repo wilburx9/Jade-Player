@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class Playlist(val id: Long, var name: String, val modified: Long) : Parcelable {
+data class Playlist(val id: Long, var name: String, val modified: Long, var songsCount: Int = 0) : Parcelable {
 
     constructor(cursor: Cursor) : this(
         id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists._ID)),
