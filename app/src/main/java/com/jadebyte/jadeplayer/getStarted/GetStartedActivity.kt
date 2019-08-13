@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_get_started.*
 class GetStartedActivity : BaseActivity(), View.OnClickListener {
 
     private val permissionRequestExternalStorage = 0
-    private val storagePermission = android.Manifest.permission.READ_EXTERNAL_STORAGE
+    private val storagePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

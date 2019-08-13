@@ -58,7 +58,7 @@ class SplashActivity : BaseActivity() {
         val nextActivity =
             if (!preferences.getBoolean(OnBoardingActivity.HAS_SEEN_ON_BOARDING, false)) {
                 OnBoardingActivity::class.java
-            } else if (!isPermissionGranted(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else if (!isPermissionGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 GetStartedActivity::class.java
             } else {
                 MainActivity::class.java

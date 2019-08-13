@@ -46,7 +46,7 @@ class OnBoardingActivity : BaseActivity(), OnPageChangeListener, View.OnClickLis
 
     private fun startNextActivity() {
         val nextActivity =
-            if (isPermissionGranted(android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (isPermissionGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 MainActivity::class.java
             } else {
                 GetStartedActivity::class.java

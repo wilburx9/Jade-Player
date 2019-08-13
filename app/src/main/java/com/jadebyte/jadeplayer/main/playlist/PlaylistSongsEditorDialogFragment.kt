@@ -65,7 +65,7 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
                 Utils.vibrateAfterAction(activity!!)
                 findNavController().popBackStack()
             } else {
-                // Updating playlist wasn't successfu;
+                // Updating playlist wasn't successful;
                 if (animatorSet.isRunning) animatorSet.cancel()
                 doneButton.crossFade(progressBar, 500, visibility = View.INVISIBLE)
                 Toast.makeText(activity, R.string.sth_went_wrong, Toast.LENGTH_SHORT).show()

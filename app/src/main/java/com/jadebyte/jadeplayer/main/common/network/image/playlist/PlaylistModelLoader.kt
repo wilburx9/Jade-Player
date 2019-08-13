@@ -3,6 +3,8 @@
 package com.jadebyte.jadeplayer.main.common.network.image.playlist
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.StrictMode
 import android.provider.MediaStore
 import com.bumptech.glide.Priority
@@ -12,7 +14,10 @@ import com.bumptech.glide.load.data.DataFetcher
 import com.bumptech.glide.load.model.ModelLoader
 import com.bumptech.glide.signature.ObjectKey
 import com.jadebyte.jadeplayer.common.App
+import com.jadebyte.jadeplayer.common.dp
+import com.jadebyte.jadeplayer.common.inputStream
 import com.jadebyte.jadeplayer.main.albums.Album
+import com.jadebyte.jadeplayer.main.common.image.BitmapMerger
 import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import com.jadebyte.jadeplayer.main.playlist.Playlist
@@ -24,6 +29,18 @@ import javax.inject.Inject
 
 /**
  * Created by Wilberforce on 2019-06-07 at 04:35.
+ *
+ *  Model loader for loading playlist image.
+ *
+ *  For playlist that has a saved image file (ie the user selected a file for the playlist),
+ *  the file's InputStream is passed over to Glide.
+ *
+ *  For playlist without a saved image file, the following steps are taken:
+ *  1. A distinct list of all albums in the playlist is retrieved with ContentResolver
+ *  2. If the Glide target width is greater than 100dp, we retrieve the album art of the first four successful album
+ *  arts and then use [BitmapMerger] to merge the bitmaps. However, if the Glide target width is less than or equals
+ *  to 100dp, we load the album art of the first successful album art.
+ *  3. Finally, the InputStream from any of the results in step 2 is passed to Glide
  */
 class PlaylistModelLoader :
     ModelLoader<Playlist, InputStream> {
@@ -34,13 +51,14 @@ class PlaylistModelLoader :
         height: Int,
         options: Options
     ): ModelLoader.LoadData<InputStream>? {
-        return ModelLoader.LoadData(ObjectKey(model), PlaylistDataFetcher(model))
+        return ModelLoader.LoadData(ObjectKey(model), PlaylistDataFetcher(model, width, height))
     }
 
     override fun handles(model: Playlist): Boolean = true
 
 
-    inner class PlaylistDataFetcher(val playlist: Playlist) : DataFetcher<InputStream> {
+    inner class PlaylistDataFetcher(val playlist: Playlist, val width: Int, val height: Int) :
+        DataFetcher<InputStream> {
 
         @Inject lateinit var imageUrlFetcher: ImageUrlFetcher
         @Inject lateinit var application: Application
@@ -65,7 +83,7 @@ class PlaylistModelLoader :
         }
 
         override fun getDataSource(): DataSource {
-            return if (imageFile.exists()) DataSource.LOCAL else DataSource.REMOTE
+            return if (imageFile.exists() || width.dp > 100) DataSource.LOCAL else DataSource.REMOTE
         }
 
         override fun cancel() {
@@ -84,42 +102,88 @@ class PlaylistModelLoader :
         private fun fetchFileInputStream(): InputStream = imageFile.inputStream()
 
         private fun fetchUrlInputStream(): InputStream? {
-            val url = getImageUrl() ?: return null
+            return if (width.dp > 100) {
+                fetchMergedBitmapInputStream()
+            } else {
+                fetchBitmapInputStream()
+            }
+        }
+
+
+        private fun fetchBitmapInputStream(): InputStream? {
+            val albums = getAlbumsInPlaylist()
+            for (album in albums) {
+                val imageUrl = getImageUrl(album)
+                if (imageUrl.isNullOrEmpty()) continue
+                val stream = fetchImageUrlInputStream(imageUrl)
+                if (stream != null) return stream
+            }
+            return null
+
+        }
+
+        private fun fetchMergedBitmapInputStream(): InputStream? {
+            val albums = getAlbumsInPlaylist()
+            if (albums.isEmpty()) return null
+            val bitmaps = mutableListOf<Bitmap>()
+            for (album in albums) {
+                val imageUrl = getImageUrl(album)
+                if (!imageUrl.isNullOrEmpty()) {
+                    val inputStream = fetchImageUrlInputStream(imageUrl)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    bitmaps.add(bitmap)
+                    if (bitmaps.size >= 4) {
+                        break
+                    }
+                }
+            }
+
+            if (bitmaps.isEmpty()) return null
+
+            val mergedBitmap = BitmapMerger.merge(bitmaps, width.toFloat(), height.toFloat())
+            return mergedBitmap.inputStream()
+        }
+
+        private fun fetchImageUrlInputStream(url: String): InputStream? {
             response = imageUrlFetcher.getResponse(url)
             return response?.let {
                 if (it.isSuccessful) it.body?.byteStream() else null
             }
         }
 
-        private fun getImageUrl(): String? {
+        private fun getImageUrl(album: Album): String? {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().permitNetwork().build())
-            return getAlbumOfFirstSong()?.let {
+            var params = mapOf(Pair("method", "album.getinfo"), Pair("artist", album.artist), Pair("album", album.name))
+            val url = imageUrlFetcher.fetchLastFmUrl("album", params)
+            if (!url.isNullOrEmpty()) return url
 
-                var params = mapOf(Pair("method", "album.getinfo"), Pair("artist", it.artist), Pair("album", it.name))
-                val url = imageUrlFetcher.fetchLastFmUrl("album", params)
-                if (!url.isNullOrEmpty()) return url
-
-                params =
-                    mapOf(Pair("q", String.format("album:%s artist:%s", it.name, it.artist)), Pair("type", "album"))
-                return imageUrlFetcher.fetchSpotifyUrl("albums", params)
-            }
+            params =
+                mapOf(Pair("q", String.format("album:%s artist:%s", album.name, album.artist)), Pair("type", "album"))
+            return imageUrlFetcher.fetchSpotifyUrl("albums", params)
         }
 
-        private fun getAlbumOfFirstSong(): Album? {
+        private fun getAlbumsInPlaylist(): List<Album> {
             val uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlist.id)
             val cursor = application.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
 
-            return cursor?.use {
-                if (it.moveToFirst()) Album(
-                    it,
-                    it.getLong(it.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
-                ) else null
+            val results = mutableListOf<Album>()
+            cursor?.use {
+                while (it.moveToNext()) {
+                    results.add(
+                        Album(
+                            it,
+                            it.getLong(it.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
+                        )
+                    )
+                }
             }
+            return if (results.size > 1) results.distinctBy { it.id } else results
 
         }
 
 
     }
+
 
 }
 
@@ -131,4 +195,4 @@ private val projection = arrayOf(
 )
 private const val selection = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
 private val selectionArgs = arrayOf("0")
-private const val sortOrder = "${MediaStore.Audio.Media.DATE_ADDED} COLLATE NOCASE ASC LIMIT 1"
+private const val sortOrder = "${MediaStore.Audio.Media.DATE_ADDED} COLLATE NOCASE ASC"

@@ -87,12 +87,12 @@ class NewPlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClickLi
     }
 
     private fun checkForReadStoragePermission() {
-        val hasStoragePermission = isPermissionGranted(android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        val hasStoragePermission = isPermissionGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (hasStoragePermission) {
             launchImagePickerIntent()
         } else {
             requestPermissions(
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 permissionRequestExternalStorage
             )
         }
