@@ -7,7 +7,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.res.Resources
-import android.graphics.*
+import android.graphics.Bitmap
 import android.view.View
 import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import java.io.ByteArrayInputStream
@@ -158,35 +158,6 @@ fun Bitmap.inputStream(quality: Int = 80): InputStream {
     return ByteArrayInputStream(bos.toByteArray())
 }
 
-
-/**
- * Crops a triangle from the bitmap
- *  @param isLeft direction of the right-angle of the triangle.
- *
- */
-fun Bitmap.triangle(isLeft: Boolean): Bitmap {
-    val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(output)
-    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    paint.color = Color.WHITE
-
-    val path = if (isLeft) Path().apply {
-        moveTo(0F, 0F)
-        lineTo(width.toFloat(), 0F)
-        lineTo(0F, height.toFloat())
-        close()
-    } else Path().apply {
-        moveTo(0F, height.toFloat())
-        lineTo(width.toFloat(), 0F)
-        lineTo(height.toFloat(), height.toFloat())
-    }
-    path.fillType = Path.FillType.EVEN_ODD
-
-    canvas.drawPath(path, paint)
-    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-    canvas.drawBitmap(this, 0F, 0F, paint)
-    return output
-}
 
 /**
  * Converts an Int in pixels to dp(density independent pixels)

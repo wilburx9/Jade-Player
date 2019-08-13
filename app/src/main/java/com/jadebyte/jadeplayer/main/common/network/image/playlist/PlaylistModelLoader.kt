@@ -17,7 +17,6 @@ import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.common.dp
 import com.jadebyte.jadeplayer.common.inputStream
 import com.jadebyte.jadeplayer.main.albums.Album
-import com.jadebyte.jadeplayer.main.common.image.BitmapMerger
 import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import com.jadebyte.jadeplayer.main.playlist.Playlist
@@ -38,7 +37,7 @@ import javax.inject.Inject
  *  For playlist without a saved image file, the following steps are taken:
  *  1. A distinct list of all albums in the playlist is retrieved with ContentResolver
  *  2. If the Glide target width is greater than 100dp, we retrieve the album art of the first four successful album
- *  arts and then use [BitmapMerger] to merge the bitmaps. However, if the Glide target width is less than or equals
+ *  arts and then use [ImageUtils.merge] to merge the bitmaps. However, if the Glide target width is less than or equals
  *  to 100dp, we load the album art of the first successful album art.
  *  3. Finally, the InputStream from any of the results in step 2 is passed to Glide
  */
@@ -123,24 +122,26 @@ class PlaylistModelLoader :
         }
 
         private fun fetchMergedBitmapInputStream(): InputStream? {
-            val albums = getAlbumsInPlaylist()
-            if (albums.isEmpty()) return null
+            val distinctAlbums = getAlbumsInPlaylist()
+            if (distinctAlbums.isEmpty()) return null
             val bitmaps = mutableListOf<Bitmap>()
-            for (album in albums) {
+            for (album in distinctAlbums) {
                 val imageUrl = getImageUrl(album)
                 if (!imageUrl.isNullOrEmpty()) {
                     val inputStream = fetchImageUrlInputStream(imageUrl)
                     val bitmap = BitmapFactory.decodeStream(inputStream)
                     bitmaps.add(bitmap)
-                    if (bitmaps.size >= 4) {
-                        break
-                    }
+                    // We need four bitmaps at most
+                    // We also don't want to load a third bitmap if we think the albums are not up to four(since the
+                    // third one will be discarded in this scenario)
+                    if (bitmaps.size >= 4 || (bitmaps.size > 1 && distinctAlbums.size < 4)) break
+
                 }
             }
 
             if (bitmaps.isEmpty()) return null
 
-            val mergedBitmap = BitmapMerger.merge(bitmaps, width.toFloat(), height.toFloat())
+            val mergedBitmap = ImageUtils.merge(bitmaps, width.toFloat(), height.toFloat())
             return mergedBitmap.inputStream()
         }
 

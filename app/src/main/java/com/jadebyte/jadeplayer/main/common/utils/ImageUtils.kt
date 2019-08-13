@@ -4,8 +4,8 @@ package com.jadebyte.jadeplayer.main.common.utils
 
 import android.content.ContentUris
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.*
+import android.media.ThumbnailUtils
 import android.net.Uri
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -20,6 +20,54 @@ import kotlin.math.min
  * Created by Wilberforce on 16/04/2019 at 01:31.
  */
 object ImageUtils {
+
+    /**
+     * Merges bitmaps
+     *
+     * Only 2 and 4 bitmaps are supported for the interim.
+     * For 2 bitmaps, they're triangle cropped and a collage of them is generated
+     *
+     * For 4 bitmaps, a 2 X 2 collage of the them
+     *
+     * @param bitmaps the list of bitmaps to merge together
+     * @param resultWidth width of the merged bitmap
+     * @param resultHeight height of the merged bitmap
+     * @return the merged bitmap
+     */
+    fun merge(
+        bitmaps: List<Bitmap>, resultWidth: Float, resultHeight: Float
+    ): Bitmap {
+
+        if (bitmaps.size < 2) {
+            return bitmaps[0]
+        }
+
+
+        val bgBitmap = Bitmap.createBitmap(resultWidth.toInt(), resultHeight.toInt(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bgBitmap)
+        val bitmapsCount = bitmaps.size
+
+        if (bitmapsCount < 4) {
+            bitmaps.take(2).forEachIndexed { index, bitmap ->
+                val b = ThumbnailUtils.extractThumbnail(bitmap, resultWidth.toInt(), resultHeight.toInt())
+                val triangle = triangleCrop(b, index == 0)
+                canvas.drawBitmap(triangle, 0F, 0F, null)
+            }
+
+        } else {
+            val halfWidth = resultWidth.toInt() / 2
+            val halfHeight = resultHeight.toInt() / 2
+
+            bitmaps.take(4).forEachIndexed { index, bitmap ->
+                val b = ThumbnailUtils.extractThumbnail(bitmap, halfWidth, halfHeight)
+                val left = if (index == 0 || index == 2) 0f else resultHeight / 2
+                val top = if (index < 2) 0f else resultHeight / 2
+                canvas.drawBitmap(b, left, top, null)
+            }
+
+        }
+        return bgBitmap
+    }
 
     // get the album cover URi from the album Id
     fun getAlbumArtUri(albumId: Long): Uri {
@@ -155,5 +203,36 @@ object ImageUtils {
         }
         return null
     }
+
+    /**
+     * Crops a triangle from the bitmap
+     * @param src the bitmap to crop
+     * @param isLeft direction of the right-angle of the triangle.
+     * @return the cropped bitmap in a triangle shape
+     */
+    private fun triangleCrop(src: Bitmap, isLeft: Boolean): Bitmap {
+        val output = Bitmap.createBitmap(src.width, src.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(output)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        paint.color = Color.BLACK
+
+        val path = if (isLeft) Path().apply {
+            moveTo(0F, 0F)
+            lineTo(src.width.toFloat(), 0F)
+            lineTo(0F, src.height.toFloat())
+            close()
+        } else Path().apply {
+            moveTo(0F, src.height.toFloat())
+            lineTo(src.width.toFloat(), 0F)
+            lineTo(src.height.toFloat(), src.height.toFloat())
+        }
+        path.fillType = Path.FillType.EVEN_ODD
+
+        canvas.drawPath(path, paint)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(src, 0F, 0F, paint)
+        return output
+    }
+
 
 }

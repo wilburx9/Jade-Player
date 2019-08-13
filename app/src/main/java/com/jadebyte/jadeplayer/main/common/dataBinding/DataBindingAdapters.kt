@@ -15,9 +15,11 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.GlideApp
+import com.jadebyte.jadeplayer.common.dp
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.common.image.CircularTransparentCenter
+import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoader
 import com.jadebyte.jadeplayer.main.playlist.Playlist
 import com.jadebyte.jadeplayer.main.songs.Song
 
@@ -109,11 +111,23 @@ object DataBindingAdapters {
             .into(view)
     }
 
+    /**
+     *  Load image for playlist
+     *  When the measuredWidth of [view] is more than 100dp, we'll change any of [playlist]'s values to force Glide
+     *  to use a cache key different from an unmodified [playlist]. The reason for this is that we are using a different
+     *  loading algorithm for [view]s with measuredWidth more than 100dp. See [PlaylistModelLoader] for the algorithm
+     */
     @BindingAdapter("playlistSrc")
     @JvmStatic
     fun setPlaylistSrc(view: ImageView, playlist: Playlist) {
+        val p =
+            if (view.measuredWidth.dp > 100) {
+                playlist.apply { name = "$name${view.measuredWidth}" }
+            } else {
+                playlist
+            }
         GlideApp.with(view)
-            .load(playlist)
+            .load(p)
             .transform(
                 MultiTransformation(centerCrop, RoundedCorners(10))
             )
