@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigator
@@ -89,7 +88,7 @@ class PlaylistFragment : BaseFragment(), OnItemClickListener, View.OnClickListen
         when (v?.id) {
             R.id.navigationIcon -> findNavController().navigate(R.id.action_playlistFragment_to_navigationDialogFragment)
             R.id.addPlayList, R.id.addPlayListIcon -> findNavController().navigate(
-                R.id.action_playlistFragment_to_newPlaylistDialogFragment
+                R.id.action_playlistFragment_to_writePlaylistDialogFragment
             )
         }
     }

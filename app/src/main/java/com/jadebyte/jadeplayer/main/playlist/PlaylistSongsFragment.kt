@@ -78,7 +78,8 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
             if (it.isEmpty()) {
                 findNavController().popBackStack()
             } else {
-                binding.playlist = it.first()
+                playlist = it.first()
+                binding.playlist = Playlist(playlist)
             }
         })
     }

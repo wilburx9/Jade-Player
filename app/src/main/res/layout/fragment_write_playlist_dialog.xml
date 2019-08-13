@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:padding="@dimen/padding_large"
-    tools:context=".main.playlist.NewPlaylistDialogFragment">
+    tools:context=".main.playlist.WritePlaylistDialogFragment">
 
 
     <ImageButton
@@ -37,18 +37,18 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
+        android:id="@+id/unselectedImageGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_xxx_large"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/uploadPicture"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/unselectedImageGroup"
         app:layout_constraintTop_toBottomOf="@+id/createAPlaylist">
 
         <View
             android:id="@+id/thumbBackground"
-            android:layout_width="135dp"
-            android:layout_height="135dp"
+            android:layout_width="@dimen/write_playlist_thumb_width"
+            android:layout_height="138dp"
             android:background="@drawable/accent_round_corner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -80,31 +80,48 @@
             android:textSize="@dimen/text_size_x_small"
             app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
             app:layout_constraintEnd_toEndOf="@id/thumbBackground"
-            app:layout_constraintEnd_toStartOf="@+id/uploadPicture"
             app:layout_constraintStart_toStartOf="@+id/thumbBackground" />
-
-        <TextView
-            android:id="@+id/uploadPicture"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/padding_x_large"
-            android:paddingEnd="@dimen/padding_x_large"
-            android:text="@string/upload_playlist_image"
-            android:textSize="@dimen/text_size_x_small"
-            app:layout_constraintBottom_toBottomOf="@+id/thumbBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/thumbBackground"
-            app:layout_constraintTop_toTopOf="@+id/thumbBackground" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/uploadPicture"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_x_large"
+        android:paddingEnd="@dimen/padding_x_large"
+        android:text="@string/upload_playlist_image"
+        android:textSize="@dimen/text_size_x_small"
+        app:layout_constraintBottom_toBottomOf="@+id/unselectedImageGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/unselectedImageGroup"
+        app:layout_constraintTop_toTopOf="@+id/unselectedImageGroup" />
+
+    <Button
+        android:id="@+id/removePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_border_white"
+        android:minHeight="0dp"
+        android:paddingLeft="@dimen/padding_large"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_large"
+        android:paddingBottom="@dimen/padding_small"
+        android:text="@string/remove_picture"
+        android:textColor="@android:color/white"
+        android:textStyle="normal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/unselectedImageGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/unselectedImageGroup"
+        app:layout_constraintTop_toTopOf="@+id/unselectedImageGroup" />
 
     <ImageView
         android:id="@+id/playlistArt"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/playlist_image"
-        android:visibility="invisible"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="@id/unselectedImageGroup"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/unselectedImageGroup"
         app:layout_constraintTop_toTopOf="@id/unselectedImageGroup" />
 
@@ -113,10 +130,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="?attr/selectableItemBackground"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="@id/unselectedImageGroup"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/unselectedImageGroup"
-        app:layout_constraintTop_toTopOf="@id/unselectedImageGroup"/>
+        app:layout_constraintTop_toTopOf="@id/unselectedImageGroup" />
 
 
     <com.google.android.material.textfield.TextInputEditText
@@ -140,7 +157,7 @@
         app:layout_constraintTop_toBottomOf="@+id/unselectedImageGroup" />
 
     <Button
-        android:id="@+id/createPlaylist"
+        android:id="@+id/writePlaylist"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -153,7 +170,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playlistNameField" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

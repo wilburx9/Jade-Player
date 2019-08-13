@@ -123,9 +123,11 @@
     <string name="upload_playlist_image">Upload a picture as your playlist identity</string>
     <string name="playlist_name">Playlist name</string>
     <string name="playlist_empty_message">Playlist cannot be empty</string>
+    <string name="playlist_empty_thumb_message">Change playlist name or select an image</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="edit_songs">Edit songs</string>
     <string name="edit_playlist">Edit Playlist</string>
+    <string name="save_changes">Save Changes</string>
     <string name="playlist_delete_message">Do you want to permanently delete \"%1$s\"?</string>
     <string name="no_thanks">No thanks</string>
     <string name="ok">OK</string>
@@ -136,6 +138,7 @@
     <string name="done">Done</string>
     <string name="select_songs">Select Songs</string>
     <string name="song_in_album">%1$s in %2$s</string>
+    <string name="remove_picture">Remove picture</string>
 
 
 </resources>

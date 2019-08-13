@@ -64,8 +64,8 @@
             android:id="@+id/action_playlistFragment_to_playlistSongsFragment"
             app:destination="@id/playlistSongsFragment" />
         <action
-            android:id="@+id/action_playlistFragment_to_newPlaylistDialogFragment"
-            app:destination="@id/newPlaylistDialogFragment" />
+            android:id="@+id/action_playlistFragment_to_writePlaylistDialogFragment"
+            app:destination="@id/writePlaylistDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -173,10 +173,16 @@
             app:launchSingleTop="true" />
     </fragment>
     <dialog
-        android:id="@+id/newPlaylistDialogFragment"
-        android:name="com.jadebyte.jadeplayer.main.playlist.NewPlaylistDialogFragment"
+        android:id="@+id/writePlaylistDialogFragment"
+        android:name="com.jadebyte.jadeplayer.main.playlist.WritePlaylistDialogFragment"
         android:label="fragment_new_playlist_dialog"
-        tools:layout="@layout/fragment_new_playlist_dialog" />
+        tools:layout="@layout/fragment_write_playlist_dialog" >
+        <argument
+            android:name="playlist"
+            app:argType="com.jadebyte.jadeplayer.main.playlist.Playlist"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
     <dialog
         android:id="@+id/playlistMenuBottomSheetDialogFragment"
         android:name="com.jadebyte.jadeplayer.main.playlist.PlaylistMenuBottomSheetDialogFragment"
@@ -188,6 +194,11 @@
         <action
             android:id="@+id/action_playlistMenuBottomSheetDialogFragment_to_playlistSongsEditorDialogFragment"
             app:destination="@id/playlistSongsEditorDialogFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/playlistSongsFragment" />
+        <action
+            android:id="@+id/action_playlistMenuBottomSheetDialogFragment_to_writePlaylistDialogFragment"
+            app:destination="@id/writePlaylistDialogFragment"
             app:launchSingleTop="true"
             app:popUpTo="@+id/playlistSongsFragment" />
     </dialog>

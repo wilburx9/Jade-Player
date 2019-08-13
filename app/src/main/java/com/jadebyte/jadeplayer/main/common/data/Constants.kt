@@ -27,4 +27,7 @@ object Constants {
     const val NAV_RADIO = "com.jadebyte.jadeplayer.nav.radio"
     const val NAV_SETTINGS = "com.jadebyte.jadeplayer.nav.settings"
     const val NAV_VIDEOS = "com.jadebyte.jadeplayer.nav.videos"
+
+    // Other constants
+    const val MAX_PLAYLIST_IMAGE_THUMB_WIDTH = 100
 }

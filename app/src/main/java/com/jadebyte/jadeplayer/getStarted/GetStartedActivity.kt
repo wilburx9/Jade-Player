@@ -11,7 +11,7 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.BaseActivity
-import com.jadebyte.jadeplayer.common.crossFade
+import com.jadebyte.jadeplayer.common.crossFadeWidth
 import com.jadebyte.jadeplayer.common.fadeIn
 import com.jadebyte.jadeplayer.main.MainActivity
 import kotlinx.android.synthetic.main.activity_get_started.*
@@ -42,7 +42,7 @@ class GetStartedActivity : BaseActivity(), View.OnClickListener {
                     // The user has denied the permission and selected the "Don't ask again"
                     // option in the permission request dialog
                     infoText.text = getString(R.string.read_storage_permission_settings, getString(R.string.app_name))
-                    goToAppInfo.crossFade(getStarted, 500)
+                    goToAppInfo.crossFadeWidth(getStarted, 500)
                 }
                 if (infoText.visibility != View.VISIBLE) {
                     infoText.fadeIn(duration = 500)

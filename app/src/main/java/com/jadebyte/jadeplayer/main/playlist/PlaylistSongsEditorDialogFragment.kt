@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.common.crossFade
+import com.jadebyte.jadeplayer.common.crossFadeWidth
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.utils.Utils
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
@@ -57,7 +57,7 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
     }
 
     private fun editPlaylist() {
-        val animatorSet = progressBar.crossFade(doneButton, 500)
+        val animatorSet = progressBar.crossFadeWidth(doneButton, 500)
         viewModel.playlistValue.observe(viewLifecycleOwner, Observer {
 
             if (it) {
@@ -67,7 +67,7 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
             } else {
                 // Updating playlist wasn't successful;
                 if (animatorSet.isRunning) animatorSet.cancel()
-                doneButton.crossFade(progressBar, 500, visibility = View.INVISIBLE)
+                doneButton.crossFadeWidth(progressBar, 500, visibility = View.INVISIBLE)
                 Toast.makeText(activity, R.string.sth_went_wrong, Toast.LENGTH_SHORT).show()
             }
 
@@ -85,7 +85,7 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
         this.items = items
         (songsRV.adapter as BaseAdapter<Song>).updateItems(items)
         updateSelectedCount()
-        content.crossFade(largeProgressBar)
+        content.crossFadeWidth(largeProgressBar)
     }
 
     private fun updateSelectedCount() {

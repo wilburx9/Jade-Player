@@ -209,6 +209,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_playlistMenuBottomSheetDialogFragment_to_newPlaylistDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_playlistMenuBottomSheetDialogFragment_to_playlistSongsEditorDialogFragment">
                               <value>
                                 <LayoutPositions />

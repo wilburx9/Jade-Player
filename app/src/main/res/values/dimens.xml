@@ -32,4 +32,5 @@
     <dimen name="button_padding">18dp</dimen>
     <dimen name="song_image_large">60dp</dimen>
     <dimen name="song_image_small">45dp</dimen>
+    <dimen name="write_playlist_thumb_width">135dp</dimen>
 </resources>

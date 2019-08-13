@@ -71,7 +71,10 @@ class PlaylistMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
     }
 
     private fun editPlaylist() {
-        findNavController().popBackStack()
+        findNavController().navigate(
+            PlaylistMenuBottomSheetDialogFragmentDirections
+                .actionPlaylistMenuBottomSheetDialogFragmentToWritePlaylistDialogFragment(playlist)
+        )
     }
 
     private fun playPlaylistNext() {

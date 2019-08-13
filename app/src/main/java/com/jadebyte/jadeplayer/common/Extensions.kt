@@ -120,7 +120,7 @@ fun View.fadeIn(duration: Long = 1000, startDelay: Long = 0) {
  *  @param duration duration of the animation
  *  @param visibility The visibility of [otherView] at the end of the animation
  */
-fun View.crossFade(
+fun View.crossFadeWidth(
     otherView: View,
     duration: Long = 1000,
     startDelay: Long = 0,
@@ -133,7 +133,7 @@ fun View.crossFade(
         addListener(object : AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
                 super.onAnimationStart(animation)
-                this@crossFade.visibility = View.VISIBLE
+                this@crossFadeWidth.visibility = View.VISIBLE
             }
 
             override fun onAnimationEnd(animation: Animator?) {
