@@ -35,8 +35,8 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
 
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_base_player, container, false)
     }
@@ -46,9 +46,9 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
         setupView()
         observeViewModel()
         navigationIcon.setOnClickListener(
-                Navigation.createNavigateOnClickListener(
-                        navigationFragmentId
-                )
+            Navigation.createNavigateOnClickListener(
+                navigationFragmentId
+            )
         )
         playButton.setOnClickListener(this)
     }
@@ -75,7 +75,7 @@ abstract class BasePlayerFragment<T> : BaseFragment(), View.OnClickListener, OnI
             sectionTitle.setText(titleRes)
         }
         val adapter =
-                BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this)
+            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this)
         dataRV.adapter = adapter
         dataRV.layoutManager = layoutManager()
     }

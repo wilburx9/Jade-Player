@@ -66,7 +66,7 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
                     }
                 }
                 initiallySelectedItems = items.filter { it.selected }
-                data.postValue(items)
+                if (data.value != items) data.postValue(items)
             }
         }
     }

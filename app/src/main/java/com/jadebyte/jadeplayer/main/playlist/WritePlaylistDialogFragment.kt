@@ -86,10 +86,10 @@ class WritePlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClick
 
     fun observeViewModel() {
         viewModel.data.observe(viewLifecycleOwner, Observer {
-            if (it == 0) {
+            if (it.success || it.message == null) {
                 findNavController().popBackStack()
             } else {
-                Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

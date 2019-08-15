@@ -57,7 +57,7 @@ abstract class BaseViewModel<T>(application: Application) : AndroidViewModel(app
 
     // Give child classes the opportunity to intercept and modify result
     open fun deliverResult(items: List<T>) {
-        data.value = items
+        if (data.value != items) data.value = items
     }
 }
 

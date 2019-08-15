@@ -8,7 +8,9 @@ import android.view.View
  * Created by Wilberforce on 2019-04-21 at 03:35.
  */
 interface OnItemClickListener {
-    fun onItemClick(position:Int, sharableView: View? = null)
+    fun onItemClick(position: Int, sharableView: View? = null)
 
-    fun  onOverflowClick(position: Int){}
+    fun onOverflowMenuClick(position: Int) {}
+
+    fun onLongClick(position: Int) {}
 }

@@ -44,7 +44,7 @@ class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(appl
                 items.forEach {
                     it.songsCount = (repository as PlaylistRepository).fetchSongCount(it.id)
                 }
-                data.postValue(items)
+                if (data.value != items) data.postValue(items)
             }
         }
     }

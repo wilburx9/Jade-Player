@@ -24,7 +24,8 @@ class BaseAdapter<T>(
     private val variableId: Int,
     private val fadeInViewHolder: Boolean = false,
     private val itemClickListener: OnItemClickListener,
-    private var variables: SparseArrayCompat<Any>? = null
+    private var variables: SparseArrayCompat<Any>? = null,
+    private val longClick: Boolean = false
 ) : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
     private var lastPosition = -1
@@ -37,7 +38,7 @@ class BaseAdapter<T>(
                 itemBinding.setVariable(it.keyAt(i), it.valueAt(i))
             }
         }
-        return BaseViewHolder(itemBinding, variableId, itemClickListener)
+        return BaseViewHolder(itemBinding, variableId, itemClickListener, true)
     }
 
     override fun getItemCount(): Int {

@@ -22,7 +22,7 @@ class SongsFragment : BasePlayerFragment<Song>() {
 
     }
 
-    override fun onOverflowClick(position: Int) {
+    override fun onOverflowMenuClick(position: Int) {
         val action = SongsFragmentDirections.actionSongsFragmentToSongsMenuBottomSheetDialogFragment2(items[position])
         findNavController().navigate(action)
     }

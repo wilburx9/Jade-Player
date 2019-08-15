@@ -3,13 +3,15 @@
 package com.jadebyte.jadeplayer.main.playlist
 
 
+import android.content.DialogInterface
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.utils.Utils
@@ -22,6 +24,7 @@ class PlaylistMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         playlist = arguments!!.getParcelable("playlist")!!
+
     }
 
     override fun onCreateView(
@@ -37,39 +40,43 @@ class PlaylistMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
             R.id.playNext -> playPlaylistNext()
             R.id.editSongs -> editSongs()
             R.id.editPlaylist -> editPlaylist()
-            R.id.delete -> deletePlaylist()
+            R.id.delete -> showDeleteConfirmation()
         }
     }
 
-    private fun deletePlaylist() {
+    private fun showDeleteConfirmation() {
+        fun deletePlaylist(dialog: DialogInterface?) {
+            val viewModel = ViewModelProviders.of(this)[WritePlaylistViewModel::class.java]
+
+            viewModel.data.observe(viewLifecycleOwner, Observer {
+                val activity = activity
+                if (activity != null && !isDetached) {
+                    val message = if (it.success) {
+                        Utils.vibrateAfterAction(activity)
+                        getString(R.string.sth_deleted, playlist.name)
+                    } else {
+                        getString(it.message!!)
+                    }
+                    Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+                }
+
+                dialog?.dismiss()
+                findNavController().popBackStack()
+            })
+
+            viewModel.deletePlaylist(playlist.id)
+        }
+
         val builder = AlertDialog.Builder(activity!!)
             .setMessage(activity!!.getString(R.string.playlist_delete_message, playlist.name))
             .setNegativeButton(R.string.no_thanks) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(R.string.ok) { dialog, _ ->
-                activity?.let {
-                    // TODO: Delete image file when done
-                    if (!isDetached) {
-                        val where = MediaStore.Audio.Playlists._ID + "=?"
-                        val whereVal = arrayOf(playlist.id.toString())
-                        val rows = it.contentResolver
-                            .delete(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, where, whereVal)
-                        if (rows > 0) {
-                            Toast.makeText(it, getString(R.string.sth_deleted, playlist.name), Toast.LENGTH_SHORT)
-                                .show()
-                            Utils.vibrateAfterAction(it)
-                            dialog.dismiss()
-                        } else {
-                            Toast.makeText(it, R.string.sth_went_wrong, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-                dialog.dismiss()
-                findNavController().popBackStack()
-            }
+            .setPositiveButton(R.string.ok) { dialog, _ -> deletePlaylist(dialog) }
+
         val dialog = builder.create()
         dialog.window?.attributes?.windowAnimations = R.style.AppTheme_DialogAnimation
         dialog.show()
     }
+
 
     private fun editPlaylist() {
         findNavController().navigate(
