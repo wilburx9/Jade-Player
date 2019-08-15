@@ -65,7 +65,10 @@ class PlaylistFragment : BaseFragment(), OnItemClickListener, View.OnClickListen
     }
 
     private fun setupViews() {
-        playlistRV.adapter = BaseAdapter(items, activity!!, R.layout.item_playlist, BR.playlist, false, this)
+        playlistRV.adapter = BaseAdapter(
+            items, activity!!, R.layout.item_playlist, BR.playlist, false, this,
+            longClick = true
+        )
         val layoutManager = LinearLayoutManager(activity)
         playlistRV.layoutManager = layoutManager
 
@@ -82,6 +85,13 @@ class PlaylistFragment : BaseFragment(), OnItemClickListener, View.OnClickListen
         val action =
             PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistSongsFragment(transitionName, items[position])
         findNavController().navigate(action, extras)
+    }
+
+    override fun onItemLongClick(position: Int) {
+        super.onItemLongClick(position)
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistMenuBottomSheetDialogFragment(items[position])
+        findNavController().navigate(action)
     }
 
     override fun onClick(v: View?) {

@@ -12,5 +12,5 @@ interface OnItemClickListener {
 
     fun onOverflowMenuClick(position: Int) {}
 
-    fun onLongClick(position: Int) {}
+    fun onItemLongClick(position: Int) {}
 }

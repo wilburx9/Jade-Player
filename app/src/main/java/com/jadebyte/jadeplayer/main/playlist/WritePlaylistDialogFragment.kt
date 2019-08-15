@@ -30,6 +30,7 @@ import com.jadebyte.jadeplayer.common.px
 import com.jadebyte.jadeplayer.main.common.callbacks.TextWatcher
 import com.jadebyte.jadeplayer.main.common.dataBinding.DataBindingAdapters
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
+import com.jadebyte.jadeplayer.main.common.utils.Utils
 import com.jadebyte.jadeplayer.main.common.view.BaseFullscreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_write_playlist_dialog.*
 import java.io.File
@@ -87,6 +88,7 @@ class WritePlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClick
     fun observeViewModel() {
         viewModel.data.observe(viewLifecycleOwner, Observer {
             if (it.success || it.message == null) {
+                Utils.vibrateAfterAction(activity!!)
                 findNavController().popBackStack()
             } else {
                 Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()

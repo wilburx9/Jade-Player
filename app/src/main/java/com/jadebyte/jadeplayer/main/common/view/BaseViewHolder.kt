@@ -46,7 +46,7 @@ class BaseViewHolder<T>(
     override fun onLongClick(v: View?): Boolean {
         return when (v?.id) {
             R.id.container -> {
-                itemClickListener.onLongClick(adapterPosition)
+                itemClickListener.onItemLongClick(adapterPosition)
                 true
             }
             else -> false
