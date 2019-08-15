@@ -47,6 +47,7 @@ class PlaylistMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
             .setNegativeButton(R.string.no_thanks) { dialog, _ -> dialog.dismiss() }
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 activity?.let {
+                    // TODO: Delete image file when done
                     if (!isDetached) {
                         val where = MediaStore.Audio.Playlists._ID + "=?"
                         val whereVal = arrayOf(playlist.id.toString())

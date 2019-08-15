@@ -25,8 +25,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="744" />
-                            <option name="y" value="725" />
+                            <option name="x" value="567" />
+                            <option name="y" value="665" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -51,8 +51,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="744" />
-                            <option name="y" value="369" />
+                            <option name="x" value="20" />
+                            <option name="y" value="1013" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -124,6 +124,27 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="genresFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-86" />
+                            <option name="y" value="567" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_genresFragment_to_navigationDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="navigationDialogFragment">
                     <value>
                       <LayoutPositions>
@@ -140,6 +161,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_navigationDialogFragment_to_genresFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_navigationDialogFragment_to_playlistFragment">
                               <value>
                                 <LayoutPositions />
@@ -151,18 +177,6 @@
                               </value>
                             </entry>
                           </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="newPlaylistDialogFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1601" />
-                            <option name="y" value="587" />
-                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -183,12 +197,12 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_playlistFragment_to_newPlaylistDialogFragment">
+                            <entry key="action_playlistFragment_to_playlistSongsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_playlistFragment_to_playlistSongsFragment">
+                            <entry key="action_playlistFragment_to_writePlaylistDialogFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -209,12 +223,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_playlistMenuBottomSheetDialogFragment_to_newPlaylistDialogFragment">
+                            <entry key="action_playlistMenuBottomSheetDialogFragment_to_playlistSongsEditorDialogFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_playlistMenuBottomSheetDialogFragment_to_playlistSongsEditorDialogFragment">
+                            <entry key="action_playlistMenuBottomSheetDialogFragment_to_writePlaylistDialogFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -229,8 +243,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="780" />
-                            <option name="y" value="1080" />
+                            <option name="x" value="546" />
+                            <option name="y" value="1029" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -296,6 +310,18 @@
                     </value>
                   </entry>
                   <entry key="songsMenuBottomSheetDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="writePlaylistDialogFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">

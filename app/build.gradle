@@ -12,7 +12,6 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'hunter-debug'
 
 
-
 android {
     compileSdkVersion 28
     useLibrary 'android.test.base'

@@ -98,6 +98,9 @@
             app:launchSingleTop="false"
             app:popUpTo="@+id/navigationDialogFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigationDialogFragment_to_genresFragment"
+            app:destination="@id/genresFragment" />
     </dialog>
     <fragment
         android:id="@+id/albumSongsFragment"
@@ -211,5 +214,17 @@
             android:name="playlist"
             app:argType="com.jadebyte.jadeplayer.main.playlist.Playlist" />
     </dialog>
+    <fragment
+        android:id="@+id/genresFragment"
+        android:name="com.jadebyte.jadeplayer.main.genres.GenresFragment"
+        android:label="fragment_genres"
+        tools:layout="@layout/fragment_genres" >
+        <action
+            android:id="@+id/action_genresFragment_to_navigationDialogFragment"
+            app:destination="@id/navigationDialogFragment" >
+            <argument android:defaultValue="4"
+                android:name="origin" />
+        </action>
+    </fragment>
 
 </navigation>
