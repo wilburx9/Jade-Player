@@ -14,6 +14,7 @@
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="indicatorFastScrollerThumbStyle">@style/Widget.FastScrollSample.FastScrollerThumb</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -112,6 +113,11 @@
         <item name="bottomSheetStyle">@style/TransparentBottomSheet</item>
         <item name="android:windowEnterAnimation">@anim/bottom_sheet_in</item>
         <item name="android:windowExitAnimation">@anim/bottom_sheet_out</item>
+    </style>
+
+    <style name="Widget.FastScrollSample.FastScrollerThumb" parent="Widget.IndicatorFastScroll.FastScrollerThumb">
+        <item name="thumbColor">?colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>
