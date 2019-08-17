@@ -124,6 +124,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="genreSongsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="681" />
+                            <option name="y" value="-278" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="genresFragment">
                     <value>
                       <LayoutPositions>
@@ -135,6 +147,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_genresFragment_to_genreSongsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_genresFragment_to_navigationDialogFragment">
                               <value>
                                 <LayoutPositions />

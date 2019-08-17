@@ -7,9 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
@@ -63,7 +66,12 @@ class GenresFragment : BaseFragment(), OnItemClickListener {
 
 
     override fun onItemClick(position: Int, sharableView: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val transitionName = ViewCompat.getTransitionName(sharableView!!)!!
+        val extras = FragmentNavigator.Extras.Builder()
+            .addSharedElement(sharableView, transitionName)
+            .build()
+        val action = GenresFragmentDirections.actionGenresFragmentToGenreSongsFragment(items[position], transitionName)
+        findNavController().navigate(action, extras)
     }
 
     override fun onItemLongClick(position: Int) {

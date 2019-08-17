@@ -15,10 +15,12 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/sharableView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
@@ -31,6 +33,7 @@
             android:paddingBottom="@dimen/padding_large"
             android:text="@{genre.name}"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:transitionName="@{genre.toString()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

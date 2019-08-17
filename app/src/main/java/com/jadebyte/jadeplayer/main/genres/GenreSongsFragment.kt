@@ -1,6 +1,6 @@
 // Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
 
-package com.jadebyte.jadeplayer.main.albums
+package com.jadebyte.jadeplayer.main.genres
 
 
 import android.os.Bundle
@@ -15,41 +15,40 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.databinding.FragmentAlbumSongsBinding
+import com.jadebyte.jadeplayer.databinding.FragmentGenreSongsBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.jadebyte.jadeplayer.main.songs.Song
-import kotlinx.android.synthetic.main.fragment_album_songs.*
+import kotlinx.android.synthetic.main.fragment_genre_songs.*
 
-class AlbumSongsFragment : BaseFragment(), OnItemClickListener {
 
-    private lateinit var viewModel: AlbumSongsViewModel
-    private lateinit var album: Album
+class GenreSongsFragment : BaseFragment(), OnItemClickListener {
+    private lateinit var viewModel: GenreSongsViewModel
+    private lateinit var genre: Genre
     private var items = emptyList<Song>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        album = arguments!!.getParcelable("album")!!
-        viewModel = ViewModelProviders.of(this)[AlbumSongsViewModel::class.java]
-        viewModel.init(album.id)
-
+        genre = arguments!!.getParcelable("genre")
+        viewModel = ViewModelProviders.of(this)[GenreSongsViewModel::class.java]
+        viewModel.init(genre.id)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentAlbumSongsBinding.inflate(inflater, container, false)
-        binding.album = album
+        val binding = FragmentGenreSongsBinding.inflate(inflater, container, false)
+        binding.genre = genre
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ViewCompat.setTransitionName(albumArt, arguments!!.getString("transitionName"))
+        ViewCompat.setTransitionName(genreNameField, arguments!!.getString("transitionName"))
         setupViews()
         observeViewModel()
         sectionBackButton.setOnClickListener { findNavController().popBackStack() }
@@ -66,14 +65,14 @@ class AlbumSongsFragment : BaseFragment(), OnItemClickListener {
             return
         }
         this.items = items
-        albumSongsDuration.text = getSongsTotalTime(items)
-        (albumSongsRV.adapter as BaseAdapter<Song>).updateItems(items)
+        genreSongsDuration.text = getSongsTotalTime(items)
+        (genreSongsRV.adapter as BaseAdapter<Song>).updateItems(items)
     }
 
     private fun setupViews() {
-        val adapter = BaseAdapter(items, activity!!, R.layout.item_album_song, BR.song, itemClickListener = this)
-        albumSongsRV.adapter = adapter
-        albumSongsRV.layoutManager = LinearLayoutManager(activity!!)
+        val adapter = BaseAdapter(items, activity!!, R.layout.item_model_song, BR.song, itemClickListener = this)
+        genreSongsRV.adapter = adapter
+        genreSongsRV.layoutManager = LinearLayoutManager(activity!!)
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {

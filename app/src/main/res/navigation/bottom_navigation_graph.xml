@@ -239,6 +239,21 @@
                 android:name="origin"
                 android:defaultValue="4" />
         </action>
+        <action
+            android:id="@+id/action_genresFragment_to_genreSongsFragment"
+            app:destination="@id/genreSongsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/genreSongsFragment"
+        android:name="com.jadebyte.jadeplayer.main.genres.GenreSongsFragment"
+        android:label="GenreSongsFragment"
+        tools:layout="@layout/fragment_genre_songs">
+        <argument
+            android:name="genre"
+            app:argType="com.jadebyte.jadeplayer.main.genres.Genre" />
+        <argument
+            android:name="transitionName"
+            app:argType="string" />
     </fragment>
 
 </navigation>

@@ -1,6 +1,6 @@
 // Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
 
-package com.jadebyte.jadeplayer.main.common.network.image.playlist
+package com.jadebyte.jadeplayer.main.common.network.image.genre
 
 import android.net.Uri
 import android.provider.MediaStore
@@ -10,42 +10,32 @@ import com.bumptech.glide.signature.ObjectKey
 import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.network.image.BaseCollageDataFetcher
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
-import com.jadebyte.jadeplayer.main.playlist.Playlist
+import com.jadebyte.jadeplayer.main.genres.Genre
 import java.io.File
 import java.io.InputStream
 
-/**
- * Created by Wilberforce on 2019-06-07 at 04:35.
- */
-class PlaylistModelLoader :
-    ModelLoader<Playlist, InputStream> {
-
+class GenreModelLoader : ModelLoader<Genre, InputStream> {
     override fun buildLoadData(
-        model: Playlist,
+        model: Genre,
         width: Int,
         height: Int,
         options: Options
     ): ModelLoader.LoadData<InputStream>? {
-        return ModelLoader.LoadData(ObjectKey(model), PlaylistDataFetcher(model, width, height))
+        return ModelLoader.LoadData(ObjectKey(model), GenreDataFetcher(model, width, height))
     }
 
-    override fun handles(model: Playlist) = true
+    override fun handles(model: Genre) = true
 
-
-    inner class PlaylistDataFetcher(private val playlist: Playlist, width: Int, height: Int) :
-        BaseCollageDataFetcher(playlist, width, height, true) {
+    inner class GenreDataFetcher(model: Genre, width: Int, height: Int) :
+        BaseCollageDataFetcher(model, width, height, false) {
 
         init {
             App.appComponent.inject(this)
         }
 
         override var modelMemberMediaUri: Uri =
-            MediaStore.Audio.Playlists.Members.getContentUri("external", playlist.id)
+            MediaStore.Audio.Genres.Members.getContentUri("external", model.id)
 
         override var imageFile = File(ImageUtils.getImagePathForModel(model, application))
-
-        override fun hasValidData() = playlist.songsCount > 0
-
     }
-
 }

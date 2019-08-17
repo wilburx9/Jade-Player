@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.*
 import android.media.ThumbnailUtils
 import android.net.Uri
+import com.jadebyte.jadeplayer.main.common.data.Model
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -196,10 +197,10 @@ object ImageUtils {
         return imageFile
     }
 
-    fun getImagePathForPlaylist(playlistId: Long, c: Context?): String? {
+    fun getImagePathForModel(model: Model, c: Context?): String? {
         val context = WeakReference<Context>(c).get()
         if (context != null) {
-            return "${context.filesDir}/images/playlist/$playlistId"
+            return "${context.filesDir}/images/${model.javaClass.name.toLowerCase()}/${model.id}"
         }
         return null
     }

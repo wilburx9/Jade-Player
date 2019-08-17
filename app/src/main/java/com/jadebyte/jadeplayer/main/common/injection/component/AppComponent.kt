@@ -9,6 +9,7 @@ import com.jadebyte.jadeplayer.main.common.network.HttpInterceptor
 import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
 import com.jadebyte.jadeplayer.main.common.network.image.album.AlbumModelLoader
 import com.jadebyte.jadeplayer.main.common.network.image.artist.ArtistModelLoader
+import com.jadebyte.jadeplayer.main.common.network.image.genre.GenreModelLoader
 import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoader
 import com.jadebyte.jadeplayer.main.navigation.NavRepository
 import com.jadebyte.jadeplayer.splash.SplashActivity
@@ -29,5 +30,6 @@ interface AppComponent {
     fun inject(albumSongsFragment: AlbumSongsFragment)
     fun inject(urlFetcher: ImageUrlFetcher)
     fun inject(playlistDataFetcher: PlaylistModelLoader.PlaylistDataFetcher)
+    fun inject(genreDataFetcher: GenreModelLoader.GenreDataFetcher)
     fun inject(splashActivity: SplashActivity)
 }

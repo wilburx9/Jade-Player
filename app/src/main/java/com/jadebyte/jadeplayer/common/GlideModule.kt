@@ -11,7 +11,9 @@ import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.common.network.image.album.AlbumModelLoaderFactory
 import com.jadebyte.jadeplayer.main.common.network.image.artist.ArtistModelLoaderFactory
+import com.jadebyte.jadeplayer.main.common.network.image.genre.GenreModelLoaderFactory
 import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoaderFactory
+import com.jadebyte.jadeplayer.main.genres.Genre
 import com.jadebyte.jadeplayer.main.playlist.Playlist
 import java.io.InputStream
 
@@ -25,6 +27,6 @@ class MyAppGlideModule : AppGlideModule() {
         registry.prepend(Album::class.java, InputStream::class.java, AlbumModelLoaderFactory())
         registry.prepend(Artist::class.java, InputStream::class.java, ArtistModelLoaderFactory())
         registry.prepend(Playlist::class.java, InputStream::class.java, PlaylistModelLoaderFactory())
-
+        registry.prepend(Genre::class.java, InputStream::class.java, GenreModelLoaderFactory())
     }
 }

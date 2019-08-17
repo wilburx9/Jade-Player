@@ -8,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -19,13 +17,12 @@ import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.databinding.FragmentPlaylistSongsBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
-import com.jadebyte.jadeplayer.main.common.utils.TimeUtils
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
+import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_playlist_songs.*
-import java.util.concurrent.TimeUnit
 
-class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListener {
+class PlaylistSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickListener {
 
     private lateinit var binding: FragmentPlaylistSongsBinding
     private lateinit var songsViewModel: PlaylistSongsViewModel
@@ -49,12 +46,7 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_playlist_songs,
-            container,
-            false
-        )
+        binding = FragmentPlaylistSongsBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.playlist = playlist
         binding.lifecycleOwner = viewLifecycleOwner
@@ -87,21 +79,12 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
     @Suppress("UNCHECKED_CAST")
     private fun updateViews(items: List<Song>) {
         this.items = items
-        playlistSongsDuration.text = getTotalTime()
+        playlistSongsDuration.text = getSongsTotalTime(items)
         (playlistSongsRV.adapter as BaseAdapter<Song>).updateItems(items)
     }
 
-    private fun getTotalTime(): CharSequence? {
-        val secs = TimeUnit.MILLISECONDS.toSeconds(TimeUtils.getTotalSongsDuration(items))
-        return getString(
-            R.string.two_comma_separated_values,
-            resources.getQuantityString(R.plurals.numberOfSongs, items.size, items.size),
-            TimeUtils.formatElapsedTime(secs, activity)
-        )
-    }
-
     private fun setupRecyclerView() {
-        val adapter = BaseAdapter(items, activity!!, R.layout.item_playlist_song, BR.song, itemClickListener = this)
+        val adapter = BaseAdapter(items, activity!!, R.layout.item_model_song, BR.song, itemClickListener = this)
         playlistSongsRV.adapter = adapter
         playlistSongsRV.layoutManager = LinearLayoutManager(activity!!)
     }

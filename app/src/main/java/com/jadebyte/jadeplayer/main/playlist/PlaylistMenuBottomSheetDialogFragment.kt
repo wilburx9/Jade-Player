@@ -68,7 +68,7 @@ class PlaylistMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
                 findNavController().popBackStack()
             })
 
-            viewModel.deletePlaylist(playlist.id)
+            viewModel.deletePlaylist(playlist)
         }
 
         val builder = AlertDialog.Builder(activity!!)

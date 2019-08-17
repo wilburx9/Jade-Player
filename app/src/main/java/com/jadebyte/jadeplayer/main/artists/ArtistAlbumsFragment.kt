@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -49,15 +48,9 @@ class ArtistAlbumsFragment : Fragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentArtistAlbumsBinding>(
-            inflater,
-            R.layout.fragment_artist_albums,
-            container,
-            false
-        )
-        val view = binding.root
+        val binding = FragmentArtistAlbumsBinding.inflate(inflater, container, false)
         binding.artist = artist
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,13 +67,15 @@ class ArtistAlbumsFragment : Fragment(), OnItemClickListener {
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer {
-            updateViews(it)
-        })
+        viewModel.data.observe(viewLifecycleOwner, Observer(this::updateViews))
     }
 
     @Suppress("UNCHECKED_CAST")
     private fun updateViews(items: List<Album>) {
+        if (items.isEmpty()) {
+            findNavController().popBackStack()
+            return
+        }
         this.items = items
         (artistAlbumsRV.adapter as BaseAdapter<Album>).updateItems(items)
     }
@@ -88,8 +83,8 @@ class ArtistAlbumsFragment : Fragment(), OnItemClickListener {
     @SuppressLint("WrongConstant")
     private fun setupRecyclerView() {
         val adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, itemClickListener = this)
-        if(artist.albumsCount ==1) {
-            artistAlbumsRV.setPadding(20.px, 0,0, 0)
+        if (artist.albumsCount == 1) {
+            artistAlbumsRV.setPadding(20.px, 0, 0, 0)
         }
         artistAlbumsRV.adapter = adapter
         artistAlbumsRV.layoutManager = FlexboxLayoutManager(activity).apply {

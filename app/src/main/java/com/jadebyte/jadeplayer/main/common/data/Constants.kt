@@ -29,5 +29,5 @@ object Constants {
     const val NAV_VIDEOS = "com.jadebyte.jadeplayer.nav.videos"
 
     // Other constants
-    const val MAX_PLAYLIST_IMAGE_THUMB_WIDTH = 100
+    const val MAX_MODEL_IMAGE_THUMB_WIDTH = 100
 }

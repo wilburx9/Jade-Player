@@ -169,7 +169,7 @@ class WritePlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClick
         if (playlist == null) {
             viewModel.createPlaylist(playlistName, tempThumbUri)
         } else {
-            viewModel.editPlaylist(playlistName, playlist!!.id, tempThumbUri, deleteImageFile)
+            viewModel.editPlaylist(playlistName, playlist!!, tempThumbUri, deleteImageFile)
         }
     }
 
@@ -234,7 +234,7 @@ class WritePlaylistDialogFragment : BaseFullscreenDialogFragment(), View.OnClick
             // Check if tt was loaded from a selected image
             if (model is Uri
                 || (playlist != null
-                        && File(ImageUtils.getImagePathForPlaylist(playlist!!.id, activity)).exists())
+                        && File(ImageUtils.getImagePathForModel(playlist!!, activity)).exists())
             ) {
                 removePicture.crossFadeWidth(uploadPicture, visibility = View.INVISIBLE)
             }

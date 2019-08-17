@@ -18,6 +18,7 @@ import com.jadebyte.jadeplayer.common.GlideApp
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.common.image.CircularTransparentCenter
+import com.jadebyte.jadeplayer.main.genres.Genre
 import com.jadebyte.jadeplayer.main.playlist.Playlist
 import com.jadebyte.jadeplayer.main.songs.Song
 
@@ -114,6 +115,18 @@ object DataBindingAdapters {
     fun setPlaylistSrc(view: ImageView, playlist: Playlist) {
         GlideApp.with(view)
             .load(playlist.modForViewWidth(view.measuredWidth))
+            .transform(
+                MultiTransformation(centerCrop, RoundedCorners(10))
+            )
+            .placeholder(R.drawable.thumb_default_short)
+            .into(view)
+    }
+
+    @BindingAdapter("genreSrc")
+    @JvmStatic
+    fun setGenreSrc(view: ImageView, genre: Genre) {
+        GlideApp.with(view)
+            .load(genre)
             .transform(
                 MultiTransformation(centerCrop, RoundedCorners(10))
             )
