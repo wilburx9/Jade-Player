@@ -7,7 +7,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import com.jadebyte.jadeplayer.common.dp
 import com.jadebyte.jadeplayer.main.common.data.Constants
-import com.jadebyte.jadeplayer.main.common.data.Data
+import com.jadebyte.jadeplayer.main.common.data.Model
 import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoader
 import kotlinx.android.parcel.Parcelize
 
@@ -21,7 +21,7 @@ data class Playlist(
     var name: String,
     val modified: Long,
     var songsCount: Int = 0
-) : Data(),
+) : Model(),
     Parcelable {
 
     constructor(cursor: Cursor) : this(

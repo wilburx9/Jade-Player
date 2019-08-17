@@ -5,7 +5,7 @@ package com.jadebyte.jadeplayer.main.artists
 import android.database.Cursor
 import android.os.Parcelable
 import android.provider.MediaStore
-import com.jadebyte.jadeplayer.main.common.data.Data
+import com.jadebyte.jadeplayer.main.common.data.Model
 import kotlinx.android.parcel.Parcelize
 
 
@@ -18,7 +18,7 @@ data class Artist(
     val name: String,
     val songsCount: Int,
     val albumsCount: Int
-) : Data(),
+) : Model(),
     Parcelable {
 
     constructor(data: Cursor) : this(

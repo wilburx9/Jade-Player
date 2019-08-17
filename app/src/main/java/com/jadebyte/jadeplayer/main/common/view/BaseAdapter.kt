@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.BaseDiffCallback
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
-import com.jadebyte.jadeplayer.main.common.data.Data
+import com.jadebyte.jadeplayer.main.common.data.Model
 
 
 /**
  * Created by Wilberforce on 2019-04-20 at 23:40.
  */
-class BaseAdapter<T : Data>(
+class BaseAdapter<T : Model>(
     private var items: List<T>,
     private val context: Context,
     private val layoutId: Int,

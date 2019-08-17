@@ -19,6 +19,15 @@
         android:text="@string/playlist" />
 
     <ImageButton
+        android:id="@+id/addPlayListIcon"
+        style="@style/AppTheme.SectionIcon"
+        android:contentDescription="@string/add_new"
+        app:layout_constraintBottom_toBottomOf="@id/navigationIcon"
+        app:layout_constraintEnd_toStartOf="@+id/navigationIcon"
+        app:layout_constraintTop_toTopOf="@+id/navigationIcon"
+        app:srcCompat="@drawable/ic_add" />
+
+    <ImageButton
         android:id="@+id/navigationIcon"
         style="@style/AppTheme.SectionIcon"
         android:contentDescription="@string/navigation_icon"
@@ -28,16 +37,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sectionTitle"
         app:srcCompat="@drawable/ic_nav" />
-
-    <ImageButton
-        android:id="@+id/addPlayListIcon"
-        style="@style/AppTheme.SectionIcon"
-        android:contentDescription="@string/add_new"
-        app:layout_constraintBottom_toBottomOf="@id/navigationIcon"
-        app:layout_constraintEnd_toStartOf="@+id/navigationIcon"
-        app:layout_constraintTop_toTopOf="@+id/navigationIcon"
-        app:srcCompat="@drawable/ic_add" />
-
 
     <TextView
         android:id="@+id/playlistsNum"

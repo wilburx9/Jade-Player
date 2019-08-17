@@ -90,13 +90,11 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
 
     private fun updateSelectedCount() {
         val selectedSongs = items.filter { it.selected }
-        dataNum.setText(
-            resources.getQuantityString(
-                R.plurals.numberOfSongsSelected,
-                selectedSongs.count(),
-                selectedSongs.count()
-            )
-        )
+        dataNum.setText(resources.getQuantityString(
+            R.plurals.numberOfSongsSelected,
+            selectedSongs.count(),
+            selectedSongs.count()
+        ))
     }
 
     private fun setupView() {

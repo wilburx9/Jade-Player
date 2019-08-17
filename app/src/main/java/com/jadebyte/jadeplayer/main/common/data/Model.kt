@@ -2,6 +2,6 @@
 
 package com.jadebyte.jadeplayer.main.common.data
 
-abstract class Data {
+abstract class Model {
     abstract val id: Any
 }

@@ -27,7 +27,8 @@ import kotlinx.coroutines.*
 import java.util.*
 
 
-class NavigationDialogFragment : BaseFullscreenDialogFragment(), OnStartDragListener, ItemTouchHelperAdapter, OnItemClickListener {
+class NavigationDialogFragment : BaseFullscreenDialogFragment(), OnStartDragListener, ItemTouchHelperAdapter,
+    OnItemClickListener {
 
     private var origin: Int? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -90,7 +91,7 @@ class NavigationDialogFragment : BaseFullscreenDialogFragment(), OnStartDragList
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         // This is not the best place to do this.
-        // Data modification should be done in the repository but I currently can't find a way to do this in the
+        // Model modification should be done in the repository but I currently can't find a way to do this in the
         // repository and communicate back to this View that items has moved and the indexes of the moved items.
 
         // So what I am doing here is, swapping the items, notifying the adapter and notifying the repository
@@ -127,12 +128,10 @@ class NavigationDialogFragment : BaseFullscreenDialogFragment(), OnStartDragList
             Constants.NAV_SONGS -> R.id.action_navigationDialogFragment_to_songsFragment
             Constants.NAV_PLAYLIST -> R.id.action_navigationDialogFragment_to_playlistFragment
             Constants.NAV_ARTISTS -> R.id.action_navigationDialogFragment_to_artistsFragment
+            Constants.NAV_GENRES -> R.id.action_navigationDialogFragment_to_genresFragment
             else -> null
         }
-
-        navId?.let {
-            findNavController().navigate(navId)
-        }
+        if (navId != null) findNavController().navigate(navId)
 
     }
 

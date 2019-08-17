@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.os.Parcelable
 import android.provider.MediaStore
 import com.jadebyte.jadeplayer.main.albums.Album
-import com.jadebyte.jadeplayer.main.common.data.Data
+import com.jadebyte.jadeplayer.main.common.data.Model
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import com.jadebyte.jadeplayer.main.common.utils.Utils.getTrackNumber
 import kotlinx.android.parcel.Parcelize
@@ -29,7 +29,7 @@ data class Song(
     var isCurrent: Boolean = false,
     var selected: Boolean = false,
     var audioId: Long? = null
-) : Data(), Parcelable {
+) : Model(), Parcelable {
     constructor(cursor: Cursor) : this(
         id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID)),
         title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),

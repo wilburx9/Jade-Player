@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
-import com.jadebyte.jadeplayer.main.common.data.Data
+import com.jadebyte.jadeplayer.main.common.data.Model
 import kotlinx.android.synthetic.main.fragment_base_player.*
 import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
 
 /**
  * Created by Wilberforce on 2019-04-21 at 01:48.
  */
-abstract class BasePlayerFragment<T: Data> : BaseFragment(), View.OnClickListener, OnItemClickListener {
+abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListener, OnItemClickListener {
     var items = emptyList<T>()
     lateinit var viewModel: BaseViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int

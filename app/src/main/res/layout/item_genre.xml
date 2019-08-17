@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="genre"
+            type="com.jadebyte.jadeplayer.main.genres.Genre" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_bold"
+            android:maxLines="1"
+            android:paddingStart="@dimen/padding_x_large"
+            android:paddingTop="@dimen/padding_large"
+            android:paddingEnd="@dimen/padding_x_large"
+            android:paddingBottom="@dimen/padding_large"
+            android:text="@{genre.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Afro Fusion" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

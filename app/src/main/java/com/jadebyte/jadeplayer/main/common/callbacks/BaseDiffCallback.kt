@@ -3,9 +3,9 @@
 package com.jadebyte.jadeplayer.main.common.callbacks
 
 import androidx.recyclerview.widget.DiffUtil
-import com.jadebyte.jadeplayer.main.common.data.Data
+import com.jadebyte.jadeplayer.main.common.data.Model
 
-open class BaseDiffCallback<T : Data>(private val oldList: List<T>, private val newList: List<T>) :
+open class BaseDiffCallback<T : Model>(private val oldList: List<T>, private val newList: List<T>) :
     DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
