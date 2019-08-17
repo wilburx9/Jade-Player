@@ -197,6 +197,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_playlistFragment_to_playlistMenuBottomSheetDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_playlistFragment_to_playlistSongsFragment">
                               <value>
                                 <LayoutPositions />
@@ -217,8 +222,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1332" />
-                            <option name="y" value="865" />
+                            <option name="x" value="1333" />
+                            <option name="y" value="897" />
                           </Point>
                         </option>
                         <option name="myPositions">

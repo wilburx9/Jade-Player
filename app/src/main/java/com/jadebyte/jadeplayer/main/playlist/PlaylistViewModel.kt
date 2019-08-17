@@ -8,7 +8,7 @@ import android.provider.MediaStore
 import androidx.lifecycle.viewModelScope
 import com.hunter.library.debug.HunterDebug
 import com.jadebyte.jadeplayer.main.common.data.BaseRepository
-import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
+import com.jadebyte.jadeplayer.main.common.view.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

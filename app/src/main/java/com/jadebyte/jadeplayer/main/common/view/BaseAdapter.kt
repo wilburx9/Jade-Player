@@ -9,15 +9,18 @@ import android.view.animation.AnimationUtils
 import androidx.collection.SparseArrayCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.main.common.callbacks.BaseDiffCallback
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.data.Data
 
 
 /**
  * Created by Wilberforce on 2019-04-20 at 23:40.
  */
-class BaseAdapter<T>(
+class BaseAdapter<T : Data>(
     private var items: List<T>,
     private val context: Context,
     private val layoutId: Int,
@@ -38,21 +41,23 @@ class BaseAdapter<T>(
                 itemBinding.setVariable(it.keyAt(i), it.valueAt(i))
             }
         }
-        return BaseViewHolder(itemBinding, variableId, itemClickListener, true)
+        return BaseViewHolder(itemBinding, variableId, itemClickListener, longClick)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
-        holder.bind(items[position])
-        animateItem(position, holder)
+    override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) = holder.bind(items[position])
+
+    override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int, payloads: MutableList<Any>) {
+        super.onBindViewHolder(holder, position, payloads)
+        if (payloads.isEmpty()) animateItem(position, holder)
     }
 
     fun updateItems(items: List<T>) {
+        val diffCallback = BaseDiffCallback(this.items, items)
+        val diffResult = DiffUtil.calculateDiff(diffCallback, false)
         this.items = items
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onViewDetachedFromWindow(holder: BaseViewHolder<T>) {
@@ -76,7 +81,5 @@ class BaseAdapter<T>(
         lastPosition = position
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return layoutId
-    }
+    override fun getItemViewType(position: Int): Int = layoutId
 }

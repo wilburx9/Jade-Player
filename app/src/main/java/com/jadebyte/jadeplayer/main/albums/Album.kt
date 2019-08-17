@@ -5,6 +5,7 @@ package com.jadebyte.jadeplayer.main.albums
 import android.database.Cursor
 import android.os.Parcelable
 import android.provider.MediaStore
+import com.jadebyte.jadeplayer.main.common.data.Data
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -12,13 +13,13 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class Album(
+    override val id: Long = 0,
     val name: String,
     val artist: String,
     val tracks: Int? = 0,
-    val id: Long? = 0,
     val year: String? = "",
     val key: String
-) : Parcelable {
+) : Data(), Parcelable {
 
     constructor(data: Cursor) : this(
         name = data.getString(data.getColumnIndex(MediaStore.Audio.Albums.ALBUM)),

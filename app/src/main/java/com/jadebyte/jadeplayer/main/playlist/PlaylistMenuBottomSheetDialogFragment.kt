@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.utils.Utils
@@ -20,10 +22,12 @@ import com.jadebyte.jadeplayer.main.common.view.BaseMenuBottomSheet
 
 class PlaylistMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
     lateinit var playlist: Playlist
+    @IdRes var popUpTo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         playlist = arguments!!.getParcelable("playlist")!!
+        popUpTo = arguments!!.getInt("popUpTo")
 
     }
 
@@ -96,7 +100,8 @@ class PlaylistMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
     private fun editSongs() {
         findNavController().navigate(
             PlaylistMenuBottomSheetDialogFragmentDirections
-                .actionPlaylistMenuBottomSheetDialogFragmentToPlaylistSongsEditorDialogFragment(playlist)
+                .actionPlaylistMenuBottomSheetDialogFragmentToPlaylistSongsEditorDialogFragment(playlist),
+            NavOptions.Builder().setPopUpTo(popUpTo, false).build()
         )
 
     }

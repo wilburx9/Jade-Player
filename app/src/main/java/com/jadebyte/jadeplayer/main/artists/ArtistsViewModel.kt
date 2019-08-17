@@ -6,7 +6,7 @@ import android.app.Application
 import android.net.Uri
 import android.provider.MediaStore
 import com.jadebyte.jadeplayer.main.common.data.BaseRepository
-import com.jadebyte.jadeplayer.main.common.data.BaseViewModel
+import com.jadebyte.jadeplayer.main.common.view.BaseViewModel
 
 /**
  * Created by Wilberforce on 2019-04-25 at 00:57.

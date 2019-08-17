@@ -69,7 +69,11 @@
         <action
             android:id="@+id/action_playlistFragment_to_playlistMenuBottomSheetDialogFragment"
             app:destination="@id/playlistMenuBottomSheetDialogFragment"
-            app:launchSingleTop="true" />
+            app:launchSingleTop="true">
+            <argument
+                android:name="popUpTo"
+                android:defaultValue="@id/playlistFragment" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -177,18 +181,22 @@
         <action
             android:id="@+id/action_playlistSongsFragment_to_playlistMenuBottomSheetDialogFragment"
             app:destination="@id/playlistMenuBottomSheetDialogFragment"
-            app:launchSingleTop="true" />
+            app:launchSingleTop="true">
+            <argument
+                android:name="popUpTo"
+                android:defaultValue="@id/playlistSongsFragment" />
+        </action>
     </fragment>
     <dialog
         android:id="@+id/writePlaylistDialogFragment"
         android:name="com.jadebyte.jadeplayer.main.playlist.WritePlaylistDialogFragment"
         android:label="fragment_new_playlist_dialog"
-        tools:layout="@layout/fragment_write_playlist_dialog" >
+        tools:layout="@layout/fragment_write_playlist_dialog">
         <argument
             android:name="playlist"
+            android:defaultValue="@null"
             app:argType="com.jadebyte.jadeplayer.main.playlist.Playlist"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </dialog>
     <dialog
         android:id="@+id/playlistMenuBottomSheetDialogFragment"
@@ -198,16 +206,17 @@
         <argument
             android:name="playlist"
             app:argType="com.jadebyte.jadeplayer.main.playlist.Playlist" />
+        <argument
+            android:name="popUpTo"
+            app:argType="reference" />
         <action
             android:id="@+id/action_playlistMenuBottomSheetDialogFragment_to_playlistSongsEditorDialogFragment"
             app:destination="@id/playlistSongsEditorDialogFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/playlistSongsFragment" />
+            app:launchSingleTop="true" />
         <action
             android:id="@+id/action_playlistMenuBottomSheetDialogFragment_to_writePlaylistDialogFragment"
             app:destination="@id/writePlaylistDialogFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/playlistSongsFragment" />
+            app:launchSingleTop="true" />
     </dialog>
     <dialog
         android:id="@+id/playlistSongsEditorDialogFragment"
@@ -222,12 +231,13 @@
         android:id="@+id/genresFragment"
         android:name="com.jadebyte.jadeplayer.main.genres.GenresFragment"
         android:label="fragment_genres"
-        tools:layout="@layout/fragment_genres" >
+        tools:layout="@layout/fragment_genres">
         <action
             android:id="@+id/action_genresFragment_to_navigationDialogFragment"
-            app:destination="@id/navigationDialogFragment" >
-            <argument android:defaultValue="4"
-                android:name="origin" />
+            app:destination="@id/navigationDialogFragment">
+            <argument
+                android:name="origin"
+                android:defaultValue="4" />
         </action>
     </fragment>
 

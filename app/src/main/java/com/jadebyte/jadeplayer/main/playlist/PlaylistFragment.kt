@@ -90,7 +90,7 @@ class PlaylistFragment : BaseFragment(), OnItemClickListener, View.OnClickListen
     override fun onItemLongClick(position: Int) {
         super.onItemLongClick(position)
         val action =
-            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistMenuBottomSheetDialogFragment(items[position])
+            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistMenuBottomSheetDialogFragment(playlist = items[position])
         findNavController().navigate(action)
     }
 

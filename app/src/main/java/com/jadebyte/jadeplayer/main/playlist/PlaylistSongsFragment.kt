@@ -111,7 +111,7 @@ class PlaylistSongsFragment : Fragment(), OnItemClickListener, View.OnClickListe
             R.id.sectionBackButton -> findNavController().popBackStack()
             R.id.moreOptions -> findNavController().navigate(
                 PlaylistSongsFragmentDirections
-                    .actionPlaylistSongsFragmentToPlaylistMenuBottomSheetDialogFragment(playlist)
+                    .actionPlaylistSongsFragmentToPlaylistMenuBottomSheetDialogFragment(playlist = playlist)
             )
         }
     }

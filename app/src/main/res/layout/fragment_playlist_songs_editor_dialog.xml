@@ -21,12 +21,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
-        <TextView
+        <TextSwitcher
             android:id="@+id/dataNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_large"
+            android:inAnimation="@anim/fast_fade_in"
+            android:outAnimation="@anim/fast_fade_out"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintBottom_toTopOf="@+id/songsRV"
             app:layout_constraintEnd_toStartOf="@+id/progressBar"
@@ -34,8 +36,20 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="118 tracks selected " />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                tools:text="118 tracks selected " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                tools:text="118 tracks selected " />
+        </TextSwitcher>
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -90,12 +90,13 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
 
     private fun updateSelectedCount() {
         val selectedSongs = items.filter { it.selected }
-        dataNum.text =
+        dataNum.setText(
             resources.getQuantityString(
                 R.plurals.numberOfSongsSelected,
                 selectedSongs.count(),
                 selectedSongs.count()
             )
+        )
     }
 
     private fun setupView() {
@@ -110,7 +111,9 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
     @Suppress("UNCHECKED_CAST")
     override fun onItemClick(position: Int, sharableView: View?) {
         if (viewModel.reverseSelection(position)) {
-            (songsRV.adapter as BaseAdapter<Song>).notifyItemChanged(position)
+            // DiffUtil should handle the changes but there's a but in reverseSelection function in the handle that's
+            // preventing DiffUtil from detecting changes
+            (songsRV.adapter as BaseAdapter<Song>).notifyItemChanged(position, 0)
             updateSelectedCount()
         }
     }

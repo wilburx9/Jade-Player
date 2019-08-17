@@ -7,6 +7,7 @@ import android.os.Parcelable
 import android.provider.MediaStore
 import com.jadebyte.jadeplayer.common.dp
 import com.jadebyte.jadeplayer.main.common.data.Constants
+import com.jadebyte.jadeplayer.main.common.data.Data
 import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoader
 import kotlinx.android.parcel.Parcelize
 
@@ -15,7 +16,13 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class Playlist(val id: Long, var name: String, val modified: Long, var songsCount: Int = 0) : Parcelable {
+data class Playlist(
+    override val id: Long,
+    var name: String,
+    val modified: Long,
+    var songsCount: Int = 0
+) : Data(),
+    Parcelable {
 
     constructor(cursor: Cursor) : this(
         id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists._ID)),
