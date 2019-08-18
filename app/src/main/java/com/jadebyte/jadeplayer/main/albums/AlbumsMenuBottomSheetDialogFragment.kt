@@ -1,6 +1,6 @@
 // Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
 
-package com.jadebyte.jadeplayer.main.genres
+package com.jadebyte.jadeplayer.main.albums
 
 
 import android.os.Bundle
@@ -13,15 +13,18 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.view.BaseMenuBottomSheet
+import com.jadebyte.jadeplayer.main.songs.basicSongsSelection
+import com.jadebyte.jadeplayer.main.songs.basicSongsSelectionArg
 
-class GenresMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
 
-    lateinit var genre: Genre
+class AlbumsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
+
+    lateinit var album: Album
     @IdRes var popUpTo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        genre = arguments!!.getParcelable("genre")!!
+        album = arguments!!.getParcelable("album")!!
         popUpTo = arguments!!.getInt("popUpTo")
     }
 
@@ -29,7 +32,7 @@ class GenresMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_genres_menu_bottom_sheet_dialog, container, false)
+        return inflater.inflate(R.layout.fragment_albums_menu_bottom_sheet_dialog, container, false)
     }
 
     override fun onClick(v: View?) {
@@ -50,9 +53,10 @@ class GenresMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
     }
 
     private fun addToPlayList() {
-        val uri = MediaStore.Audio.Genres.Members.getContentUri("external", genre.id)
-        val action = GenresMenuBottomSheetDialogFragmentDirections
-            .actionGenresMenuBottomSheetDialogFragmentToAddSongsToPlaylistsFragment(songsUri = uri.toString())
+        val selection = "$basicSongsSelection AND ${MediaStore.Audio.Media.ALBUM_ID} = ?"
+        val selectionArgs = arrayOf(basicSongsSelectionArg, album.id.toString())
+        val action = AlbumsMenuBottomSheetDialogFragmentDirections
+            .actionAlbumsMenuBottomSheetDialogFragmentToAddSongsToPlaylistsFragment(selectionArgs, selection)
         val navOptions = NavOptions.Builder().setPopUpTo(popUpTo, false).build()
 
         findNavController().navigate(action, navOptions)

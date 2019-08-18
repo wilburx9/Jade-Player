@@ -62,7 +62,7 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
 
             if (it) {
                 // Updating playlist was successful
-                Utils.vibrateAfterAction(activity!!)
+                Utils.vibrateAfterAction(activity)
                 findNavController().popBackStack()
             } else {
                 // Updating playlist wasn't successful;
@@ -77,7 +77,7 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer(::updateViews))
+        viewModel.items.observe(viewLifecycleOwner, Observer(::updateViews))
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -98,19 +98,27 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
     }
 
     private fun setupView() {
-        val variables = SparseArrayCompat<Any>()
+        val variables = SparseArrayCompat<Any>(1)
         variables.put(BR.selectable, true)
         val adapter =
-            BaseAdapter(items, activity!!, R.layout.item_song, BR.song, false, this, variables)
+            BaseAdapter(items, activity!!, R.layout.item_song, BR.song,
+                false, this, variables)
         songsRV.adapter = adapter
         songsRV.layoutManager = LinearLayoutManager(activity)
     }
 
+    /**
+     * DiffUtil should handle the changes but there's an issue in [PlaylistSongsEditorViewModel.reverseSelection]
+     * function that's preventing DiffUtil from detecting changes.
+     *
+     * The issue is that the data value in the [PlaylistSongsEditorViewModel] and [items] point to
+     * the same object in memory so any item change in the values are reflected across. So by the
+     * time observers are notified, the current [items] and incoming items are already the same
+     * hence DiffUtil can't detect changes
+     */
     @Suppress("UNCHECKED_CAST")
     override fun onItemClick(position: Int, sharableView: View?) {
         if (viewModel.reverseSelection(position)) {
-            // DiffUtil should handle the changes but there's a but in reverseSelection function in the handle that's
-            // preventing DiffUtil from detecting changes
             (songsRV.adapter as BaseAdapter<Song>).notifyItemChanged(position, 0)
             updateSelectedCount()
         }

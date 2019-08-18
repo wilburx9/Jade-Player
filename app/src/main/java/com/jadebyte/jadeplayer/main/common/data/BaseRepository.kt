@@ -11,10 +11,10 @@ import androidx.annotation.WorkerThread
  * Created by Wilberforce on 19/04/2019 at 16:36.
  */
 abstract class BaseRepository<T>(private val application: Application) {
-    lateinit var uri: Uri
 
     @WorkerThread
     fun loadData(
+        uri: Uri,
         projection: Array<String>? = null,
         selection: String? = null,
         selectionArgs: Array<String>? = null,

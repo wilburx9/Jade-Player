@@ -31,7 +31,6 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
 
     fun init(playlistId: Long) {
         playlistSongsUri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
-        playlistSongsRepository.uri = playlistSongsUri
         init()
     }
 
@@ -55,7 +54,7 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
         MediaStore.Audio.Playlists.Members.AUDIO_ID
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val songsInPlaylist = playlistSongsRepository.loadData(playlistSongsProjection)
+                val songsInPlaylist = playlistSongsRepository.loadData(playlistSongsUri, playlistSongsProjection)
                 items.forEach { song ->
                     // The tracks are the same if they have the same titleKey and the same file paths
                     val playlistSong =
@@ -74,7 +73,7 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
     fun updatePlaylist() {
         viewModelScope.launch {
             val success = withContext(Dispatchers.IO) {
-                val selectedItems: List<Song> = data.value!!.filter { it.selected }
+                val selectedItems: List<Song> = items.value!!.filter { it.selected }
                 // Items that weren't selected initially.
                 // A better explanation: Items that doesn't exist in this playlist but are now selected
                 val addableItems: List<Song> = selectedItems.minus(initiallySelectedItems)
@@ -84,14 +83,14 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
 
 
                 if (addableItems.isNotEmpty()) {
-                    // Add items
+                    // Add songs to playlist
                     if (!addSongs(addableItems)) {
                         return@withContext false
                     }
                 }
 
                 if (!removableItems.isNullOrEmpty()) {
-                    // Remove items from playlist
+                    // Remove songs from playlist
                     if (!deleteSongs(removableItems)) {
                         return@withContext false
                     }

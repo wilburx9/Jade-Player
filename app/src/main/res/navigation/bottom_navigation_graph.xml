@@ -19,6 +19,13 @@
         <action
             android:id="@+id/action_exploreFragment_to_albumSongsFragment"
             app:destination="@id/albumSongsFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_albumsMenuBottomSheetDialogFragment"
+            app:destination="@id/albumsMenuBottomSheetDialogFragment"
+            app:launchSingleTop="true" >
+            <argument android:defaultValue="@id/exploreFragment"
+                android:name="popUpTo" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/songsFragment"
@@ -33,8 +40,13 @@
                 android:defaultValue="0" />
         </action>
         <action
-            android:id="@+id/action_songsFragment_to_songsMenuBottomSheetDialogFragment2"
-            app:destination="@id/songsMenuBottomSheetDialogFragment" />
+            android:id="@+id/action_songsFragment_to_songsMenuBottomSheetDialogFragment"
+            app:destination="@id/songsMenuBottomSheetDialogFragment"
+            app:launchSingleTop="true">
+            <argument
+                android:name="popUpTo"
+                android:defaultValue="@id/songsFragment" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/albumsFragment"
@@ -47,6 +59,14 @@
         <action
             android:id="@+id/action_albumsFragment_to_albumSongsFragment"
             app:destination="@id/albumSongsFragment" />
+        <action
+            android:id="@+id/action_albumsFragment_to_albumsMenuBottomSheetDialogFragment"
+            app:destination="@id/albumsMenuBottomSheetDialogFragment"
+            app:launchSingleTop="true">
+            <argument
+                android:name="popUpTo"
+                android:defaultValue="@id/albumsFragment" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/playlistFragment"
@@ -121,6 +141,12 @@
         <argument
             android:name="transitionName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_albumSongsFragment_to_albumsMenuBottomSheetDialogFragment"
+            app:destination="@id/albumsMenuBottomSheetDialogFragment" >
+            <argument android:defaultValue="@id/albumSongsFragment"
+                android:name="popUpTo" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/artistsFragment"
@@ -157,6 +183,14 @@
         <action
             android:id="@+id/action_artistAlbumsFragment_to_albumSongsFragment"
             app:destination="@id/albumSongsFragment" />
+        <action
+            android:id="@+id/action_artistAlbumsFragment_to_albumsMenuBottomSheetDialogFragment"
+            app:destination="@id/albumsMenuBottomSheetDialogFragment"
+            app:launchSingleTop="true">
+            <argument
+                android:name="popUpTo"
+                android:defaultValue="@id/artistAlbumsFragment" />
+        </action>
     </fragment>
     <dialog
         android:id="@+id/songsMenuBottomSheetDialogFragment"
@@ -166,6 +200,13 @@
         <argument
             android:name="song"
             app:argType="com.jadebyte.jadeplayer.main.songs.Song" />
+        <action
+            android:id="@+id/action_songsMenuBottomSheetDialogFragment_to_addSongsToPlaylistsFragment"
+            app:destination="@id/addSongsToPlaylistsFragment"
+            app:launchSingleTop="true" />
+        <argument
+            android:name="popUpTo"
+            app:argType="reference" />
     </dialog>
     <fragment
         android:id="@+id/playlistSongsFragment"
@@ -282,6 +323,50 @@
         <argument
             android:name="popUpTo"
             app:argType="reference" />
+        <action
+            android:id="@+id/action_genresMenuBottomSheetDialogFragment_to_addSongsToPlaylistsFragment"
+            app:destination="@id/addSongsToPlaylistsFragment"
+            app:launchSingleTop="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/addSongsToPlaylistsFragment"
+        android:name="com.jadebyte.jadeplayer.main.playlist.AddSongsToPlaylistsFragment"
+        android:label="fragment_add_songs_to_playlists"
+        tools:layout="@layout/fragment_add_songs_to_playlists" >
+        <argument
+            android:name="songsSelectionArgs"
+            app:argType="string[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="songsSelection"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="songsUri"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_addSongsToPlaylistsFragment_to_writePlaylistDialogFragment"
+            app:destination="@id/writePlaylistDialogFragment"
+            app:launchSingleTop="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/albumsMenuBottomSheetDialogFragment"
+        android:name="com.jadebyte.jadeplayer.main.albums.AlbumsMenuBottomSheetDialogFragment"
+        android:label="fragment_albums_menu_bottom_sheet_dialog"
+        tools:layout="@layout/fragment_albums_menu_bottom_sheet_dialog" >
+        <action
+            android:id="@+id/action_albumsMenuBottomSheetDialogFragment_to_addSongsToPlaylistsFragment"
+            app:destination="@id/addSongsToPlaylistsFragment" />
+        <argument
+            android:name="popUpTo"
+            app:argType="reference" />
+        <argument
+            android:name="album"
+            app:argType="com.jadebyte.jadeplayer.main.albums.Album" />
     </dialog>
 
 </navigation>

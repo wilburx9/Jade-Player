@@ -26,8 +26,8 @@ import java.io.File
 
 class WritePlaylistViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _data = MutableLiveData<WriteResponse>()
-    val data: LiveData<WriteResponse> get() = _data
+    private val _data = MutableLiveData<WriteResult>()
+    internal val data: LiveData<WriteResult> get() = _data
 
     fun createPlaylist(playlistName: String, tempThumbUri: Uri?) {
         viewModelScope.launch {
@@ -38,12 +38,12 @@ class WritePlaylistViewModel(application: Application) : AndroidViewModel(applic
                 val playlistUri = getApplication<App>().contentResolver.insert(uri, values)
 
                 if (playlistUri?.toString().isNullOrEmpty()) {
-                    _data.postValue(WriteResponse(false, R.string.something_went_wrong))
+                    _data.postValue(WriteResult(false, R.string.something_went_wrong))
                     return@withContext
                 }
 
                 writeImageFile(Playlist(ContentUris.parseId(playlistUri)), tempThumbUri)
-                _data.postValue(WriteResponse(true))
+                _data.postValue(WriteResult(true))
             }
         }
 
@@ -60,12 +60,12 @@ class WritePlaylistViewModel(application: Application) : AndroidViewModel(applic
                 values.put(MediaStore.Audio.Playlists.DATE_MODIFIED, System.currentTimeMillis())
                 val rowsUpdated = getApplication<App>().contentResolver.update(uri, values, where, whereVal)
                 if (rowsUpdated < 1) {
-                    _data.postValue(WriteResponse(false, R.string.sth_went_wrong))
+                    _data.postValue(WriteResult(false, R.string.sth_went_wrong))
                     return@withContext
                 }
 
                 writeImageFile(playlist, tempThumbUri, deleteImageFile)
-                _data.postValue(WriteResponse(true))
+                _data.postValue(WriteResult(true))
             }
         }
     }
@@ -79,9 +79,9 @@ class WritePlaylistViewModel(application: Application) : AndroidViewModel(applic
                     .delete(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, where, whereVal)
                 if (rows > 0) {
                     writeImageFile(playlist, deleteImageFile = true)
-                    _data.postValue(WriteResponse(true, R.string.sth_deleted))
+                    _data.postValue(WriteResult(true, R.string.sth_deleted))
                 } else {
-                    _data.postValue(WriteResponse(false, R.string.sth_went_wrong))
+                    _data.postValue(WriteResult(false, R.string.sth_went_wrong))
                 }
             }
         }
@@ -110,4 +110,4 @@ class WritePlaylistViewModel(application: Application) : AndroidViewModel(applic
     }
 }
 
-data class WriteResponse(val success: Boolean, @StringRes val message: Int? = null)
+internal data class WriteResult(val success: Boolean, @StringRes val message: Int? = null)

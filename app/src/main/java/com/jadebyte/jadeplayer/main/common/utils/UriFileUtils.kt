@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference
 object UriFileUtils {
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
-     * Framework Documents, as well as the _data field for the MediaStore and
+     * Framework Documents, as well as the data field for the MediaStore and
      * other file-based ContentProviders.<br>
      * <br>
      * Callers should check whether the path is local before assuming it
@@ -105,7 +105,7 @@ object UriFileUtils {
     ): String? {
         if (uri == null) return null
 
-        val column = "_data"
+        val column = "data"
         val projection = arrayOf(column)
 
         val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
@@ -113,7 +113,7 @@ object UriFileUtils {
             if (it.moveToFirst()) {
                 val columnIndex = it.getColumnIndex(column)
 
-                //yandex.disk and dropbox do not have _data column
+                //yandex.disk and dropbox do not have data column
                 return if (columnIndex == -1) {
                     null
                 } else it.getString(columnIndex)

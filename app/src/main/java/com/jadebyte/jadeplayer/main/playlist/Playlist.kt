@@ -20,7 +20,8 @@ data class Playlist(
     override val id: Long,
     var name: String,
     val modified: Long,
-    var songsCount: Int = 0
+    var songsCount: Int = 0,
+    var selected: Boolean = false
 ) : Model(),
     Parcelable {
 

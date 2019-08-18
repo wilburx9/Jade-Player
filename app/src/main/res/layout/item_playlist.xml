@@ -8,9 +8,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="playlist"
             type="com.jadebyte.jadeplayer.main.playlist.Playlist" />
+
+        <variable
+            name="selectable"
+            type="boolean" />
 
     </data>
 
@@ -47,7 +53,7 @@
             android:textSize="@dimen/text_size_x_small"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guideLine"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkbox"
             app:layout_constraintStart_toEndOf="@+id/sharableView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.9"
@@ -67,6 +73,18 @@
             app:layout_constraintTop_toBottomOf="@+id/guideLine"
             app:layout_constraintVertical_bias="0.1"
             tools:text="23 songs" />
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/more_options"
+            android:visibility="@{selectable? View.VISIBLE: View.GONE}"
+            android:checked="@{playlist.selected}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:checked="false" />
 
 
         <androidx.constraintlayout.widget.Guideline

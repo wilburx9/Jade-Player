@@ -32,7 +32,7 @@ class GenreSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        genre = arguments!!.getParcelable("genre")
+        genre = arguments!!.getParcelable("genre")!!
         viewModel = ViewModelProviders.of(this)[GenreSongsViewModel::class.java]
         viewModel.init(genre.id)
     }
@@ -54,7 +54,7 @@ class GenreSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickList
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer(this::updateViews))
+        viewModel.items.observe(viewLifecycleOwner, Observer(this::updateViews))
     }
 
     @Suppress("UNCHECKED_CAST")

@@ -133,6 +133,8 @@ fun View.crossFadeWidth(
         addListener(object : AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
                 super.onAnimationStart(animation)
+                this@crossFadeWidth.isEnabled = true
+                otherView.isEnabled = false
                 this@crossFadeWidth.visibility = View.VISIBLE
             }
 

@@ -38,6 +38,8 @@
     <string name="previous_button">Previous button</string>
     <string name="current_playing_tracks">Current playing tracks</string>
     <string name="man_holding_an_empty_box">Man holding an empty box</string>
+    <string name="add_new">Add New</string>
+    <string name="add_new_playlist">Add New Playlist</string>
 
 
     <!--Navigation-->
@@ -70,6 +72,12 @@
     <plurals name="numberOfSongsSelected">
         <item quantity="one">%d song selected</item>
         <item quantity="other">%d songs selected</item>
+        <item quantity="zero">No songs selected</item>
+    </plurals>
+    <plurals name="numberOfPlaylistsSelected">
+        <item quantity="one">%d playlist selected</item>
+        <item quantity="other">%d playlist selected</item>
+        <item quantity="zero">No playlist selected</item>
     </plurals>
     <plurals name="numberOfAlbums">
         <item quantity="one">%d album</item>
@@ -117,7 +125,6 @@
     <string name="delete_frm_library">Delete from library</string>
     <string name="no_playlist">No playlist here to see</string>
     <string name="add_playlist_suggestion">How about we start by adding a some songs to your playlist?</string>
-    <string name="add_new">Add New</string>
     <string name="create_a_playlist">Create a playlist</string>
     <string name="create_playlist">Create playlist</string>
     <string name="create_playlist_thumb_text">Click here to change image</string>
@@ -140,6 +147,7 @@
     <string name="select_songs">Select Songs</string>
     <string name="song_in_album">%1$s in %2$s</string>
     <string name="remove_picture">Remove picture</string>
+    <string name="success">Success</string>
 
 
 </resources>

@@ -4,15 +4,27 @@ package com.jadebyte.jadeplayer.main.songs
 
 
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.view.BaseMenuBottomSheet
 
 
 class SongsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
+
+    lateinit var song: Song
+    @IdRes var popUpTo: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        song = arguments!!.getParcelable("song")!!
+        popUpTo = arguments!!.getInt("popUpTo")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,15 +41,19 @@ class SongsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
             R.id.addToPlayList -> addTrackToPlayList()
             R.id.delete -> deleteTrack()
         }
-        findNavController().popBackStack()
     }
 
     private fun deleteTrack() {
-       // TODO: Implement
+        // TODO: Implement
     }
 
     private fun addTrackToPlayList() {
-        // TODO: Implement
+        val selection = "$basicSongsSelection AND ${MediaStore.Audio.Media._ID} = ?"
+        val selectionArgs = arrayOf(basicSongsSelectionArg, song.id.toString())
+        val action = SongsMenuBottomSheetDialogFragmentDirections
+            .actionSongsMenuBottomSheetDialogFragmentToAddSongsToPlaylistsFragment(selectionArgs, selection)
+        val navOptions = NavOptions.Builder().setPopUpTo(popUpTo, false).build()
+        findNavController().navigate(action, navOptions)
     }
 
     private fun favouriteTrack() {

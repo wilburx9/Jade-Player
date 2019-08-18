@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
  * Created by Wilberforce on 2019-05-18 at 21:55.
  */
 class PlaybackViewModel(application: Application) : AndroidViewModel(application) {
-    private val indexOfPlayingSong = MediatorLiveData<Int>()
+    private val indexOfPlayingSong = MutableLiveData<Int>()
     private val songs = MutableLiveData<List<Song>>()
     val mediatorLiveData = MediatorLiveData<Any>()
 

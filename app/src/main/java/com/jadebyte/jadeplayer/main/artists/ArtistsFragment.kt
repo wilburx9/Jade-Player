@@ -51,12 +51,12 @@ class ArtistsFragment : Fragment(), OnItemClickListener {
     @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
         if (items.isEmpty()) {
-            viewModel.data.observe(viewLifecycleOwner, Observer {
+            viewModel.items.observe(viewLifecycleOwner, Observer {
                 this.items = it
                 (artistsRV.adapter as BaseAdapter<Artist>).updateItems(it)
             })
         } else {
-            viewModel.data.value = items
+            viewModel.overrideCurrentItems(items)
 
         }
     }

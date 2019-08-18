@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -26,20 +25,18 @@ import com.jadebyte.jadeplayer.databinding.FragmentArtistAlbumsBinding
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
+import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_artist_albums.*
 
-
-private const val ARTIST = "artist"
-
-class ArtistAlbumsFragment : Fragment(), OnItemClickListener {
+class ArtistAlbumsFragment : BaseFragment(), OnItemClickListener {
     lateinit var artist: Artist
     lateinit var viewModel: ArtistAlbumsViewModel
-    private var items = emptyList<Album>()
+    private var albums = emptyList<Album>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        artist = arguments!!.getParcelable(ARTIST)!!
+        artist = arguments!!.getParcelable("artist")!!
         viewModel = ViewModelProviders.of(this)[ArtistAlbumsViewModel::class.java]
         viewModel.init(artist.id)
     }
@@ -67,22 +64,25 @@ class ArtistAlbumsFragment : Fragment(), OnItemClickListener {
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer(this::updateViews))
+        viewModel.items.observe(viewLifecycleOwner, Observer(this::updateViews))
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun updateViews(items: List<Album>) {
-        if (items.isEmpty()) {
+    private fun updateViews(albums: List<Album>) {
+        if (albums.isEmpty()) {
             findNavController().popBackStack()
             return
         }
-        this.items = items
-        (artistAlbumsRV.adapter as BaseAdapter<Album>).updateItems(items)
+        this.albums = albums
+        (artistAlbumsRV.adapter as BaseAdapter<Album>).updateItems(albums)
     }
 
     @SuppressLint("WrongConstant")
     private fun setupRecyclerView() {
-        val adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, itemClickListener = this)
+        val adapter = BaseAdapter(
+            albums, activity!!, R.layout.item_album, BR.album, itemClickListener = this,
+            longClick = true
+        )
         if (artist.albumsCount == 1) {
             artistAlbumsRV.setPadding(20.px, 0, 0, 0)
         }
@@ -102,10 +102,16 @@ class ArtistAlbumsFragment : Fragment(), OnItemClickListener {
             .build()
         val action =
             ArtistAlbumsFragmentDirections.actionArtistAlbumsFragmentToAlbumSongsFragment(
-                items[position],
+                albums[position],
                 transitionName
             )
         findNavController().navigate(action, extras)
     }
 
+    override fun onItemLongClick(position: Int) {
+        val action =
+            ArtistAlbumsFragmentDirections.actionArtistAlbumsFragmentToAlbumsMenuBottomSheetDialogFragment(album = albums[position])
+        findNavController().navigate(action)
+        
+    }
 }

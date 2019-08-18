@@ -61,10 +61,10 @@ class PlaylistSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickL
     }
 
     private fun observeViewModel() {
-        songsViewModel.data.observe(viewLifecycleOwner, Observer {
+        songsViewModel.items.observe(viewLifecycleOwner, Observer {
             updateViews(it)
         })
-        playlistViewModel.data.observe(viewLifecycleOwner, Observer {
+        playlistViewModel.items.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 findNavController().popBackStack()
             } else {

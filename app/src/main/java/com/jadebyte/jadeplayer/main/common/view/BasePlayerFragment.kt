@@ -32,6 +32,7 @@ abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListen
     @get: LayoutRes abstract var itemLayoutId: Int
     abstract var viewModelVariableId: Int
     open var fadeInViewHolder = false
+    open var longClickItems = false
 
 
     override fun onCreateView(
@@ -56,9 +57,9 @@ abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListen
     private fun observeViewModel() {
         if (items.isEmpty()) {
             viewModel.init()
-            viewModel.data.observe(viewLifecycleOwner, Observer(::updateViews))
+            viewModel.items.observe(viewLifecycleOwner, Observer(::updateViews))
         } else {
-            viewModel.data.value = items
+            viewModel.overrideCurrentItems(items)
         }
     }
 
@@ -75,7 +76,7 @@ abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListen
             sectionTitle.setText(titleRes)
         }
         val adapter =
-            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this)
+            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this, longClick = longClickItems)
         dataRV.adapter = adapter
         dataRV.layoutManager = layoutManager()
     }

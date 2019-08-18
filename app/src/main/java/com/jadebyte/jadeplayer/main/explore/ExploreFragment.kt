@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_explore.*
 
 class ExploreFragment : Fragment(), OnItemClickListener {
 
-    private var items: List<Album> = emptyList()
+    private var albums: List<Album> = emptyList()
     private lateinit var viewModel: ExploreViewModel
 
 
@@ -56,20 +56,22 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
-        if (items.isEmpty()) {
+        if (albums.isEmpty()) {
             viewModel.init()
-            viewModel.data.observe(viewLifecycleOwner, Observer {
-                this.items = it
+            viewModel.items.observe(viewLifecycleOwner, Observer {
+                this.albums = it
                 (randomAlbumsRV.adapter as BaseAdapter<Album>).updateItems(it)
             })
         } else {
-            viewModel.data.value = items
+            viewModel.overrideCurrentItems(albums)
 
         }
     }
 
     private fun setupRecyclerView() {
-        val adapter = BaseAdapter(items, activity!!, R.layout.item_album, BR.album, true, this)
+        // Important!! See https://rubensousa.com/2019/08/16/nested_recyclerview_part1/ for improving nested 
+        // scrolling in multiple fragments
+        val adapter = BaseAdapter(albums, activity!!, R.layout.item_album, BR.album, true, this, longClick = true)
         randomAlbumsRV.adapter = adapter
 
         val layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
@@ -82,9 +84,12 @@ class ExploreFragment : Fragment(), OnItemClickListener {
             .addSharedElement(sharableView, transitionName)
             .build()
         val action =
-            ExploreFragmentDirections.actionExploreFragmentToAlbumSongsFragment(items[position], transitionName)
+            ExploreFragmentDirections.actionExploreFragmentToAlbumSongsFragment(albums[position], transitionName)
         findNavController().navigate(action, extras)
     }
 
-
+    override fun onItemLongClick(position: Int) {
+        val action = ExploreFragmentDirections.actionExploreFragmentToAlbumsMenuBottomSheetDialogFragment(album = albums[0])
+        findNavController().navigate(action)
+    }
 }

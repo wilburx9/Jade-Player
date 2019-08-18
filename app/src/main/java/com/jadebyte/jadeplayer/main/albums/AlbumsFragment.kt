@@ -24,7 +24,7 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this)[AlbumsViewModel::class.java]
-}
+    }
 
     @SuppressLint("WrongConstant")
     override fun layoutManager(): RecyclerView.LayoutManager {
@@ -45,11 +45,18 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
 
     }
 
+    override fun onItemLongClick(position: Int) {
+        val action =
+            AlbumsFragmentDirections.actionAlbumsFragmentToAlbumsMenuBottomSheetDialogFragment(album = items[position])
+        findNavController().navigate(action)
+    }
+
     override var itemLayoutId: Int = R.layout.item_album
     override var viewModelVariableId: Int = BR.album
     override var navigationFragmentId: Int = R.id.action_albumsFragment_to_navigationDialogFragment
     override var numberOfDataRes: Int = R.plurals.numberOfAlbums
     override var titleRes: Int = com.jadebyte.jadeplayer.R.string.albums
     override var fadeInViewHolder: Boolean = true
+    override var longClickItems: Boolean = true
 
 }

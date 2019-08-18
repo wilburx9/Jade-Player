@@ -22,7 +22,7 @@ import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_album_songs.*
 
-class AlbumSongsFragment : BaseFragment(), OnItemClickListener {
+class AlbumSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickListener {
 
     private lateinit var viewModel: AlbumSongsViewModel
     private lateinit var album: Album
@@ -56,7 +56,7 @@ class AlbumSongsFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun observeViewModel() {
-        viewModel.data.observe(viewLifecycleOwner, Observer(this::updateViews))
+        viewModel.items.observe(viewLifecycleOwner, Observer(this::updateViews))
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -74,6 +74,16 @@ class AlbumSongsFragment : BaseFragment(), OnItemClickListener {
         val adapter = BaseAdapter(items, activity!!, R.layout.item_album_song, BR.song, itemClickListener = this)
         albumSongsRV.adapter = adapter
         albumSongsRV.layoutManager = LinearLayoutManager(activity!!)
+        moreOptions.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.moreOptions -> findNavController().navigate(
+                AlbumSongsFragmentDirections
+                    .actionAlbumSongsFragmentToAlbumsMenuBottomSheetDialogFragment(album = album)
+            )
+        }
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {

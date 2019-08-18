@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 /**
  * Created by Wilberforce on 2019-05-19 at 10:11.
  */
-class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(application) {
+open class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(application) {
 
     override var repository: BaseRepository<Playlist> = PlaylistRepository(application)
 
@@ -47,6 +47,16 @@ class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(appl
                 if (data.value != items) data.postValue(items)
             }
         }
+    }
+
+    fun reverseSelection(index: Int): Boolean {
+        return data.value?.let {
+            if (it.size > index) {
+                it[index].selected = !it[index].selected
+                true
+            } else false
+        } ?: false
+
     }
 
 }

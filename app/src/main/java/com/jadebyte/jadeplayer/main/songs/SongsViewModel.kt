@@ -15,14 +15,13 @@ open class SongsViewModel(application: Application) : BaseViewModel<Song>(applic
 
     override var repository: BaseRepository<Song> = SongsRepository(application)
 
-    override var selection: String? = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
+    override var selection: String? = basicSongsSelection
 
-    override var selectionArgs: Array<String>? = arrayOf("0")
+    override var selectionArgs: Array<String>? = basicSongsSelectionArgs
 
-    // Sort with the title in ascending case-insensitive order
-    override var sortOrder: String? = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
+    override var sortOrder: String? = basicSongsSongsOrder
 
-    override var uri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+    override var uri: Uri = basicSongUri
 
     override var projection: Array<String>? = basicSongsProjection
 }
@@ -42,3 +41,14 @@ val basicSongsProjection = arrayOf(
     MediaStore.Audio.Media.ALBUM_KEY,
     MediaStore.Audio.Media._ID
 )
+
+// Sort with the title in ascending case-insensitive order
+const val basicSongsSongsOrder = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
+
+const val basicSongsSelection = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
+
+val basicSongUri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+
+val basicSongsSelectionArgs get() = arrayOf(basicSongsSelectionArg)
+
+const val basicSongsSelectionArg = "0"
