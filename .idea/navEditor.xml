@@ -25,8 +25,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="567" />
-                            <option name="y" value="665" />
+                            <option name="x" value="574" />
+                            <option name="y" value="471" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -133,6 +133,15 @@
                             <option name="y" value="-278" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_genreSongsFragment_to_genresMenuBottomSheetDialogFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -141,13 +150,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-86" />
-                            <option name="y" value="567" />
+                            <option name="x" value="-90" />
+                            <option name="y" value="654" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_genresFragment_to_genreSongsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_genresFragment_to_genresMenuBottomSheetDialogFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -158,6 +172,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="genresMenuBottomSheetDialogFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1057" />
+                            <option name="y" value="-281" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

@@ -242,6 +242,14 @@
         <action
             android:id="@+id/action_genresFragment_to_genreSongsFragment"
             app:destination="@id/genreSongsFragment" />
+        <action
+            android:id="@+id/action_genresFragment_to_genresMenuBottomSheetDialogFragment"
+            app:destination="@id/genresMenuBottomSheetDialogFragment"
+            app:launchSingleTop="true">
+            <argument
+                android:name="popUpTo"
+                android:defaultValue="@id/genresFragment" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/genreSongsFragment"
@@ -254,6 +262,26 @@
         <argument
             android:name="transitionName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_genreSongsFragment_to_genresMenuBottomSheetDialogFragment"
+            app:destination="@id/genresMenuBottomSheetDialogFragment"
+            app:launchSingleTop="true">
+            <argument
+                android:name="popUpTo"
+                android:defaultValue="@id/genreSongsFragment" />
+        </action>
     </fragment>
+    <dialog
+        android:id="@+id/genresMenuBottomSheetDialogFragment"
+        android:name="com.jadebyte.jadeplayer.main.genres.GenresMenuBottomSheetDialogFragment"
+        android:label="fragment_genres_menu_bottom_sheet_dialog"
+        tools:layout="@layout/fragment_genres_menu_bottom_sheet_dialog" >
+        <argument
+            android:name="genre"
+            app:argType="com.jadebyte.jadeplayer.main.genres.Genre" />
+        <argument
+            android:name="popUpTo"
+            app:argType="reference" />
+    </dialog>
 
 </navigation>

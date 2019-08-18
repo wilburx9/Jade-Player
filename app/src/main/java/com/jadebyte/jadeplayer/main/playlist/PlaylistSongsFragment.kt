@@ -56,10 +56,8 @@ class PlaylistSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ViewCompat.setTransitionName(playlistArt, arguments!!.getString("transitionName"))
-        setupRecyclerView()
+        setupViews()
         observeViewModel()
-        sectionBackButton.setOnClickListener(this)
-        moreOptions.setOnClickListener(this)
     }
 
     private fun observeViewModel() {
@@ -83,10 +81,12 @@ class PlaylistSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickL
         (playlistSongsRV.adapter as BaseAdapter<Song>).updateItems(items)
     }
 
-    private fun setupRecyclerView() {
+    private fun setupViews() {
         val adapter = BaseAdapter(items, activity!!, R.layout.item_model_song, BR.song, itemClickListener = this)
         playlistSongsRV.adapter = adapter
         playlistSongsRV.layoutManager = LinearLayoutManager(activity!!)
+        sectionBackButton.setOnClickListener(this)
+        moreOptions.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {

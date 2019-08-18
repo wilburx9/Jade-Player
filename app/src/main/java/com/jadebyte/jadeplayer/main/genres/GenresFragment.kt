@@ -81,5 +81,11 @@ class GenresFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemLongClick(position: Int) {
         super.onItemLongClick(position)
+        val action = GenresFragmentDirections.actionGenresFragmentToGenresMenuBottomSheetDialogFragment(
+            genre =
+            items[position]
+        )
+        findNavController().navigate(action)
+
     }
 }

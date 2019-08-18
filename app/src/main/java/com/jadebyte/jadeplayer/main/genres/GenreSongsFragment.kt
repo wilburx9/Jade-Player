@@ -23,7 +23,7 @@ import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_genre_songs.*
 
 
-class GenreSongsFragment : BaseFragment(), OnItemClickListener {
+class GenreSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickListener {
     private lateinit var viewModel: GenreSongsViewModel
     private lateinit var genre: Genre
     private var items = emptyList<Song>()
@@ -51,7 +51,6 @@ class GenreSongsFragment : BaseFragment(), OnItemClickListener {
         ViewCompat.setTransitionName(genreNameField, arguments!!.getString("transitionName"))
         setupViews()
         observeViewModel()
-        sectionBackButton.setOnClickListener { findNavController().popBackStack() }
     }
 
     private fun observeViewModel() {
@@ -73,6 +72,18 @@ class GenreSongsFragment : BaseFragment(), OnItemClickListener {
         val adapter = BaseAdapter(items, activity!!, R.layout.item_model_song, BR.song, itemClickListener = this)
         genreSongsRV.adapter = adapter
         genreSongsRV.layoutManager = LinearLayoutManager(activity!!)
+        sectionBackButton.setOnClickListener(this)
+        moreOptions.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.sectionBackButton -> findNavController().popBackStack()
+            R.id.moreOptions -> findNavController().navigate(
+                GenreSongsFragmentDirections
+                    .actionGenreSongsFragmentToGenresMenuBottomSheetDialogFragment(genre = genre)
+            )
+        }
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {
