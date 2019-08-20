@@ -7,8 +7,8 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.lifecycle.viewModelScope
 import com.hunter.library.debug.HunterDebug
-import com.jadebyte.jadeplayer.main.common.data.BaseRepository
-import com.jadebyte.jadeplayer.main.common.view.BaseViewModel
+import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
+import com.jadebyte.jadeplayer.main.common.view.BaseMediaStoreViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,9 +16,9 @@ import kotlinx.coroutines.withContext
 /**
  * Created by Wilberforce on 2019-05-19 at 10:11.
  */
-open class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>(application) {
+open class PlaylistViewModel(application: Application) : BaseMediaStoreViewModel<Playlist>(application) {
 
-    override var repository: BaseRepository<Playlist> = PlaylistRepository(application)
+    override var repository: BaseMediaStoreRepository<Playlist> = PlaylistRepository(application)
 
     override var sortOrder: String? = "${MediaStore.Audio.Playlists.DATE_MODIFIED} COLLATE NOCASE DESC"
 
@@ -31,10 +31,12 @@ open class PlaylistViewModel(application: Application) : BaseViewModel<Playlist>
     )
 
 
-    fun init(playlistId: Long) {
-        selection = "${MediaStore.Audio.Playlists._ID} == ?"
-        selectionArgs = arrayOf(playlistId.toString())
-        init()
+    override fun init(vararg params: Any?) {
+        if (params.isNotEmpty()) {
+            selection = "${MediaStore.Audio.Playlists._ID} == ?"
+            selectionArgs = arrayOf(params[0].toString())
+        }
+        super.init()
     }
 
     @HunterDebug

@@ -30,9 +30,9 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
     val playlistValue: LiveData<Event<Boolean>> get() = _playlistValue
 
 
-    fun init(playlistId: Long) {
-        playlistSongsUri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId)
-        init()
+    override fun init(vararg params: Any?) {
+        playlistSongsUri = MediaStore.Audio.Playlists.Members.getContentUri("external", params[0] as Long)
+        super.init()
     }
 
     fun reverseSelection(index: Int): Boolean {

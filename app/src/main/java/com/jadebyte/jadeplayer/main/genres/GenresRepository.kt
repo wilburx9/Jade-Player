@@ -4,9 +4,9 @@ package com.jadebyte.jadeplayer.main.genres
 
 import android.app.Application
 import android.database.Cursor
-import com.jadebyte.jadeplayer.main.common.data.BaseRepository
+import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
 
-class GenresRepository(application: Application) : BaseRepository<Genre>(application) {
+class GenresRepository(application: Application) : BaseMediaStoreRepository<Genre>(application) {
 
     override fun transform(cursor: Cursor) = Genre(cursor)
 }

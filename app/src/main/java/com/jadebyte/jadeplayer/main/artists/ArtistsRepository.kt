@@ -4,11 +4,11 @@ package com.jadebyte.jadeplayer.main.artists
 
 import android.app.Application
 import android.database.Cursor
-import com.jadebyte.jadeplayer.main.common.data.BaseRepository
+import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
 
 /**
  * Created by Wilberforce on 2019-04-25 at 00:55.
  */
-class ArtistsRepository(application: Application) : BaseRepository<Artist>(application) {
+class ArtistsRepository(application: Application) : BaseMediaStoreRepository<Artist>(application) {
     override fun transform(cursor: Cursor): Artist = Artist(cursor)
 }

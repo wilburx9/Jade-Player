@@ -34,18 +34,17 @@ class AddSongsToPlaylistsViewModel(application: Application) : PlaylistViewModel
     private lateinit var songsSelection: String
     private lateinit var songsSelectionArgs: Array<String>
 
-    fun init(
-        songsUri: Uri?,
-        songsSelection: String?,
-        songsSelectionArgs: Array<String>?
+    @Suppress("UNCHECKED_CAST")
+    override fun init(
+        vararg params: Any?
     ) {
-        this.songsUri = songsUri ?: basicSongUri
-        this.songsSelection = songsSelection ?: basicSongsSelection
-        this.songsSelectionArgs = songsSelectionArgs ?: basicSongsSelectionArgs
+        this.songsUri = params[0] as Uri? ?: basicSongUri
+        this.songsSelection = params[1] as String? ?: basicSongsSelection
+        this.songsSelectionArgs = params[2] as Array<String>? ?: basicSongsSelectionArgs
 
         mediatorItems.addSource(items) { mediatorItems.value = it }
         mediatorItems.addSource(insertionData) { mediatorItems.value = it }
-        init()
+        super.init()
         loadSongs()
     }
 

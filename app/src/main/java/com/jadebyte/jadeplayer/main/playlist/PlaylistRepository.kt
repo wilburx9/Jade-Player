@@ -6,12 +6,12 @@ import android.app.Application
 import android.database.Cursor
 import android.provider.MediaStore
 import androidx.annotation.WorkerThread
-import com.jadebyte.jadeplayer.main.common.data.BaseRepository
+import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
 
 /**
  * Created by Wilberforce on 2019-05-19 at 10:24.
  */
-class PlaylistRepository(application: Application) : BaseRepository<Playlist>(application) {
+class PlaylistRepository(application: Application) : BaseMediaStoreRepository<Playlist>(application) {
 
     override fun transform(cursor: Cursor): Playlist = Playlist(cursor)
 

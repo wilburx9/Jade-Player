@@ -5,12 +5,15 @@ package com.jadebyte.jadeplayer.main.common.data
 import android.app.Application
 import android.database.Cursor
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.annotation.WorkerThread
 
 /**
  * Created by Wilberforce on 19/04/2019 at 16:36.
+ *
+ * Base repository for repositories that fetch data from the [MediaStore]
  */
-abstract class BaseRepository<T>(private val application: Application) {
+abstract class BaseMediaStoreRepository<T>(private val application: Application) {
 
     @WorkerThread
     fun loadData(
@@ -38,7 +41,11 @@ abstract class BaseRepository<T>(private val application: Application) {
         sortOrder: String? = null
     ): Cursor? = application.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
 
+    /**
+     * Converts [cursor] to [T].
+     *
+     * @param cursor the cursor to convert
+     * @return the transformed [T]
+     */
     abstract fun transform(cursor: Cursor): T
-
-
 }

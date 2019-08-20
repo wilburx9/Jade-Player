@@ -5,15 +5,15 @@ package com.jadebyte.jadeplayer.main.albums
 import android.app.Application
 import android.net.Uri
 import android.provider.MediaStore
-import com.jadebyte.jadeplayer.main.common.data.BaseRepository
-import com.jadebyte.jadeplayer.main.common.view.BaseViewModel
+import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
+import com.jadebyte.jadeplayer.main.common.view.BaseMediaStoreViewModel
 
 /**
  * Created by Wilberforce on 19/04/2019 at 16:34.
  */
-open class AlbumsViewModel(application: Application) : BaseViewModel<Album>(application) {
+open class AlbumsViewModel(application: Application) : BaseMediaStoreViewModel<Album>(application) {
 
-    final override var repository: BaseRepository<Album> = AlbumsRepository(application)
+    final override var repository: BaseMediaStoreRepository<Album> = AlbumsRepository(application)
 
     override var sortOrder: String? = "${MediaStore.Audio.Albums.ALBUM} COLLATE NOCASE ASC"
 

@@ -5,15 +5,15 @@ package com.jadebyte.jadeplayer.main.songs
 import android.app.Application
 import android.net.Uri
 import android.provider.MediaStore
-import com.jadebyte.jadeplayer.main.common.data.BaseRepository
-import com.jadebyte.jadeplayer.main.common.view.BaseViewModel
+import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
+import com.jadebyte.jadeplayer.main.common.view.BaseMediaStoreViewModel
 
 /**
  * Created by Wilberforce on 19/04/2019 at 15:06.
  */
-open class SongsViewModel(application: Application) : BaseViewModel<Song>(application) {
+open class SongsViewModel(application: Application) : BaseMediaStoreViewModel<Song>(application) {
 
-    override var repository: BaseRepository<Song> = SongsRepository(application)
+    override var repository: BaseMediaStoreRepository<Song> = SongsRepository(application)
 
     override var selection: String? = basicSongsSelection
 

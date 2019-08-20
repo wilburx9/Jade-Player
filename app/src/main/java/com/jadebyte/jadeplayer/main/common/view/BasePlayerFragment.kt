@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
  */
 abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListener, OnItemClickListener {
     var items = emptyList<T>()
-    lateinit var viewModel: BaseViewModel<T>
+    lateinit var viewModel: BaseMediaStoreViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int
     @get: PluralsRes open var numberOfDataRes: Int = -1
     @get: StringRes open var titleRes: Int = -1

@@ -5,12 +5,12 @@ package com.jadebyte.jadeplayer.main.genres
 import android.app.Application
 import android.net.Uri
 import android.provider.MediaStore
-import com.jadebyte.jadeplayer.main.common.data.BaseRepository
-import com.jadebyte.jadeplayer.main.common.view.BaseViewModel
+import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
+import com.jadebyte.jadeplayer.main.common.view.BaseMediaStoreViewModel
 
-class GenresViewModel(application: Application) : BaseViewModel<Genre>(application) {
+class GenresViewModel(application: Application) : BaseMediaStoreViewModel<Genre>(application) {
 
-    override var repository: BaseRepository<Genre> = GenresRepository(application)
+    override var repository: BaseMediaStoreRepository<Genre> = GenresRepository(application)
 
     override var sortOrder: String? = "${MediaStore.Audio.Genres.NAME} COLLATE NOCASE ASC"
 
