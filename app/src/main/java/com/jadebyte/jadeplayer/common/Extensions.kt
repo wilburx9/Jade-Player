@@ -8,11 +8,14 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.net.Uri
 import android.view.View
 import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.net.URLEncoder
+import java.nio.charset.Charset
 import kotlin.math.abs
 
 
@@ -161,6 +164,29 @@ fun Bitmap.inputStream(quality: Int = 80): InputStream {
 }
 
 
+fun String?.contains(other: String?, caseSensitive: Boolean = true): Boolean {
+    if (this == null && other == null) return true
+    if (this != null && other != null) return contains(ignoreCase = caseSensitive, other = other)
+    return false
+}
+
+/**
+ * Helper extension to URL encode a [String]. Returns an empty string when called on null.
+ */
+inline val String?.urlEncoded: String
+    get() = if (Charset.isSupported("UTF-8")) {
+        URLEncoder.encode(this ?: "", "UTF-8")
+    } else {
+        // If UTF-8 is not supported, use the default charset.
+        @Suppress("deprecation")
+        URLEncoder.encode(this ?: "")
+    }
+
+/**
+ * Helper extension to convert a potentially null [String] to a [Uri] falling back to [Uri.EMPTY]
+ */
+fun String?.toUri(): Uri = this?.let { Uri.parse(it) } ?: Uri.EMPTY
+
 /**
  * Converts an Int in pixels to dp(density independent pixels)
  */
@@ -180,3 +206,4 @@ val Float.dp: Float get() = (this / Resources.getSystem().displayMetrics.density
  * Converts an Float in dp(density independent pixels) to pixels
  */
 val Float.px: Float get() = (this * Resources.getSystem().displayMetrics.density)
+

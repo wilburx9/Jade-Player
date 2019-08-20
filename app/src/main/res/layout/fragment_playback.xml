@@ -16,13 +16,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
+        android:id="@+id/playingTracks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/current_playing_tracks"
         android:padding="@dimen/padding_medium"
-        android:id="@+id/playingTracks"
         android:src="@drawable/anim_playlist_current_to_close"
         app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,10 +50,10 @@
         android:paddingTop="@dimen/padding_small"
         android:paddingRight="@dimen/padding_x_large"
         android:paddingBottom="@dimen/padding_small"
+        android:stateListAnimator="@null"
         android:text="@string/lyrics"
         android:textSize="@dimen/text_size_x_small"
         android:textStyle="bold"
-        android:stateListAnimator="@null"
         app:layout_constraintBottom_toTopOf="@+id/guideLine"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -70,10 +70,10 @@
         android:paddingTop="@dimen/padding_small"
         android:paddingRight="@dimen/padding_x_large"
         android:paddingBottom="@dimen/padding_small"
+        android:stateListAnimator="@null"
         android:text="@string/close"
         android:textSize="@dimen/text_size_x_small"
         android:textStyle="bold"
-        android:stateListAnimator="@null"
         app:layout_constraintBottom_toTopOf="@+id/quoteImg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -113,9 +113,9 @@
         android:paddingTop="@dimen/padding_small"
         android:paddingRight="@dimen/padding_x_large"
         android:paddingBottom="@dimen/padding_small"
+        android:stateListAnimator="@null"
         android:textAllCaps="true"
         android:textSize="@dimen/text_size_x_small"
-        android:stateListAnimator="@null"
         app:layout_constraintBottom_toTopOf="@+id/guideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +204,26 @@
         app:layout_constraintBottom_toTopOf="@+id/songTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nowPlaying" />
+        app:layout_constraintTop_toBottomOf="@+id/nowPlaying">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="Jumping over the roofs" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="Jumping over the roofs" />
+    </TextSwitcher>
 
 
     <TextSwitcher
@@ -216,7 +235,28 @@
         app:layout_constraintBottom_toTopOf="@+id/playButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/songArtist" />
+        app:layout_constraintTop_toBottomOf="@+id/songArtist">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:textStyle="bold"
+            tools:text="Beyonce" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:textStyle="bold"
+            tools:text="Beyonce" />
+    </TextSwitcher>
 
 
     <ImageButton
@@ -311,13 +351,13 @@
         app:layout_constraintTop_toTopOf="@+id/shuffleButton" />
 
     <FrameLayout
+        android:id="@+id/currentSongsContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/currentSongsContainer"
-        app:layout_constraintTop_toBottomOf="@+id/sectionBackButton"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guideLine"/>
+        app:layout_constraintTop_toBottomOf="@+id/sectionBackButton" />
 
 
     <androidx.constraintlayout.widget.Guideline

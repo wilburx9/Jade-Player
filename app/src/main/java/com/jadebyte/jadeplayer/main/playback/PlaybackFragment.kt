@@ -15,7 +15,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,6 +26,7 @@ import com.jadebyte.jadeplayer.common.*
 import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import com.jadebyte.jadeplayer.main.common.callbacks.OnPageChangeListener
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
+import com.jadebyte.jadeplayer.main.common.view.ZoomOutPageTransformer
 import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_playback.*
 import java.util.concurrent.TimeUnit
@@ -92,8 +92,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         })
         viewPager.setPageTransformer(true, ZoomOutPageTransformer())
         viewPager.adapter = PlaybackAdapter(items)
-        songTitle.setFactory { LayoutInflater.from(activity).inflate(R.layout.song_title, null) as TextView }
-        songArtist.setFactory { LayoutInflater.from(activity).inflate(R.layout.song_artist, null) as TextView }
         sectionBackButton.setOnClickListener(this)
         nextButton.setOnClickListener(this)
         previousButton.setOnClickListener(this)

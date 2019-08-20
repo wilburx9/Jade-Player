@@ -1,4 +1,6 @@
-package com.jadebyte.jadeplayer.main.playback
+// Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+
+package com.jadebyte.jadeplayer.main.common.view
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager

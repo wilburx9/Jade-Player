@@ -2,13 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jadebyte.jadeplayer">
 
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- For Glide to restart connection requests when internet comes up -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- For Glide to restart connection requests when internet comes up -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!--Support picture-in-picture for video player-->
     <uses-permission android:name="android.permission.VIBRATE" />
+
+
+    <!-- Support picture-in-picture for video player -->
     <application
         android:name=".common.App"
         android:allowBackup="true"
@@ -17,10 +19,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".main.playback.PlaybackService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService"/>
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar.ColoredStatusBar"/>
+            android:theme="@style/AppTheme.NoActionBar.ColoredStatusBar" />
         <activity
             android:name=".getStarted.GetStartedActivity"
             android:theme="@style/AppTheme.NoActionBar.DarkTheme" />

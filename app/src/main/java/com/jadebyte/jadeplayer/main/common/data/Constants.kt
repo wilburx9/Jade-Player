@@ -28,6 +28,24 @@ object Constants {
     const val NAV_SETTINGS = "com.jadebyte.jadeplayer.nav.settings"
     const val NAV_VIDEOS = "com.jadebyte.jadeplayer.nav.videos"
 
+
+    // Media playback
+    const val MEDIA_SEARCH_SUPPORTED = "android.media.browse.SEARCH_SUPPORTED"
+    const val CONTENT_STYLE_BROWSABLE_HINT = "android.media.browse.CONTENT_STYLE_BROWSABLE_HINT"
+    const val CONTENT_STYLE_PLAYABLE_HINT = "android.media.browse.CONTENT_STYLE_PLAYABLE_HINT"
+    const val CONTENT_STYLE_SUPPORTED = "android.media.browse.CONTENT_STYLE_SUPPORTED"
+    const val CONTENT_STYLE_LIST = 1
+    const val CONTENT_STYLE_GRID = 2
+    const val BROWSABLE_ROOT = "/"
+    const val EMPTY_ROOT = "@empty@"
+    const val RECOMMENDED_ROOT = "__RECOMMENDED__"
+    const val ALBUMS_ROOT = "__ALBUMS__"
+    const val METADATA_KEY_FLAGS = "com.jadebyte.jadeplayer.playback.METADATA_KEY_UAMP_FLAGS"
+    const val NETWORK_FAILURE = "com.jadebyte.jadeplayer.playback.NETWORK_FAILURE"
+
     // Other constants
     const val MAX_MODEL_IMAGE_THUMB_WIDTH = 100
+    val WHITESPACE_REGEX = "\\s|\\n".toRegex()
+    const val IMAGE_URI_ROOT = "android.resource://com.jadebyte.jadeplayer/drawable/"
+
 }

@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_bottom_playback.*
 class BottomPlaybackFragment : BaseFragment() {
 
     lateinit var viewModel: PlaybackViewModel
-    lateinit var binding: FragmentBottomPlaybackBinding
+     var binding: FragmentBottomPlaybackBinding? = null
     private var items = emptyList<Song>()
     var indexOfPlayingSong = 0
 
@@ -37,12 +37,11 @@ class BottomPlaybackFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBottomPlaybackBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!)[PlaybackViewModel::class.java]
         setupViews()
         observeViewData()
     }
@@ -75,15 +74,16 @@ class BottomPlaybackFragment : BaseFragment() {
         }
 
         if (items.isNotEmpty()) {
-            binding.song = items[indexOfPlayingSong]
-            binding.executePendingBindings()
+            binding?.song = items[indexOfPlayingSong]
+            binding?.executePendingBindings()
         }
     }
 
 
     override fun onDestroyView() {
         viewModel.mediatorLiveData.removeObserver(dataObserver)
-        binding.unbind()
+        binding?.unbind()
+        binding = null
         super.onDestroyView()
     }
 

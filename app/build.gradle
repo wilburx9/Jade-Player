@@ -77,6 +77,7 @@ dependencies {
     implementation 'com.quinn.hunter:hunter-debug-library:0.9.6'
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
