@@ -58,17 +58,19 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
 
     private fun editPlaylist() {
         val animatorSet = progressBar.crossFadeWidth(doneButton, 500)
-        viewModel.playlistValue.observe(viewLifecycleOwner, Observer {
+        viewModel.playlistValue.observe(viewLifecycleOwner, Observer { event ->
 
-            if (it) {
-                // Updating playlist was successful
-                Utils.vibrateAfterAction(activity)
-                findNavController().popBackStack()
-            } else {
-                // Updating playlist wasn't successful;
-                if (animatorSet.isRunning) animatorSet.cancel()
-                doneButton.crossFadeWidth(progressBar, 500, visibility = View.INVISIBLE)
-                Toast.makeText(activity, R.string.sth_went_wrong, Toast.LENGTH_SHORT).show()
+            event.getContentIfNotHandled()?.let {
+                if (it) {
+                    // Updating playlist was successful
+                    Utils.vibrateAfterAction(activity)
+                    findNavController().popBackStack()
+                } else {
+                    // Updating playlist wasn't successful;
+                    if (animatorSet.isRunning) animatorSet.cancel()
+                    doneButton.crossFadeWidth(progressBar, 500, visibility = View.INVISIBLE)
+                    Toast.makeText(activity, R.string.sth_went_wrong, Toast.LENGTH_SHORT).show()
+                }
             }
 
         })
@@ -90,19 +92,23 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
 
     private fun updateSelectedCount() {
         val selectedSongs = items.filter { it.selected }
-        dataNum.setText(resources.getQuantityString(
-            R.plurals.numberOfSongsSelected,
-            selectedSongs.count(),
-            selectedSongs.count()
-        ))
+        dataNum.setText(
+            resources.getQuantityString(
+                R.plurals.numberOfSongsSelected,
+                selectedSongs.count(),
+                selectedSongs.count()
+            )
+        )
     }
 
     private fun setupView() {
         val variables = SparseArrayCompat<Any>(1)
         variables.put(BR.selectable, true)
         val adapter =
-            BaseAdapter(items, activity!!, R.layout.item_song, BR.song,
-                false, this, variables)
+            BaseAdapter(
+                items, activity!!, R.layout.item_song, BR.song,
+                false, this, variables
+            )
         songsRV.adapter = adapter
         songsRV.layoutManager = LinearLayoutManager(activity)
     }

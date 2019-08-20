@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hunter.library.debug.HunterDebug
+import com.jadebyte.jadeplayer.main.common.event.Event
 import com.jadebyte.jadeplayer.main.songs.Song
 import com.jadebyte.jadeplayer.main.songs.SongsViewModel
 import com.jadebyte.jadeplayer.main.songs.basicSongsProjection
@@ -25,8 +26,8 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
         listOf(*basicSongsProjection, MediaStore.Audio.Playlists.Members.AUDIO_ID).toTypedArray()
     private lateinit var playlistSongsUri: Uri
     private lateinit var initiallySelectedItems: List<Song>
-    private val _playlistValue = MutableLiveData<Boolean>()
-    val playlistValue: LiveData<Boolean> get() = _playlistValue
+    private val _playlistValue = MutableLiveData<Event<Boolean>>()
+    val playlistValue: LiveData<Event<Boolean>> get() = _playlistValue
 
 
     fun init(playlistId: Long) {
@@ -99,7 +100,7 @@ class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(ap
                 return@withContext true
 
             }
-            _playlistValue.value = success
+            _playlistValue.value = Event(success)
         }
     }
 

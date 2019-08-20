@@ -19,6 +19,7 @@ import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.crossFadeWidth
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.event.Event
 import com.jadebyte.jadeplayer.main.common.utils.Utils
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.common.view.BaseFullscreenDialogFragment
@@ -60,12 +61,15 @@ class AddSongsToPlaylistsFragment : BaseFullscreenDialogFragment(), OnItemClickL
     @Suppress("UNCHECKED_CAST")
     private fun updateViews(data: Any) {
         crossFadeAnimatorSet?.cancel()
-        if (data is InsertionResult) {
-            crossFadeAnimatorSet = doneButton.crossFadeWidth(progressBar, 600, visibility = View.INVISIBLE)
-            if (data.message != null) Toast.makeText(activity, data.message, Toast.LENGTH_SHORT).show()
-            if (data.success == null || data.success) {
-                if (data.success == true) Utils.vibrateAfterAction(activity)
-                findNavController().popBackStack()
+        if (data is Event<*>) {
+            data.getContentIfNotHandled()?.let {
+                it as InsertionResult
+                crossFadeAnimatorSet = doneButton.crossFadeWidth(progressBar, 600, visibility = View.INVISIBLE)
+                if (it.message != null) Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                if (it.success == null || it.success) {
+                    if (it.success == true) Utils.vibrateAfterAction(activity)
+                    findNavController().popBackStack()
+                }
             }
         } else {
             this.playlists = data as List<Playlist>

@@ -12,6 +12,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.main.common.event.Event
 import com.jadebyte.jadeplayer.main.songs.SongsRepository
 import com.jadebyte.jadeplayer.main.songs.basicSongUri
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelection
@@ -26,7 +27,7 @@ import kotlinx.coroutines.withContext
  */
 class AddSongsToPlaylistsViewModel(application: Application) : PlaylistViewModel(application) {
     private val songsRepository = SongsRepository(application)
-    private val insertionData = MutableLiveData<InsertionResult>()
+    private val insertionData = MutableLiveData<Event<InsertionResult>>()
     val mediatorItems = MediatorLiveData<Any>()
     private var matchingSongsIds = emptyList<Long>()
     private lateinit var songsUri: Uri
@@ -64,16 +65,17 @@ class AddSongsToPlaylistsViewModel(application: Application) : PlaylistViewModel
             withContext(Dispatchers.IO) {
                 val selected = data.value?.filter { it.selected }
                 if (selected == null || selected.isEmpty()) {
-                    insertionData.postValue(InsertionResult())
+                    insertionData.postValue(Event(InsertionResult()))
                     return@withContext
                 }
 
                 val songIds = matchingSongsIds
                 if (songIds.isEmpty()) {
-                    insertionData.postValue(InsertionResult(R.string.sth_went_wrong, false))
+                    insertionData.postValue(Event(InsertionResult(R.string.sth_went_wrong, false)))
                     return@withContext
                 }
                 val operations = arrayListOf<ContentProviderOperation>()
+
                 selected.forEach { playlist ->
                     songIds.forEach { id ->
                         val values = ContentValues()
@@ -86,9 +88,9 @@ class AddSongsToPlaylistsViewModel(application: Application) : PlaylistViewModel
                 }
                 val result = getApplication<Application>().contentResolver.applyBatch(MediaStore.AUTHORITY, operations)
                 if (result.size == operations.size) {
-                    insertionData.postValue(InsertionResult(R.string.success, true))
+                    insertionData.postValue(Event(InsertionResult(R.string.success, true)))
                 } else {
-                    insertionData.postValue(InsertionResult(R.string.sth_went_wrong, false))
+                    insertionData.postValue(Event(InsertionResult(R.string.sth_went_wrong, false)))
                 }
             }
         }

@@ -169,7 +169,7 @@ abstract class BaseCollageDataFetcher(
     }
 
     private fun generateCollage(): Boolean =
-        !(useFile && (imageFile.exists() || width.dp > Constants.MAX_MODEL_IMAGE_THUMB_WIDTH))
+        !(useFile && (imageFile.exists() || width.dp < Constants.MAX_MODEL_IMAGE_THUMB_WIDTH))
 
     open fun hasValidData(): Boolean = true
 }

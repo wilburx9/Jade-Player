@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference
 object ViewUtils {
     @ColorInt
     fun resolveAndroidColorAttr(c: Context, @AttrRes colorAttrRes: Int): Int {
-        val context = WeakReference<Context>(c).get()
+        val context = WeakReference(c).get()
         val resolvedAttr = resolveThemeAttr(context, colorAttrRes)
         val colorRes = if (resolvedAttr.resourceId != 0) resolvedAttr.resourceId else resolvedAttr.data
         return if (context == null) Color.parseColor("#b0b1b2") else ContextCompat.getColor(context, colorRes)
@@ -26,7 +26,7 @@ object ViewUtils {
 
     @ColorInt
     fun resolveColorAttr(c: Context, @AttrRes colorAttrRes: Int): Int {
-        val context = WeakReference<Context>(c).get()
+        val context = WeakReference(c).get()
         val resolvedAttr = resolveThemeAttr(context, colorAttrRes)
         return if (context == null) Color.parseColor("#b0b1b2") else ContextCompat.getColor(context, resolvedAttr.data)
     }
