@@ -56,7 +56,7 @@ abstract class BaseCollageDataFetcher(
     DataFetcher<InputStream>, KoinComponent {
 
     private val imageUrlFetcher: ImageUrlFetcher by inject()
-    private val application: Application by inject()
+    val application: Application by inject()
     abstract var imageFile: File
     private var inputStream: InputStream? = null
     private var response: Response? = null
@@ -70,7 +70,7 @@ abstract class BaseCollageDataFetcher(
         response?.body?.close()
     }
 
-    override fun getDataSource(): DataSource = if (generateCollage()) DataSource.REMOTE else DataSource.LOCAL
+    override fun getDataSource(): DataSource = if (useFile()) DataSource.LOCAL else DataSource.REMOTE
 
     override fun cancel() {
         cancelled = true
@@ -78,7 +78,7 @@ abstract class BaseCollageDataFetcher(
 
     override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) {
         if (!cancelled) {
-            inputStream = if (generateCollage()) fetchCollageInputStream() else fetchFileInputStream()
+            inputStream = if (useFile()) fetchFileInputStream() else fetchCollageInputStream()
             callback.onDataReady(inputStream)
         } else {
             callback.onLoadFailed(IOException("Forced Glide network failure. Can't load image for ${model.javaClass.name}"))
@@ -169,8 +169,10 @@ abstract class BaseCollageDataFetcher(
 
     }
 
-    private fun generateCollage(): Boolean =
-        !(useFile && (imageFile.exists() || width.dp < Constants.MAX_MODEL_IMAGE_THUMB_WIDTH))
+    private fun useFile(): Boolean {
+        if (useFile && imageFile.exists()) return true
+        return false
+    }
 
     open fun hasValidData(): Boolean = true
 }
