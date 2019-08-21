@@ -186,6 +186,7 @@ class PackageValidator(context: Context, @XmlRes xmlResId: Int) {
     // Looks up the [PackageInfo] for a package name.
     // This requests both the signatures (for checking if an app is on the whitelist) and
     // the app's permissions, which allow for more flexibility in the whitelist.
+    @Suppress("DEPRECATION")
     @SuppressLint("PackageManagerGetSignatures")
     private fun getPackageInfo(callingPackage: String): PackageInfo? {
         return packageManager.getPackageInfo(

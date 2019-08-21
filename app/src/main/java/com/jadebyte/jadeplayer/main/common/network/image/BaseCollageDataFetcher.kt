@@ -18,10 +18,11 @@ import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.main.common.data.Model
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import okhttp3.Response
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import javax.inject.Inject
 
 
 /**
@@ -52,10 +53,10 @@ abstract class BaseCollageDataFetcher(
     val height: Int,
     private val useFile: Boolean
 ) :
-    DataFetcher<InputStream> {
+    DataFetcher<InputStream>, KoinComponent {
 
-    @Inject lateinit var imageUrlFetcher: ImageUrlFetcher
-    @Inject lateinit var application: Application
+    private val imageUrlFetcher: ImageUrlFetcher by inject()
+    private val application: Application by inject()
     abstract var imageFile: File
     private var inputStream: InputStream? = null
     private var response: Response? = null

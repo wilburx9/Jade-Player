@@ -4,7 +4,6 @@ package com.jadebyte.jadeplayer.main.common.network.image
 
 import android.app.Application
 import android.net.Uri
-import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
 import com.jadebyte.jadeplayer.main.common.network.Connectivity
 import okhttp3.CacheControl
@@ -12,19 +11,13 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONObject
-import javax.inject.Inject
 
-class ImageUrlFetcher {
-
-    @Inject lateinit var application: Application
-    @Inject lateinit var okHttpClient: OkHttpClient
-    @Inject lateinit var cacheControl: CacheControl
-    @Inject lateinit var cloudKeys: CloudKeys
-
-
-    init {
-        App.appComponent.inject(this)
-    }
+class ImageUrlFetcher(
+    val application: Application,
+    val okHttpClient: OkHttpClient,
+    val cacheControl: CacheControl,
+    val cloudKeys: CloudKeys
+) {
 
     fun fetchLastFmUrl(key: String, params: Map<String, String>?): String? {
         if (cloudKeys.lastFmKey.isNullOrEmpty()) {

@@ -9,22 +9,17 @@ import androidx.core.content.edit
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.common.BaseActivity
 import com.jadebyte.jadeplayer.getStarted.GetStartedActivity
 import com.jadebyte.jadeplayer.main.MainActivity
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
 import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.onBoarding.OnBoardingActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class SplashActivity : BaseActivity() {
 
-    @Inject lateinit var preferences: SharedPreferences
-
-    init {
-        App.appComponent.inject(this)
-    }
+    private val preferences: SharedPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

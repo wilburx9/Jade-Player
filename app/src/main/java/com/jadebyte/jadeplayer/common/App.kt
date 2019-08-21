@@ -6,12 +6,12 @@ import android.app.Application
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
 import com.jadebyte.jadeplayer.BuildConfig
-import com.jadebyte.jadeplayer.main.common.injection.component.AppComponent
-import com.jadebyte.jadeplayer.main.common.injection.component.DaggerAppComponent
-import com.jadebyte.jadeplayer.main.common.injection.module.AppModule
-import com.jadebyte.jadeplayer.main.common.injection.module.CommonModule
+import com.jadebyte.jadeplayer.main.common.injection.component.appComponent
 import com.jadebyte.jadeplayer.main.common.utils.BlurKit
 import com.squareup.leakcanary.LeakCanary
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 
@@ -21,13 +21,21 @@ import timber.log.Timber
 class App : Application() {
 
     override fun onCreate() {
-//        enableStrictMode()
+        enableStrictMode()
         super.onCreate()
         initLeakCanary()
         initBlurKit()
         plantTimber()
         setupTheme()
-        setupDagger()
+        setupKoin()
+    }
+
+    private fun setupKoin() {
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(appComponent)
+        }
     }
 
     private fun enableStrictMode() {
@@ -60,14 +68,6 @@ class App : Application() {
         LeakCanary.install(this)
     }
 
-    private fun setupDagger() {
-        appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(this))
-            .commonModule(CommonModule())
-            .build()
-
-    }
-
     private fun setupTheme() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
@@ -76,9 +76,4 @@ class App : Application() {
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 
-    companion object {
-        @JvmStatic
-        lateinit var appComponent: AppComponent
-            private set
-    }
 }

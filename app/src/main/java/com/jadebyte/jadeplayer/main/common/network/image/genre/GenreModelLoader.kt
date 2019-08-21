@@ -7,7 +7,6 @@ import android.provider.MediaStore
 import com.bumptech.glide.load.Options
 import com.bumptech.glide.load.model.ModelLoader
 import com.bumptech.glide.signature.ObjectKey
-import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.network.image.BaseCollageDataFetcher
 import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import com.jadebyte.jadeplayer.main.genres.Genre
@@ -29,9 +28,6 @@ class GenreModelLoader : ModelLoader<Genre, InputStream> {
     inner class GenreDataFetcher(model: Genre, width: Int, height: Int) :
         BaseCollageDataFetcher(model, width, height, false) {
 
-        init {
-            App.appComponent.inject(this)
-        }
 
         override var modelMemberMediaUri: Uri =
             MediaStore.Audio.Genres.Members.getContentUri("external", model.id)

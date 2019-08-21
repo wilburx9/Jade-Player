@@ -16,10 +16,6 @@ class ArtistModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>) : Im
     override var lastFmUrlKey: String = "artist"
     override var spotifyUrlKey: String = "artists"
 
-    init {
-        App.appComponent.inject(this)
-    }
-
     override fun getLastFmParams(model: Artist): Map<String, String>? {
         return mapOf(Pair("method", "artist.getinfo"), Pair("artist", model.name))
     }

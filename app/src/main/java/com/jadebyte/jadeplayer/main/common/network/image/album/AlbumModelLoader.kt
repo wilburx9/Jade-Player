@@ -4,7 +4,6 @@ package com.jadebyte.jadeplayer.main.common.network.image.album
 
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.ModelLoader
-import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlLoader
 import java.io.InputStream
@@ -16,11 +15,6 @@ class AlbumModelLoader(concreteLoader: ModelLoader<GlideUrl, InputStream>) :
     ImageUrlLoader<Album>(concreteLoader) {
     override var lastFmUrlKey: String = "album"
     override var spotifyUrlKey: String = "albums"
-
-
-    init {
-        App.appComponent.inject(this)
-    }
 
     override fun getLastFmParams(model: Album): Map<String, String>? {
         return mapOf(Pair("method", "album.getinfo"), Pair("artist", model.artist), Pair("album", model.name))

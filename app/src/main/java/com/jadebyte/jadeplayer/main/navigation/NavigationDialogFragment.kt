@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -24,6 +23,7 @@ import com.jadebyte.jadeplayer.main.common.utils.BlurKit
 import com.jadebyte.jadeplayer.main.common.view.BaseFullscreenDialogFragment
 import kotlinx.android.synthetic.main.fragment_navigation_dialog.*
 import kotlinx.coroutines.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 
@@ -33,7 +33,7 @@ class NavigationDialogFragment : BaseFullscreenDialogFragment(), OnStartDragList
     private var origin: Int? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var adapter: NavAdapter
-    private lateinit var viewModel: NavViewModel
+    private val viewModel: NavViewModel by viewModel()
     private var items: List<NavItem> = emptyList()
     private val job = Job()
     private val scope = CoroutineScope(job + Dispatchers.Main)
@@ -56,7 +56,6 @@ class NavigationDialogFragment : BaseFullscreenDialogFragment(), OnStartDragList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this)[NavViewModel::class.java]
         viewModel.init(origin)
         setupRecyclerView()
         observeViewModel()

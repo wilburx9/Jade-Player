@@ -3,8 +3,8 @@
 package com.jadebyte.jadeplayer.onBoarding
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import androidx.core.content.edit
 import com.jadebyte.jadeplayer.R
@@ -13,8 +13,11 @@ import com.jadebyte.jadeplayer.getStarted.GetStartedActivity
 import com.jadebyte.jadeplayer.main.MainActivity
 import com.jadebyte.jadeplayer.main.common.callbacks.OnPageChangeListener
 import kotlinx.android.synthetic.main.activity_on_boarding.*
+import org.koin.android.ext.android.inject
 
 class OnBoardingActivity : BaseActivity(), OnPageChangeListener, View.OnClickListener {
+
+    private val preferences: SharedPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +58,7 @@ class OnBoardingActivity : BaseActivity(), OnPageChangeListener, View.OnClickLis
         val intent = Intent(this, nextActivity)
         startActivity(intent)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        PreferenceManager.getDefaultSharedPreferences(this).edit {
+        preferences.edit {
             putBoolean(HAS_SEEN_ON_BOARDING, true)
         }
     }

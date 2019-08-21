@@ -2,6 +2,7 @@
 
 package com.jadebyte.jadeplayer.main.navigation
 
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
@@ -9,7 +10,7 @@ import androidx.lifecycle.ViewModel
 /**
  * Created by Wilberforce on 09/04/2019 at 17:15.
  */
-class NavViewModel : ViewModel() {
+class NavViewModel(private val preferences: SharedPreferences) : ViewModel() {
     private var navRepository: NavRepository? = null
     var navItems: LiveData<List<NavItem>>? = null
         private set
@@ -19,7 +20,7 @@ class NavViewModel : ViewModel() {
             return
         }
 
-        navRepository = NavRepository(origin)
+        navRepository = NavRepository(origin, preferences)
         navItems = navRepository?.liveItems
     }
 

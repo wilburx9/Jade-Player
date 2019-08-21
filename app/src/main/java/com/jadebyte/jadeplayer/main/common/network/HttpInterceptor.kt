@@ -4,10 +4,8 @@ package com.jadebyte.jadeplayer.main.common.network
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.jadebyte.jadeplayer.common.App
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
 import com.jadebyte.jadeplayer.main.common.utils.ConvertUtils
-import dagger.Lazy
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -16,22 +14,18 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.io.IOException
-import javax.inject.Inject
 
 /**
  * Created by Wilberforce on 19/04/2019 at 22:25.
  * Original source: https://gist.github.com/alex-shpak/da1e65f52dc916716930
  */
-class HttpInterceptor : Interceptor {
+class HttpInterceptor(private val preferences: SharedPreferences, private val cloudKeys: CloudKeys) : Interceptor,
+    KoinComponent {
 
-    @Inject lateinit var okHttpClient: Lazy<OkHttpClient>
-    @Inject lateinit var preferences: SharedPreferences
-    @Inject lateinit var cloudKeys: CloudKeys
-
-    init {
-        App.appComponent.inject(this)
-    }
+    private val okHttpClient: OkHttpClient by inject()
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -102,7 +96,7 @@ class HttpInterceptor : Interceptor {
             .build()
 
         try {
-            val response = okHttpClient.get().newCall(request).execute()
+            val response = okHttpClient.newCall(request).execute()
             val jsonObject = JSONObject(response.body!!.string())
             val accessToken = jsonObject.getString("access_token")
             preferences.edit {

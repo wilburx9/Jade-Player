@@ -7,13 +7,14 @@ import com.bumptech.glide.load.Options
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.ModelLoader
 import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.io.InputStream
-import javax.inject.Inject
 
 abstract class ImageUrlLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStream>?) :
-    BaseGlideUrlLoader<M>(concreteLoader) {
+    BaseGlideUrlLoader<M>(concreteLoader), KoinComponent {
 
-    @Inject lateinit var imageUrlFetcher: ImageUrlFetcher
+    private val imageUrlFetcher: ImageUrlFetcher by inject()
 
     abstract var lastFmUrlKey: String
     abstract var spotifyUrlKey: String

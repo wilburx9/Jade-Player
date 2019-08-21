@@ -35,10 +35,6 @@ class PlaylistModelLoader :
     inner class PlaylistDataFetcher(private val playlist: Playlist, width: Int, height: Int) :
         BaseCollageDataFetcher(playlist, width, height, true) {
 
-        init {
-            App.appComponent.inject(this)
-        }
-
         override var modelMemberMediaUri: Uri =
             MediaStore.Audio.Playlists.Members.getContentUri("external", playlist.id)
 
