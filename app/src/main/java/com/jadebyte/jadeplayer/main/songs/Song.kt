@@ -38,7 +38,7 @@ data class Song(
         path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
         duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
         artPath = ImageUtils.getAlbumArtUri(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))).toString(),
-        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)))
+        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.TRACK)))
     )
 
     constructor(cursor: Cursor, audioId: Long?) : this(
@@ -49,7 +49,7 @@ data class Song(
         path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.DATA)),
         duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.DURATION)),
         artPath = ImageUtils.getAlbumArtUri(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.ALBUM_ID))).toString(),
-        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.ARTIST))),
+        number = getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.TRACK))),
         audioId = audioId
     )
 }

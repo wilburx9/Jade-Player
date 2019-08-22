@@ -3,6 +3,7 @@
 package com.jadebyte.jadeplayer.main.common.injection.module
 
 import android.app.Application
+import android.content.ComponentName
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
@@ -10,6 +11,8 @@ import com.jadebyte.jadeplayer.main.common.network.DelegatingSocketFactory
 import com.jadebyte.jadeplayer.main.common.network.HttpInterceptor
 import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
 import com.jadebyte.jadeplayer.main.navigation.NavViewModel
+import com.jadebyte.jadeplayer.main.playback.MediaSessionConnection
+import com.jadebyte.jadeplayer.main.playback.PlaybackService
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
@@ -29,6 +32,7 @@ val commonModule = module {
     single { CloudKeys(get<SharedPreferences>()) }
     single { CacheControl.Builder().maxAge(30, TimeUnit.DAYS).build() }
     single { ImageUrlFetcher(get(), get(), get(), get()) }
+    single { MediaSessionConnection(get(), ComponentName(get(), PlaybackService::class.java)) }
     viewModel { NavViewModel(get()) }
     single {
         OkHttpClient.Builder()

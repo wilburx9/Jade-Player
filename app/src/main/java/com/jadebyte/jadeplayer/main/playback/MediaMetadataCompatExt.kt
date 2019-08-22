@@ -2,8 +2,10 @@
 
 package com.jadebyte.jadeplayer.main.playback
 
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
@@ -11,6 +13,7 @@ import androidx.core.net.toUri
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
+import com.jadebyte.jadeplayer.main.common.utils.Utils
 
 /**
  * Useful extensions for [MediaMetadataCompat].
@@ -252,6 +255,43 @@ inline val MediaMetadataCompat.fullDescription
         description.also {
             it.extras?.putAll(bundle)
         }
+
+/**
+ * Extension method for [MediaMetadataCompat.Builder] to set the fields with
+ * [MediaStore] result cursor
+ */
+fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long): MediaMetadataCompat.Builder {
+    val durationMs = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
+    val songTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
+    val songArtist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
+    val songAlbum = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))
+    val songNumber =
+        Utils.getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.TRACK))).toLongOrNull()
+            ?: 0
+
+    id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID)).toString()
+    title = songTitle
+    artist = songArtist
+    album = songAlbum
+    duration = durationMs
+    mediaUri = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
+    trackNumber = songNumber
+    trackCount = count
+    flag = MediaItem.FLAG_PLAYABLE
+
+    // To make things easier for *displaying* these, set the display properties as well.
+    displayTitle = songTitle
+    displaySubtitle = songArtist
+    displayDescription = songAlbum
+
+    // Add downloadStatus to force the creation of an "extras" bundle in the resulting
+    // MediaMetadataCompat object. This is needed to send accurate metadata to the
+    // media session during updates.
+    downloadStatus = MediaDescriptionCompat.STATUS_NOT_DOWNLOADED
+
+    // Allow it to be used in the typical builder style.
+    return this
+}
 
 /**
  * Extension method for building an [ProgressiveMediaSource] from a [MediaMetadataCompat] object.
