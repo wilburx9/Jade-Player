@@ -19,6 +19,7 @@ import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.common.image.CircularTransparentCenter
 import com.jadebyte.jadeplayer.main.genres.Genre
+import com.jadebyte.jadeplayer.main.playback.MediaItemData
 import com.jadebyte.jadeplayer.main.playlist.Playlist
 import com.jadebyte.jadeplayer.main.songs.Song
 
@@ -45,13 +46,27 @@ object DataBindingAdapters {
         }
     }
 
-
-    @BindingAdapter("songSrc")
+    @BindingAdapter("android:src")
     @JvmStatic
-    fun setAlbumCoverCompat(view: ImageView, song: Song?) {
-        if (song != null) {
+    fun setAlbumCover(view: ImageView, mediaItem: MediaItemData?) {
+        if (mediaItem != null) {
             GlideApp.with(view)
-                .load(song.album)
+                .load(mediaItem)
+                .transform(
+                    MultiTransformation(centerCrop, circleCrop)
+                )
+                .placeholder(R.drawable.thumb_circular_default)
+                .into(view)
+        }
+    }
+
+
+    @BindingAdapter("mediaSrc")
+    @JvmStatic
+    fun setAlbumCoverCompat(view: ImageView, item: MediaItemData?) {
+        if (item != null) {
+            GlideApp.with(view)
+                .load(item)
                 .transform(
                     MultiTransformation(centerCrop, circleCrop, CircularTransparentCenter(.3F))
                 )

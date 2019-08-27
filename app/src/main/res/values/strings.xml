@@ -40,6 +40,10 @@
     <string name="man_holding_an_empty_box">Man holding an empty box</string>
     <string name="add_new">Add New</string>
     <string name="add_new_playlist">Add New Playlist</string>
+    <string name="skip_to_next">Skip to next song</string>
+    <string name="skip_to_previous">Skip to previous song</string>
+    <string name="play_song">Play song</string>
+    <string name="pause_song">Pause song</string>
 
 
     <!--Navigation-->
@@ -149,6 +153,8 @@
     <string name="remove_picture">Remove picture</string>
     <string name="success">Success</string>
     <string name="recommended">Recommended</string>
+    <string name="notification_channel">Now Playing</string>
+    <string name="notification_channel_description">Shows what music is currently playing in Jade Player</string>
 
 
 </resources>

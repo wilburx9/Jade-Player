@@ -40,8 +40,12 @@ object Constants {
     const val EMPTY_ROOT = "@empty@"
     const val RECOMMENDED_ROOT = "__RECOMMENDED__"
     const val ALBUMS_ROOT = "__ALBUMS__"
-    const val METADATA_KEY_FLAGS = "com.jadebyte.jadeplayer.playback.METADATA_KEY_UAMP_FLAGS"
     const val NETWORK_FAILURE = "com.jadebyte.jadeplayer.playback.NETWORK_FAILURE"
+    const val LAST_URI = "com.jadebyte.jadeplayer.playback.LAST_URI"
+    const val LAST_SELECTION = "com.jadebyte.jadeplayer.playback.LAST_SELECTION"
+    const val LAST_SELECTION_ARGS = "com.jadebyte.jadeplayer.playback.LAST_SELECTION_ARGS"
+    const val LAST_SORT_ORDER = "com.jadebyte.jadeplayer.playback.LAST_SORT_ORDER"
+    const val PLAYBACK_NOTIFICATION: Int = 0xb2017
 
     // Other constants
     const val MAX_MODEL_IMAGE_THUMB_WIDTH = 100

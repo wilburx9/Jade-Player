@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <import type="android.view.View" />
+
+        <variable
+            name="mediaItem"
+            type="com.jadebyte.jadeplayer.main.playback.MediaItemData" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/padding_large">
+
+        <ImageView
+            android:id="@+id/sharableView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/track_album_art"
+            android:scaleType="centerCrop"
+            android:src="@{mediaItem}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/thumb_circular_default" />
+
+
+        <TextView
+            android:id="@+id/songArtist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{mediaItem.subtitle}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/text_size_x_small"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/guideLine"
+            app:layout_constraintStart_toEndOf="@+id/sharableView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            tools:text="Midnight Dogs" />
+
+        <TextView
+            android:id="@+id/songTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{mediaItem.title}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/songArtist"
+            app:layout_constraintRight_toRightOf="@+id/songArtist"
+            app:layout_constraintTop_toBottomOf="@+id/guideLine"
+            app:layout_constraintVertical_bias="0.1"
+            tools:text="Loved it out there" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

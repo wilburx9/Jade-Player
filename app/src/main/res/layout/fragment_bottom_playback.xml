@@ -9,12 +9,14 @@
     <data>
 
         <import type="android.view.View" />
+
         <import type="java.util.concurrent.TimeUnit" />
+
         <import type="com.jadebyte.jadeplayer.main.common.utils.ConvertUtils" />
 
         <variable
-            name="song"
-            type="com.jadebyte.jadeplayer.main.songs.Song" />
+            name="mediaItem"
+            type="com.jadebyte.jadeplayer.main.playback.MediaItemData" />
 
     </data>
 
@@ -23,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/fadedColorPrimary"
-        android:visibility="@{song == null? View.GONE: View.VISIBLE}"
+        android:visibility="@{mediaItem == null? View.GONE: View.VISIBLE}"
         tools:context=".main.playback.BottomPlaybackFragment"
         tools:layout_height="@dimen/floating_playback_height"
         tools:visibility="visible">
@@ -50,8 +52,8 @@
             android:layout_marginBottom="@dimen/margin_medium"
             android:contentDescription="@string/track_album_art"
             android:scaleType="centerCrop"
-            android:src="@{song}"
-            android:transitionName="@{song.toString()}"
+            android:src="@{mediaItem}"
+            android:transitionName="@{mediaItem.toString()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -67,7 +69,7 @@
             android:layout_marginRight="@dimen/margin_medium"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{song.album.artist}"
+            android:text="@{mediaItem.subtitle}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
@@ -82,7 +84,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{song.title}"
+            android:text="@{mediaItem.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             app:layout_constraintLeft_toLeftOf="@+id/songArtist"
             app:layout_constraintRight_toRightOf="@+id/songArtist"
@@ -138,7 +140,7 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginBottom="@dimen/margin_medium"
             android:background="@null"
-            android:max="@{ConvertUtils.longToInt(TimeUnit.MILLISECONDS.toSeconds(song.duration))}"
+            android:max="@{ConvertUtils.longToInt(TimeUnit.MILLISECONDS.toSeconds(1000))}"
             android:paddingStart="0dp"
             android:paddingEnd="0dp"
             android:progressDrawable="@drawable/seek_bar"

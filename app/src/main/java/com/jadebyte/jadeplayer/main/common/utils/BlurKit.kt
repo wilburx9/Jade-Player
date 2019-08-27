@@ -55,7 +55,7 @@ class BlurKit {
         val canvas = Canvas(bitmap)
         val matrix = Matrix()
         matrix.preScale(downscaleFactor, downscaleFactor)
-        canvas.matrix = matrix
+        canvas.setMatrix(matrix)
         src.draw(canvas)
         return bitmap
     }

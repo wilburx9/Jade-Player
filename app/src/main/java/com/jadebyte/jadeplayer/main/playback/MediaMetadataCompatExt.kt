@@ -1,4 +1,5 @@
 // Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+// Very little modification was made from the original file https://github.com/googlesamples/android-UniversalMusicPlayer/raw/master/common/src/main/java/com/example/android/uamp/media/extensions/MediaMetadataCompatExt.kt
 
 package com.jadebyte.jadeplayer.main.playback
 
@@ -111,7 +112,7 @@ inline val MediaMetadataCompat.downloadStatus
  */
 @MediaItem.Flags
 inline val MediaMetadataCompat.flag
-    get() = this.getLong(METADATA_KEY_UAMP_FLAGS).toInt()
+    get() = this.getLong(METADATA_KEY_FLAGS).toInt()
 
 /**
  * Useful extensions for [MediaMetadataCompat.Builder].
@@ -241,7 +242,7 @@ inline var MediaMetadataCompat.Builder.flag: Int
     @Deprecated(NO_GET, level = DeprecationLevel.ERROR)
     get() = throw IllegalAccessException("Cannot get from MediaMetadataCompat.Builder")
     set(value) {
-        putLong(METADATA_KEY_UAMP_FLAGS, value.toLong())
+        putLong(METADATA_KEY_FLAGS, value.toLong())
     }
 
 /**
@@ -322,4 +323,4 @@ fun List<MediaMetadataCompat>.toMediaSource(
  * Custom property that holds whether an item is [MediaItem.FLAG_BROWSABLE] or
  * [MediaItem.FLAG_PLAYABLE].
  */
-const val METADATA_KEY_UAMP_FLAGS = "com.example.android.uamp.media.METADATA_KEY_UAMP_FLAGS"
+const val METADATA_KEY_FLAGS = "com.jadebyte.jadeplayer.playback.METADATA_KEY_FLAGS"

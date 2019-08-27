@@ -11,12 +11,6 @@
                   <entry key="addSongsToPlaylistsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1964" />
-                            <option name="y" value="419" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_addSongsToPlaylistsFragment_to_writePlaylistDialogFragment">
@@ -32,12 +26,6 @@
                   <entry key="albumSongsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="988" />
-                            <option name="y" value="1391" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_albumSongsFragment_to_albumsMenuBottomSheetDialogFragment">
@@ -53,12 +41,6 @@
                   <entry key="albumsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="744" />
-                            <option name="y" value="1327" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_albumsFragment_to_albumSongsFragment">
@@ -84,12 +66,6 @@
                   <entry key="albumsMenuBottomSheetDialogFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1232" />
-                            <option name="y" value="1365" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_albumsMenuBottomSheetDialogFragment_to_addSongsToPlaylistsFragment">
@@ -105,12 +81,6 @@
                   <entry key="artistAlbumsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="744" />
-                            <option name="y" value="971" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_artistAlbumsFragment_to_albumSongsFragment">
@@ -136,12 +106,6 @@
                   <entry key="artistsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="500" />
-                            <option name="y" value="614" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_artistsFragment_to_artistAlbumsFragment">
@@ -162,12 +126,6 @@
                   <entry key="exploreFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="1505" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_exploreFragment_to_albumSongsFragment">
@@ -193,12 +151,6 @@
                   <entry key="genreSongsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1476" />
-                            <option name="y" value="283" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_genreSongsFragment_to_genresMenuBottomSheetDialogFragment">
@@ -214,12 +166,6 @@
                   <entry key="genresFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1232" />
-                            <option name="y" value="419" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_genresFragment_to_genreSongsFragment">
@@ -245,12 +191,6 @@
                   <entry key="genresMenuBottomSheetDialogFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1720" />
-                            <option name="y" value="419" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_genresMenuBottomSheetDialogFragment_to_addSongsToPlaylistsFragment">
@@ -266,12 +206,6 @@
                   <entry key="navigationDialogFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="988" />
-                            <option name="y" value="792" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_navigationDialogFragment_to_artistsFragment">
@@ -302,12 +236,6 @@
                   <entry key="playlistFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1232" />
-                            <option name="y" value="889" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_playlistFragment_to_navigationDialogFragment">
@@ -338,12 +266,6 @@
                   <entry key="playlistMenuBottomSheetDialogFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1720" />
-                            <option name="y" value="911" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_playlistMenuBottomSheetDialogFragment_to_playlistSongsEditorDialogFragment">
@@ -363,25 +285,12 @@
                   </entry>
                   <entry key="playlistSongsEditorDialogFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1964" />
-                            <option name="y" value="775" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="playlistSongsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1476" />
-                            <option name="y" value="775" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_playlistSongsFragment_to_playlistMenuBottomSheetDialogFragment">
@@ -396,25 +305,12 @@
                   </entry>
                   <entry key="searchFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                   <entry key="songsFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1232" />
-                            <option name="y" value="63" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_songsFragment_to_navigationDialogFragment">
@@ -435,12 +331,6 @@
                   <entry key="songsMenuBottomSheetDialogFragment">
                     <value>
                       <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="1720" />
-                            <option name="y" value="63" />
-                          </Point>
-                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_songsMenuBottomSheetDialogFragment_to_addSongsToPlaylistsFragment">
@@ -455,14 +345,7 @@
                   </entry>
                   <entry key="writePlaylistDialogFragment">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="2208" />
-                            <option name="y" value="419" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                 </map>
@@ -478,6 +361,12 @@
                   <entry key="mainFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_mainFragment_to_playbackFragment">
@@ -493,6 +382,12 @@
                   <entry key="playbackFragment">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_playbackFragment_to_songsMenuBottomSheetDialogFragment">
@@ -507,7 +402,14 @@
                   </entry>
                   <entry key="songsMenuBottomSheetDialogFragment">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="500" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                 </map>

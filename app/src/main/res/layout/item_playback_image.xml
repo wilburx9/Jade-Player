@@ -8,8 +8,8 @@
 
     <data>
         <variable
-            name="song"
-            type="com.jadebyte.jadeplayer.main.songs.Song" />
+            name="mediaItem"
+            type="com.jadebyte.jadeplayer.main.playback.MediaItemData" />
 
     </data>
 
@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/album_art"
             android:padding="@dimen/padding_large"
-            app:songSrc="@{song}"
+            app:mediaSrc="@{mediaItem}"
             tools:src="@drawable/thumb_circular_default_hollow" />
     </FrameLayout>
 </layout>

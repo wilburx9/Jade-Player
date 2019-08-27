@@ -13,12 +13,12 @@ apply plugin: 'hunter-debug'
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     useLibrary 'android.test.base'
     defaultConfig {
         applicationId "com.jadebyte.jadeplayer"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -76,6 +76,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation 'com.quinn.hunter:hunter-debug-library:0.9.6'
     implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+    implementation "com.google.android.exoplayer:extension-mediasession:$exoplayer_version"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"

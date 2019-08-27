@@ -22,7 +22,7 @@ class SongsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        song = arguments!!.getParcelable("song")!!
+        song = arguments!!.getParcelable("mediaItem")!!
         popUpTo = arguments!!.getInt("popUpTo")
     }
 

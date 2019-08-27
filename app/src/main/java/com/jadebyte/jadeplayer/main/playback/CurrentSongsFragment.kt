@@ -10,21 +10,18 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.databinding.ItemCurrentBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
+import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
-import com.jadebyte.jadeplayer.main.common.view.BaseViewHolder
-import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_current_songs.*
 
 
 class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
     private lateinit var viewModel: PlaybackViewModel
-    private var items = emptyList<Song>()
+    private var items = emptyList<MediaItemData>()
 
 
     override fun onCreateView(
@@ -44,73 +41,21 @@ class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
     private fun setupViewViews() {
         currentRV.layoutManager = LinearLayoutManager(activity)
-        val adapter = Adapter(items, itemClickListener = this)
+        val adapter = BaseAdapter(items, activity!!, BR.mediaItem, R.layout.item_media, itemClickListener = this)
         currentRV.adapter = adapter
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
-        viewModel.mediatorLiveData.observe(viewLifecycleOwner, dataObserver)
+        viewModel.mediaItems.observe(viewLifecycleOwner, Observer {
+            items = it
+            (currentRV.adapter as BaseAdapter<MediaItemData>).updateItems(items)
+        })
     }
 
-    private val dataObserver = Observer(this::updateViews)
 
     override fun onItemClick(position: Int, sharableView: View?) {
-        viewModel.updateIndexOfPlayingSong(position)
-    }
-
-    private fun updateViews(result: Any) {
-        val adapter = currentRV.adapter as Adapter
-        if (result is Int) {
-            adapter.updateItems(items, result)
-        } else {
-            @Suppress("UNCHECKED_CAST")
-            items = result as List<Song>
-            adapter.updateItems(items)
-        }
-    }
-
-    override fun onDestroyView() {
-        viewModel.mediatorLiveData.removeObserver(dataObserver)
-        super.onDestroyView()
-    }
-
-}
-
-
-private class Adapter(
-    private var items: List<Song>,
-    private var indexOfPlayingSong: Int = 0,
-    private val itemClickListener: OnItemClickListener
-) : RecyclerView.Adapter<BaseViewHolder<Song>>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Song> {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemCurrentBinding.inflate(inflater, parent, false)
-        return BaseViewHolder(binding, BR.song, itemClickListener)
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    override fun onBindViewHolder(holder: BaseViewHolder<Song>, position: Int) {
-        holder.bind(items[position])
-    }
-
-    fun updateItems(items: List<Song>, indexOfPlayingSong: Int? = null) {
-        this.items = items
-        if (indexOfPlayingSong != null && this.items.isNotEmpty()) {
-            // The current song is no longer current
-            this.items[this.indexOfPlayingSong].isCurrent = false
-            notifyItemChanged(this.indexOfPlayingSong)
-
-            // We have a new current song
-            this.items[indexOfPlayingSong].isCurrent = true
-            notifyItemChanged(indexOfPlayingSong)
-            this.indexOfPlayingSong = indexOfPlayingSong
-        } else {
-            notifyDataSetChanged()
-        }
+        viewModel.playMediaId(items[position].id)
     }
 
 }

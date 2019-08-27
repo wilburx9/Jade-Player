@@ -9,28 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.databinding.FragmentBottomPlaybackBinding
 import com.jadebyte.jadeplayer.main.MainFragmentDirections
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
-import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_bottom_playback.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BottomPlaybackFragment : BaseFragment() {
 
-    lateinit var viewModel: PlaybackViewModel
-     var binding: FragmentBottomPlaybackBinding? = null
-    private var items = emptyList<Song>()
-    var indexOfPlayingSong = 0
+    private val playbackViewModel: PlaybackViewModel by viewModel()
+    private var binding: FragmentBottomPlaybackBinding? = null
+    private var mediaItem: MediaItemData? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!)[PlaybackViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,33 +48,21 @@ class BottomPlaybackFragment : BaseFragment() {
             val transitionName = ViewCompat.getTransitionName(sharableView)!!
             val extras = FragmentNavigator.Extras.Builder().addSharedElement(sharableView, transitionName).build()
             val action =
-                MainFragmentDirections.actionMainFragmentToPlaybackFragment(items[indexOfPlayingSong], transitionName)
+                MainFragmentDirections.actionMainFragmentToPlaybackFragment(mediaItem!!, transitionName)
             activity?.findNavController(R.id.mainNavHostFragment)?.navigate(action, extras)
         }
     }
 
     private fun observeViewData() {
-        viewModel.mediatorLiveData.observe(viewLifecycleOwner, dataObserver)
-    }
-
-
-    @Suppress("UNCHECKED_CAST")
-    private val dataObserver = Observer<Any> {
-        if (it is Int) {
-            indexOfPlayingSong = it
-        } else {
-            items = it as List<Song>
-        }
-
-        if (items.isNotEmpty()) {
-            binding?.song = items[indexOfPlayingSong]
+        playbackViewModel.mediaItems.observe(this, Observer {
+            mediaItem = it.first { it.isPlaying }
+            binding?.mediaItem = mediaItem
             binding?.executePendingBindings()
-        }
+        })
     }
 
 
     override fun onDestroyView() {
-        viewModel.mediatorLiveData.removeObserver(dataObserver)
         binding?.unbind()
         binding = null
         super.onDestroyView()

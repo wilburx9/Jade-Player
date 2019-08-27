@@ -1,5 +1,5 @@
 // Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
-//
+// A little modification was made from the original file: https://github.com/googlesamples/android-UniversalMusicPlayer/raw/master/common/src/main/java/com/example/android/uamp/common/MediaSessionConnection.kt
 
 package com.jadebyte.jadeplayer.main.playback
 
@@ -38,10 +38,10 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
     val playbackState = MutableLiveData<PlaybackStateCompat>().apply { postValue(EMPTY_PLAYBACK_STATE) }
     val nowPlaying = MutableLiveData<MediaMetadataCompat>().apply { postValue(NOTHING_PLAYING) }
 
-    val transportControls get() = mediaController.transportControls
+    val transportControls: MediaControllerCompat.TransportControls get() = mediaController.transportControls
 
 
-    fun subsribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
+    fun subscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.subscribe(parentId, callback)
     }
 

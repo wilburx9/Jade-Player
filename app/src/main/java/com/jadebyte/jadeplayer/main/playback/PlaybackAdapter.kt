@@ -9,20 +9,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.databinding.ItemPlaybackImageBinding
-import com.jadebyte.jadeplayer.main.songs.Song
 
 /**
  * Created by Wilberforce on 2019-05-02 at 00:25.
  */
-class PlaybackAdapter(private var songs: List<Song>?) : PagerAdapter() {
+class PlaybackAdapter(private var items: List<MediaItemData>?) : PagerAdapter() {
 
-    fun updateItems(items: List<Song>?) {
-        this.songs = items
+    fun updateItems(items: List<MediaItemData>?) {
+        this.items = items
         notifyDataSetChanged()
     }
 
     override fun getCount(): Int {
-        return songs?.size ?: 0
+        return items?.size ?: 0
     }
 
     override fun isViewFromObject(view: View, any: Any): Boolean {
@@ -33,9 +32,9 @@ class PlaybackAdapter(private var songs: List<Song>?) : PagerAdapter() {
         val inflater = LayoutInflater.from(container.context)
         val binding =
             DataBindingUtil.inflate<ItemPlaybackImageBinding>(inflater, R.layout.item_playback_image, container, false)
-        val song = songs?.get(position)
-        binding.song = song
-        binding.root.tag = song
+        val mediaItem = items?.get(position)
+        binding.mediaItem = mediaItem
+        binding.root.tag = mediaItem
         container.addView(binding.root)
         return binding.root
     }

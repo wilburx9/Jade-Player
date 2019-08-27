@@ -36,13 +36,13 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     private lateinit var viewModel: PlaybackViewModel
     private lateinit var currentSong: Song
-    private var items = emptyList<Song>()
+    private var items = emptyList<MediaItemData>()
     private lateinit var rotationAnimSet: AnimatorSet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        currentSong = arguments!!.getParcelable("song")!!
+        currentSong = arguments!!.getParcelable("mediaItem")!!
     }
 
 
@@ -63,24 +63,15 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun observeViewData() {
-        viewModel.mediatorLiveData.observe(viewLifecycleOwner, dataObserver)
+        viewModel.mediaItems.observe(viewLifecycleOwner, Observer { items ->
+            this.items = items
+            val currentItem = this.items.first { it.isPlaying }
+            (viewPager.adapter as PlaybackAdapter).updateItems(this.items)
+            updateViewsAsPerSongChange(viewPager.currentItem)
+            viewPager.setCurrentItem(this.items.indexOf(currentItem), false)
+        })
     }
 
-
-    private val dataObserver = Observer<Any> {
-        if (it is Int) {
-            viewPager.setCurrentItem(it, false)
-        } else {
-            @Suppress("UNCHECKED_CAST")
-            updateViews(it as List<Song>)
-        }
-    }
-
-    private fun updateViews(items: List<Song>) {
-        this.items = items
-        (viewPager.adapter as PlaybackAdapter).updateItems(items)
-        updateViewsAsPerSongChange(viewPager.currentItem)
-    }
 
     private fun setupView() {
         rotationAnimSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
@@ -106,10 +97,10 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     private fun updateViewsAsPerSongChange(position: Int) {
         items[position].let {
             rotationAnimSet.setTarget(viewPager.findViewWithTag(it))
-            songArtist.setText(it.album.artist)
+            songArtist.setText(it.subtitle)
             songTitle.setText(it.title)
             rotationAnimSet.start()
-            totalDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(it.duration))
+            totalDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(1000))
             // TODO: Remove the below line when songs start playing
             countdownDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(0))
         }
@@ -150,7 +141,8 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun showMenuBottomSheet() {
-        val action = PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment( items[viewPager.currentItem])
+        val action =
+            PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(items[viewPager.currentItem])
         findNavController().navigate(action)
     }
 
@@ -254,25 +246,27 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     private fun playNextSong() {
         val currentPos = viewPager.currentItem
-        if (currentPos == (items.size - 1)) {
+        val nextItem = if (currentPos == (items.size - 1)) {
             // If the current item is the last, start from afresh
-            viewModel.updateIndexOfPlayingSong(0)
-            return
+            0
+        } else {
+            currentPos + 0
         }
 
-        viewModel.updateIndexOfPlayingSong(currentPos + 1)
+        viewModel.playMediaId(items[nextItem].id)
     }
 
 
     private fun playPreviousTrack() {
         val currentPos = viewPager.currentItem
-        if (currentPos == 0) {
+        val previousItem = if (currentPos == 0) {
             // If the current item is the first, go to the last item
-            viewModel.updateIndexOfPlayingSong(items.size - 1)
-            return
+            items.size - 1
+        } else {
+            currentPos - 1
         }
 
-        viewModel.updateIndexOfPlayingSong(currentPos - 1)
+        viewModel.playMediaId(items[previousItem].id)
     }
 
     private fun hasLyrics(): Boolean {
@@ -303,7 +297,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     override fun onDestroyView() {
-        viewModel.mediatorLiveData.removeObserver(dataObserver)
         rotationAnimSet.cancel()
         super.onDestroyView()
     }

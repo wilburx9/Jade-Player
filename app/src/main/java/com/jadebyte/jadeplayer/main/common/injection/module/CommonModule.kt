@@ -13,6 +13,7 @@ import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
 import com.jadebyte.jadeplayer.main.navigation.NavViewModel
 import com.jadebyte.jadeplayer.main.playback.MediaSessionConnection
 import com.jadebyte.jadeplayer.main.playback.PlaybackService
+import com.jadebyte.jadeplayer.main.playback.PlaybackViewModel
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
@@ -34,6 +35,7 @@ val commonModule = module {
     single { ImageUrlFetcher(get(), get(), get(), get()) }
     single { MediaSessionConnection(get(), ComponentName(get(), PlaybackService::class.java)) }
     viewModel { NavViewModel(get()) }
+    viewModel { PlaybackViewModel(get(), get()) }
     single {
         OkHttpClient.Builder()
             .socketFactory(DelegatingSocketFactory(SocketFactory.getDefault()))

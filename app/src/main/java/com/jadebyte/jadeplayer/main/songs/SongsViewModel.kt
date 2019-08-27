@@ -19,7 +19,7 @@ open class SongsViewModel(application: Application) : BaseMediaStoreViewModel<So
 
     override var selectionArgs: Array<String>? = basicSongsSelectionArgs
 
-    override var sortOrder: String? = basicSongsSongsOrder
+    override var sortOrder: String? = basicSongsOrder
 
     override var uri: Uri = basicSongUri
 
@@ -43,7 +43,7 @@ val basicSongsProjection = arrayOf(
 )
 
 // Sort with the title in ascending case-insensitive order
-const val basicSongsSongsOrder = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
+const val basicSongsOrder = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
 
 const val basicSongsSelection = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
 
