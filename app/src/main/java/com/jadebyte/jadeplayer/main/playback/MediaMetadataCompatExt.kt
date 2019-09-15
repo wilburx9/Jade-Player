@@ -3,6 +3,7 @@
 
 package com.jadebyte.jadeplayer.main.playback
 
+import android.content.ContentUris
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
@@ -251,7 +252,7 @@ inline var MediaMetadataCompat.Builder.flag: Int
  *
  * These keys are used by the ExoPlayer MediaSession extension when announcing metadata changes.
  */
-inline val MediaMetadataCompat.fullDescription
+inline val MediaMetadataCompat.fullDescription: MediaDescriptionCompat
     get() =
         description.also {
             it.extras?.putAll(bundle)
@@ -261,11 +262,16 @@ inline val MediaMetadataCompat.fullDescription
  * Extension method for [MediaMetadataCompat.Builder] to set the fields with
  * [MediaStore] result cursor
  */
-fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long): MediaMetadataCompat.Builder {
+
+ fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long, art: Bitmap): MediaMetadataCompat.Builder {
     val durationMs = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
     val songTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
     val songArtist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
     val songAlbum = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))
+    val artWorkUri = ContentUris.withAppendedId(
+        Utils.artworkUri,
+        cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
+    )
     val songNumber =
         Utils.getTrackNumber(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.TRACK))).toLongOrNull()
             ?: 0
@@ -279,7 +285,8 @@ fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long): MediaMetadata
     trackNumber = songNumber
     trackCount = count
     flag = MediaItem.FLAG_PLAYABLE
-
+    albumArt = art
+    albumArtUri = artWorkUri.toString()
     // To make things easier for *displaying* these, set the display properties as well.
     displayTitle = songTitle
     displaySubtitle = songArtist

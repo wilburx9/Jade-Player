@@ -3,21 +3,51 @@
 package com.jadebyte.jadeplayer.main.playback
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.SubscriptionCallback
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.*
-import timber.log.Timber
+import com.jadebyte.jadeplayer.main.common.data.Constants
 
 /**
  * Created by Wilberforce on 2019-05-18 at 21:55.
  */
-class PlaybackViewModel(application: Application, mediaSessionConnection: MediaSessionConnection) :
+class PlaybackViewModel(
+    application: Application,
+    mediaSessionConnection: MediaSessionConnection,
+    preferences: SharedPreferences,
+    private val mediaId: String
+) :
     AndroidViewModel(application) {
 
     private val _mediaItems = MutableLiveData<List<MediaItemData>>()
+    private val _currentItem = MutableLiveData<MediaItemData?>()
     val mediaItems: LiveData<List<MediaItemData>> = _mediaItems
+    val currentItem: LiveData<MediaItemData?> = _currentItem
+
+
+    /**
+     * When the data in [_mediaItems] changes, we infer the current item from the list.
+     *
+     * First, we check for a playing item.
+     *
+     * And if no items are playing, we check for last item that was played
+     *
+     * Finally we resort to picking thr first item if the above conditions didn't return an item.
+     */
+    private val mediaItemsObserver = Observer<List<MediaItemData>> { items ->
+        val current = (items.firstOrNull { it.isPlaying }
+            ?: items.firstOrNull { it.id == preferences.getString(Constants.LAST_ID, null) }
+            ?: items.firstOrNull())
+        _currentItem.postValue(current)
+    }
+
+
+    init {
+        _mediaItems.observeForever(mediaItemsObserver)
+    }
 
     fun playMediaId(mediaId: String) {
         val nowPlaying = mediaSessionConnection.nowPlaying.value
@@ -29,11 +59,6 @@ class PlaybackViewModel(application: Application, mediaSessionConnection: MediaS
                 when {
                     it.isPlaying -> transportControls.pause()
                     it.isPauseEnabled -> transportControls.play()
-                    else -> {
-                        Timber.w(
-                            "playMediaId: Playable item clicked but neither play nor pause are enabled!(mediaId=$mediaId)"
-                        )
-                    }
                 }
             }
         } else {
@@ -96,7 +121,7 @@ class PlaybackViewModel(application: Application, mediaSessionConnection: MediaS
      *  which can also change [MediaItemData.isPlaying]s in the list.
      */
     private val mediaSessionConnection = mediaSessionConnection.also {
-        it.subscribe(mediaSessionConnection.rootMediaId, subscriptionCallback)
+        it.subscribe(mediaId, subscriptionCallback)
         it.playbackState.observeForever(playbackStateObserver)
         it.nowPlaying.observeForever(mediaMetadataObserver)
     }
@@ -111,12 +136,17 @@ class PlaybackViewModel(application: Application, mediaSessionConnection: MediaS
     override fun onCleared() {
         super.onCleared()
 
+        // Remove observer from the mediaItems
+        _mediaItems.removeObserver(mediaItemsObserver)
+
         // Remove the permanent observers from the MediaSessionConnection.
         mediaSessionConnection.playbackState.removeObserver(playbackStateObserver)
         mediaSessionConnection.nowPlaying.removeObserver(mediaMetadataObserver)
 
         // And then, finally, unsubscribe the media ID that was being watched.
         mediaSessionConnection.unsubscribe(mediaSessionConnection.rootMediaId, subscriptionCallback)
+
+
     }
 
 }

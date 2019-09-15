@@ -53,12 +53,12 @@ class BrowseTree(context: Context, musicSource: MusicSource) {
      */
     init {
         val rootList = mediaIdToChildren[Constants.BROWSABLE_ROOT] ?: mutableListOf()
-        val recommendedMetadata = MediaMetadataCompat.Builder().apply {
-            id = Constants.RECOMMENDED_ROOT
-            title = context.getString(R.string.recommended)
+        val songsMetadata = MediaMetadataCompat.Builder().apply {
+            id = Constants.SONGS_ROOT
+            title = context.getString(R.string.songs)
             albumArtUri =
                 Constants.IMAGE_URI_ROOT + context.resources.getResourceEntryName(R.drawable.ic_song)
-            flag = MediaItem.FLAG_BROWSABLE
+            flag = MediaItem.FLAG_PLAYABLE
         }.build()
 
         val albumsMetadata = MediaMetadataCompat.Builder().apply {
@@ -67,20 +67,30 @@ class BrowseTree(context: Context, musicSource: MusicSource) {
             albumArtUri = Constants.IMAGE_URI_ROOT + context.resources.getResourceEntryName(R.drawable.ic_album)
         }.build()
 
-        rootList += recommendedMetadata
+
+        val artistsMetadata = MediaMetadataCompat.Builder().apply {
+            id = Constants.ARTISTS_ROOT
+            title = context.getString(R.string.artists)
+            artist = Constants.IMAGE_URI_ROOT + context.resources.getResourceEntryName(R.drawable.ic_microphone)
+        }.build()
+
+        rootList += songsMetadata
         rootList += albumsMetadata
+        rootList += artistsMetadata
         mediaIdToChildren[Constants.BROWSABLE_ROOT] = rootList
         musicSource.forEach {
             val albumMediaId = it.album.urlEncoded
             val albumChildren = mediaIdToChildren[albumMediaId] ?: buildAlbumRoot(it)
             albumChildren += it
 
-            // Add the first track of each album to the 'Recommended' category
-            if (it.trackNumber == 1L) {
-                val  recommendedChildren = mediaIdToChildren[Constants.RECOMMENDED_ROOT] ?: mutableListOf()
-                recommendedChildren += it
-                mediaIdToChildren[Constants.RECOMMENDED_ROOT] = recommendedChildren
-            }
+
+            val artistMediaId = it.artist.urlEncoded
+            val artistChildren = mediaIdToChildren[artistMediaId] ?: buildArtistRoot(it)
+            artistChildren += it
+
+            val  songsChildren = mediaIdToChildren[Constants.SONGS_ROOT] ?: mutableListOf()
+            songsChildren += it
+            mediaIdToChildren[Constants.SONGS_ROOT] = songsChildren
         }
     }
 
@@ -96,7 +106,6 @@ class BrowseTree(context: Context, musicSource: MusicSource) {
             title = metadata.album
             artist = metadata.artist
             albumArt = metadata.albumArt
-            albumArtUri = metadata.albumArtUri.toString()
             flag = MediaItem.FLAG_BROWSABLE
         }.build()
 
@@ -108,6 +117,32 @@ class BrowseTree(context: Context, musicSource: MusicSource) {
         // Insert the album's root with an empty list for its children, and return the list.
         return mutableListOf<MediaMetadataCompat>().also {
             mediaIdToChildren[albumMetadata.id] = it
+        }
+    }
+
+    /**
+     * Builds a node, under the root, that represents an artist, given
+     * a [MediaMetadataCompat] object that's one of the songs on that artist,
+     * marking the item as [MediaItem.FLAG_BROWSABLE], since it will have child
+     * node(s) AKA at least 1 song.
+     */
+    private fun buildArtistRoot(metadata: MediaMetadataCompat): MutableList<MediaMetadataCompat> {
+        val artistMetadata = MediaMetadataCompat.Builder().apply {
+            id = metadata.artist.urlEncoded
+            title = metadata.artist
+            albumArt = metadata.albumArt
+            //            albumArtUri = metadata.albumArtUri.toString()
+            flag = MediaItem.FLAG_BROWSABLE
+        }.build()
+
+        // Adds this artist to the 'Artists' category.
+        val rootList = mediaIdToChildren[Constants.ARTISTS_ROOT] ?: mutableListOf()
+        rootList += artistMetadata
+        mediaIdToChildren[Constants.ARTISTS_ROOT] = rootList
+
+        // Insert the album's root with an empty list for its children, and return the list.
+        return mutableListOf<MediaMetadataCompat>().also {
+            mediaIdToChildren[artistMetadata.id] = it
         }
     }
 }

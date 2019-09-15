@@ -15,8 +15,8 @@
         <import type="com.jadebyte.jadeplayer.main.common.utils.ConvertUtils" />
 
         <variable
-            name="mediaItem"
-            type="com.jadebyte.jadeplayer.main.playback.MediaItemData" />
+            name="viewModel"
+            type="com.jadebyte.jadeplayer.main.playback.PlaybackViewModel" />
 
     </data>
 
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/fadedColorPrimary"
-        android:visibility="@{mediaItem == null? View.GONE: View.VISIBLE}"
+        android:visibility="@{viewModel.currentItem == null? View.GONE: View.VISIBLE}"
         tools:context=".main.playback.BottomPlaybackFragment"
         tools:layout_height="@dimen/floating_playback_height"
         tools:visibility="visible">
@@ -52,8 +52,8 @@
             android:layout_marginBottom="@dimen/margin_medium"
             android:contentDescription="@string/track_album_art"
             android:scaleType="centerCrop"
-            android:src="@{mediaItem}"
-            android:transitionName="@{mediaItem.toString()}"
+            android:src="@{viewModel.currentItem}"
+            android:transitionName="@{viewModel.currentItem.toString()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -69,7 +69,7 @@
             android:layout_marginRight="@dimen/margin_medium"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{mediaItem.subtitle}"
+            android:text="@{viewModel.currentItem.subtitle}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{mediaItem.title}"
+            android:text="@{viewModel.currentItem.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             app:layout_constraintLeft_toLeftOf="@+id/songArtist"
             app:layout_constraintRight_toRightOf="@+id/songArtist"
@@ -113,11 +113,13 @@
             android:layout_marginEnd="@dimen/margin_medium"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/play_and_pause_button"
+            android:onClick="@{(v) -> viewModel.playMediaId(viewModel.currentItem.id)}"
             android:padding="@dimen/padding_large"
-            android:src="@drawable/ic_pause_white"
+            android:src="@{viewModel.currentItem.playing? @drawable/ic_pause_white :@drawable/ic_play_white }"
             app:layout_constraintEnd_toStartOf="@+id/nextButton"
             app:layout_constraintStart_toEndOf="@+id/previousButton"
-            app:layout_constraintTop_toTopOf="@+id/nextButton" />
+            app:layout_constraintTop_toTopOf="@+id/nextButton"
+            tools:src="@drawable/ic_play_white" />
 
         <ImageButton
             android:id="@+id/nextButton"

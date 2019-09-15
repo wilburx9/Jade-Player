@@ -55,9 +55,11 @@ class PlaybackPreparer(
 
     // We are only supporting preparing and playing from search and media id
     // TODO: Add support for ACTION_PREPARE and ACTION_PLAY, which mean "prepare/play something".
-    override fun getSupportedPrepareActions() = PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID or
-            PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID or PlaybackStateCompat.ACTION_PREPARE_FROM_SEARCH or
-            PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH
+    override fun getSupportedPrepareActions() =
+        PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID or
+                PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID or
+                PlaybackStateCompat.ACTION_PREPARE_FROM_SEARCH or
+                PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH
 
     /**
      *  Handles callbacks to both [MediaSessionCompat.Callback.onPrepareFromMediaId] *AND*
@@ -65,6 +67,7 @@ class PlaybackPreparer(
      *  This is done with expectation that "play" is just "prepare" + "play".
      */
     override fun onPrepareFromMediaId(mediaId: String?, playWhenReady: Boolean, extras: Bundle?) {
+        Timber.i("onPrepareFromMediaId: $mediaId :: $playWhenReady")
         musicSource.whenReady { _ ->
             val itemToPlay = musicSource.find { it.id == mediaId }
             if (itemToPlay == null) {
@@ -73,13 +76,14 @@ class PlaybackPreparer(
                 return@whenReady
             }
 
-            val metadataList = buildPlaylist(itemToPlay)
+            val metadataList = musicSource.toList()
             val mediaSource = metadataList.toMediaSource(dataSourceFactory)
 
             // Since the playlist was probably based on some ordering (such as tracks
             // on an album), find which window index to play first so that the song the
             // user actually wants to hear plays first.
             val initialWindowIndex = metadataList.indexOf(itemToPlay)
+            exoPlayer.playWhenReady = playWhenReady
             exoPlayer.prepare(mediaSource)
             exoPlayer.seekTo(initialWindowIndex, 0)
         }

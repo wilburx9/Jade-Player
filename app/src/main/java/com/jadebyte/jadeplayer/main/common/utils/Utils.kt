@@ -4,6 +4,7 @@ package com.jadebyte.jadeplayer.main.common.utils
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -46,4 +47,6 @@ object Utils {
         val context = WeakReference(c).get()
         return context?.let { ContextCompat.checkSelfPermission(it, permission) } == PackageManager.PERMISSION_GRANTED
     }
+
+    val artworkUri = Uri.parse("content://media/external/audio/albumart")
 }

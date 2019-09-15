@@ -152,7 +152,6 @@
     <string name="song_in_album">%1$s in %2$s</string>
     <string name="remove_picture">Remove picture</string>
     <string name="success">Success</string>
-    <string name="recommended">Recommended</string>
     <string name="notification_channel">Now Playing</string>
     <string name="notification_channel_description">Shows what music is currently playing in Jade Player</string>
 

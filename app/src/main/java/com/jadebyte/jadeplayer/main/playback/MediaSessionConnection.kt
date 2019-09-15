@@ -46,13 +46,13 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
     }
 
     fun unsubscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
-        mediaBrowser.subscribe(parentId, callback)
+        mediaBrowser.unsubscribe(parentId, callback)
     }
 
 
     fun sendCommand(command: String, parameters: Bundle?) = sendCommand(command, parameters) { _, _ -> }
 
-    fun sendCommand(
+    private fun sendCommand(
         command: String, parameters: Bundle?, resultCallback: ((Int, Bundle?) -> Unit)
     ) = if (mediaBrowser.isConnected) {
         mediaController.sendCommand(command, parameters, object : ResultReceiver(Handler()) {
@@ -72,7 +72,7 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
         // Invoked when MediaBrowser connection succeeds
         override fun onConnected() {
             // Get a MediaController for the MediaSession.
-            mediaController = MediaControllerCompat(context, mediaController.sessionToken)
+            mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken)
             mediaController.registerCallback(MediaControllerCallback())
             isConnected.postValue(true)
         }

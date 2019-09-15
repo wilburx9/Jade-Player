@@ -7,6 +7,8 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,6 +21,8 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
@@ -27,6 +31,8 @@ import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ext.mediasession.TimelineQueueNavigator
 import com.google.android.exoplayer2.upstream.FileDataSourceFactory
+import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.common.GlideApp
 import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.main.songs.basicSongsOrder
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelection
@@ -102,7 +108,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
             // Produces DataSource instances through which media data is loaded.
             val dataSourceFactory = FileDataSourceFactory()
             // Create the PlaybackPreparer of the media session connector.
-            val playbackPreparer =PlaybackPreparer(
+            val playbackPreparer = PlaybackPreparer(
                 mediaSource,
                 exoPlayer,
                 dataSourceFactory
@@ -111,6 +117,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
             it.setPlaybackPreparer(playbackPreparer)
             it.setQueueNavigator(QueueNavigator(mediaSession))
         }
+        packageValidator = PackageValidator(this, R.xml.allowed_media_browser_callers)
     }
 
     override fun onDestroy() {
@@ -209,7 +216,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
     // See https://link.medium.com/Zw5gorq9mZ
     private val exoPlayer by lazy {
         ExoPlayerFactory.newSimpleInstance(this).apply {
-            setAudioAttributes(audioAttributes, true)
+            setAudioAttributes(this@PlaybackService.audioAttributes, true)
         }
     }
 
@@ -225,6 +232,10 @@ class PlaybackService : MediaBrowserServiceCompat() {
     }
 
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
+        val notificationTarget = NotificationTarget()
+        var largeBitmap: Bitmap? = null
+
+
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
             updateNotification(mediaController.playbackState)
         }
@@ -237,23 +248,14 @@ class PlaybackService : MediaBrowserServiceCompat() {
             if (state == null) return
             val updatedState = state.state
 
-            // Skip building a notification when state is "none" and metadata is null
-            val notification = if (mediaController.metadata != null
-                && updatedState != PlaybackStateCompat.STATE_NONE
-            ) {
-                notificationBuilder.buildNotification(mediaSession.sessionToken)
-            } else {
-                null
-            }
-
             when (updatedState) {
                 PlaybackStateCompat.STATE_PLAYING,
-                PlaybackStateCompat.STATE_BUFFERING -> initiatePlayback(notification, updatedState)
-                else -> terminatePlayback(notification, updatedState)
+                PlaybackStateCompat.STATE_BUFFERING -> initiatePlayback(updatedState)
+                else -> terminatePlayback(updatedState)
             }
         }
 
-        private fun terminatePlayback(notification: Notification?, state: Int) {
+        private fun terminatePlayback(state: Int) {
             becomingNoisyReceiver.unregister()
             if (isForegroundService) {
                 stopForeground(false)
@@ -263,7 +265,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
                 if (state == PlaybackStateCompat.STATE_NONE) {
                     stopSelf()
                 }
-
+                val notification = buildNotification(state)
                 if (notification != null) {
                     notificationManager.notify(Constants.PLAYBACK_NOTIFICATION, notification)
                 } else {
@@ -272,24 +274,72 @@ class PlaybackService : MediaBrowserServiceCompat() {
             }
         }
 
-        private fun initiatePlayback(notification: Notification?, state: Int) {
+        private fun initiatePlayback(state: Int) {
             becomingNoisyReceiver.register()
 
             // This may look strange, but the documentation for [Service.startForeground]
             // notes that "calling this method does *not* put the service in the started
             // state itself, even though the name sounds like it."
-            if (notification != null) {
-                notificationManager.notify(Constants.PLAYBACK_NOTIFICATION, notification)
+            buildNotification(state)?.let {
+                notificationManager.notify(Constants.PLAYBACK_NOTIFICATION, it)
+                loadLargeIcon()
 
                 if (!isForegroundService) {
                     ContextCompat.startForegroundService(
                         applicationContext, Intent(applicationContext, this@PlaybackService.javaClass)
                     )
-                    startForeground(Constants.PLAYBACK_NOTIFICATION, notification)
+                    startForeground(Constants.PLAYBACK_NOTIFICATION, it)
                     isForegroundService = true
                 }
             }
         }
+
+        private fun loadLargeIcon() {
+            GlideApp.with(this@PlaybackService)
+                .asBitmap()
+                .load(mediaController.metadata.description.iconUri)
+                .into(notificationTarget)
+        }
+
+        private fun buildNotification(state: Int): Notification? {
+
+            // Skip building a notification when state is "none" and metadata is null
+            return if (mediaController.metadata != null
+                && state != PlaybackStateCompat.STATE_NONE
+            ) {
+                notificationBuilder.buildNotification(mediaSession.sessionToken, largeBitmap)
+            } else {
+                null
+            }
+        }
+
+
+        private inner class NotificationTarget :
+            CustomTarget<Bitmap>(NOTIFICATION_LARGE_ICON_SIZE, NOTIFICATION_LARGE_ICON_SIZE) {
+
+            override fun onStart() {
+                largeBitmap = null
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                largeBitmap = null
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                largeBitmap = null
+            }
+
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                notificationManager.notify(
+                    Constants.PLAYBACK_NOTIFICATION, notificationBuilder.buildNotification
+                        (mediaSession.sessionToken, resource)
+                )
+                largeBitmap = resource
+            }
+
+        }
+
+
     }
 }
 

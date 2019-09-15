@@ -7,6 +7,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Build
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
@@ -21,7 +22,9 @@ import com.jadebyte.jadeplayer.R
 /**
  * Created by Wilberforce on 2019-08-22 at 21:30.
  */
-class NotificationBuilder(private val context: Context) {
+class NotificationBuilder(
+    private val context: Context
+) {
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 
@@ -50,7 +53,7 @@ class NotificationBuilder(private val context: Context) {
     private val stopPendingIntent =
         MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_STOP)
 
-    fun buildNotification(sessionToken: MediaSessionCompat.Token): Notification {
+    fun buildNotification(sessionToken: MediaSessionCompat.Token, largeIcon: Bitmap? = null): Notification {
         if (shouldCreatePlaybackChannel()) createPlaybackChannel()
 
         val controller = MediaControllerCompat(context, sessionToken)
@@ -61,7 +64,7 @@ class NotificationBuilder(private val context: Context) {
 
         // Only add actions for skip back, play/pause, skip forward, based on what's enabled.
         var playPauseIndex = 0
-        if (playbackState.isSkipToNextEnabled) {
+        if (playbackState.isSkipToPreviousEnabled) {
             builder.addAction(skipToPrevious)
             ++playPauseIndex
         }
@@ -80,13 +83,14 @@ class NotificationBuilder(private val context: Context) {
             .setContentText(description.subtitle)
             .setContentTitle(description.title)
             .setDeleteIntent(stopPendingIntent)
-            .setLargeIcon(description.iconBitmap)
             .setOnlyAlertOnce(true)
-            .setSmallIcon(R.drawable.thumb_circular_default)
+            .setLargeIcon(largeIcon ?: description.iconBitmap)
+            .setSmallIcon(R.drawable.ic_notification)
             .setStyle(mediaStyle)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
     }
+
 
     private fun shouldCreatePlaybackChannel() =
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !playbackChannelExists()
@@ -104,6 +108,8 @@ class NotificationBuilder(private val context: Context) {
         notificationChannel.description = context.getString(R.string.notification_channel_description)
         notificationManager.createNotificationChannel(notificationChannel)
     }
+
+
 }
 
 

@@ -18,7 +18,7 @@ data class MediaItemData(
     override val id: String,
     val title: String,
     val subtitle: String,
-    val albumArtUri: Uri,
+    val albumArtUri: Uri?,
     val isBrowsable: Boolean,
     var isPlaying: Boolean
     ) : Model(), Parcelable {
@@ -27,7 +27,7 @@ data class MediaItemData(
         id = item.mediaId!!,
         title = item.description.title!!.toString(),
         subtitle = item.description.subtitle!!.toString(),
-        albumArtUri = item.description.iconUri!!,
+        albumArtUri = item.description.iconUri,
         isBrowsable = item.isBrowsable,
         isPlaying = isPlaying
     )

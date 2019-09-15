@@ -44,20 +44,21 @@ class MediaStoreSource(
 
 
     private suspend fun updateCatalog(): List<MediaMetadataCompat>? {
-        // Block on downloading artwork.
-        val art = GlideApp.with(context)
-            .asBitmap()
-            .load(R.drawable.thumb_circular_default_hollow)
-            .submit(NOTIFICATION_LARGE_ICON_SIZE, NOTIFICATION_LARGE_ICON_SIZE)
-            .get()
-
         return withContext(Dispatchers.IO) {
+
+            val art = GlideApp.with(context)
+                .asBitmap()
+                .load(R.drawable.thumb_circular_default)
+                .submit(NOTIFICATION_LARGE_ICON_SIZE, NOTIFICATION_LARGE_ICON_SIZE)
+                .get()
+
             val results = mutableListOf<MediaMetadataCompat>()
             val cursor = context.contentResolver.query(uri, songsProjection, selection, selectionArgs, sortOrder)
             cursor?.use {
                 val count = it.count.toLong()
                 while (it.moveToNext()) {
-                    val metadata = MediaMetadataCompat.Builder().from(it, count).apply { albumArt = art }
+                    // Block on downloading artwork.
+                    val metadata = MediaMetadataCompat.Builder().from(it, count, art)
                     results.add(metadata.build())
                 }
             }
@@ -71,6 +72,7 @@ private val songsProjection = arrayOf(
     MediaStore.Audio.Media.TITLE,
     MediaStore.Audio.Media.ARTIST,
     MediaStore.Audio.Media.ALBUM,
+    MediaStore.Audio.Media.ALBUM_ID,
     MediaStore.Audio.Media.DURATION,
     MediaStore.Audio.Media.DATA,
     MediaStore.Audio.Media.ARTIST,
@@ -78,4 +80,4 @@ private val songsProjection = arrayOf(
     MediaStore.Audio.Media._ID
 )
 
-private const val NOTIFICATION_LARGE_ICON_SIZE = 144 // px
+const val NOTIFICATION_LARGE_ICON_SIZE = 144 // px

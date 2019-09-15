@@ -38,10 +38,12 @@ object Constants {
     const val CONTENT_STYLE_GRID = 2
     const val BROWSABLE_ROOT = "/"
     const val EMPTY_ROOT = "@empty@"
-    const val RECOMMENDED_ROOT = "__RECOMMENDED__"
     const val ALBUMS_ROOT = "__ALBUMS__"
+    const val ARTISTS_ROOT = "_ARTISTS__"
+    const val SONGS_ROOT = "_SONGS__"
     const val NETWORK_FAILURE = "com.jadebyte.jadeplayer.playback.NETWORK_FAILURE"
     const val LAST_URI = "com.jadebyte.jadeplayer.playback.LAST_URI"
+    const val LAST_ID = "com.jadebyte.jadeplayer.playback.LAST_ID"
     const val LAST_SELECTION = "com.jadebyte.jadeplayer.playback.LAST_SELECTION"
     const val LAST_SELECTION_ARGS = "com.jadebyte.jadeplayer.playback.LAST_SELECTION_ARGS"
     const val LAST_SORT_ORDER = "com.jadebyte.jadeplayer.playback.LAST_SORT_ORDER"
