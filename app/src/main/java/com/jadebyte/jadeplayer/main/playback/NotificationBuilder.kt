@@ -58,20 +58,24 @@ class NotificationBuilder(
 
         val controller = MediaControllerCompat(context, sessionToken)
         val description = controller.metadata.description
-        val playbackState = controller.playbackState
+        val state = controller.playbackState
 
         val builder = NotificationCompat.Builder(context, PLAYBACK_CHANNEL)
 
         // Only add actions for skip back, play/pause, skip forward, based on what's enabled.
         var playPauseIndex = 0
-        if (playbackState.isSkipToPreviousEnabled) {
+        if (state.isSkipToPreviousEnabled) {
             builder.addAction(skipToPrevious)
             ++playPauseIndex
         }
 
-        if (playbackState.isPlaying) builder.addAction(pauseAction) else builder.addAction(playAction)
+        if (state.isPlayingOrBuffering)
+            builder.addAction(pauseAction)
+        else if (state.isPlayEnabled) builder.addAction(
+            playAction
+        )
 
-        if (playbackState.isSkipToNextEnabled) builder.addAction(skipToNextAction)
+        if (state.isSkipToNextEnabled) builder.addAction(skipToNextAction)
 
         val mediaStyle = MediaStyle()
             .setCancelButtonIntent(stopPendingIntent)

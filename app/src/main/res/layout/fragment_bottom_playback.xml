@@ -10,10 +10,6 @@
 
         <import type="android.view.View" />
 
-        <import type="java.util.concurrent.TimeUnit" />
-
-        <import type="com.jadebyte.jadeplayer.main.common.utils.ConvertUtils" />
-
         <variable
             name="viewModel"
             type="com.jadebyte.jadeplayer.main.playback.PlaybackViewModel" />
@@ -98,6 +94,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/previous_button"
+            android:onClick="@{(v) -> viewModel.skipToPrevious()}"
             android:padding="@dimen/padding_large"
             android:src="@drawable/ic_previous"
             app:layout_constraintEnd_toStartOf="@+id/playButton"
@@ -121,6 +118,18 @@
             app:layout_constraintTop_toTopOf="@+id/nextButton"
             tools:src="@drawable/ic_play_white" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/progress_thin"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/playButton"
+            app:layout_constraintEnd_toEndOf="@+id/playButton"
+            app:layout_constraintStart_toStartOf="@+id/playButton"
+            app:layout_constraintTop_toTopOf="@+id/playButton"
+            tools:visibility="gone" />
+
         <ImageButton
             android:id="@+id/nextButton"
             android:layout_width="wrap_content"
@@ -128,6 +137,7 @@
             android:layout_marginEnd="@dimen/margin_small"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/next_button"
+            android:onClick="@{(v) -> viewModel.skipToNext()}"
             android:padding="@dimen/padding_large"
             android:src="@drawable/ic_next"
             app:layout_constraintEnd_toEndOf="parent"
@@ -142,9 +152,10 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginBottom="@dimen/margin_medium"
             android:background="@null"
-            android:max="@{ConvertUtils.longToInt(TimeUnit.MILLISECONDS.toSeconds(1000))}"
+            android:max="@{(int)viewModel.currentItem.duration}"
             android:paddingStart="0dp"
             android:paddingEnd="0dp"
+            android:progress="@{(int)viewModel.mediaPosition}"
             android:progressDrawable="@drawable/seek_bar"
             android:thumb="@drawable/seek_bar_thumb"
             app:layout_constraintBottom_toBottomOf="parent"

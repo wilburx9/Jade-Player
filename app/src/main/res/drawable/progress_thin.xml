@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
+  -->
+
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toDegrees="2160"> <!-- 2160 is 6 loops in duration-->
+
+    <shape
+        android:shape="ring"
+        android:thickness="@dimen/progress_circle_thickness_thin"
+        android:useLevel="false">
+
+        <gradient
+            android:angle="0"
+            android:endColor="@color/colorAccent"
+            android:startColor="@android:color/transparent"
+            android:type="sweep"
+            android:useLevel="false" />
+    </shape>
+</rotate>

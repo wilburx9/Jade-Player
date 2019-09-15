@@ -3,13 +3,13 @@
   -->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="8dp"
-    android:height="14.5dp"
-    android:viewportWidth="9.411"
+    android:width="12dp"
+    android:height="17dp"
+    android:viewportWidth="10.972"
     android:viewportHeight="16">
     <path
         android:fillColor="?android:textColorTertiary"
-        android:pathData="M9.411,14.745a1.255,1.255 0,1 1,-2.51 0v-13.49a1.255,1.255 0,1 1,2.51 0Z" />
+        android:pathData="M10.999,14.745a1.255,1.255 0,1 1,-2.51 0v-13.49a1.255,1.255 0,1 1,2.51 0Z" />
     <path
         android:fillColor="?android:textColorTertiary"
         android:pathData="M2.509,14.745a1.254,1.254 0,1 1,-2.509 0v-13.49a1.254,1.254 0,1 1,2.509 0Z" />
