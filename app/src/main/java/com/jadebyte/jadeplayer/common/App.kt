@@ -6,7 +6,7 @@ import android.app.Application
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
 import com.jadebyte.jadeplayer.BuildConfig
-import com.jadebyte.jadeplayer.main.common.injection.component.appComponent
+import com.jadebyte.jadeplayer.main.common.locator.component.appComponent
 import com.jadebyte.jadeplayer.main.common.utils.BlurKit
 import com.squareup.leakcanary.LeakCanary
 import org.koin.android.ext.koin.androidContext

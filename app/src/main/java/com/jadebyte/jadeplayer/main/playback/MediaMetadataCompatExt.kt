@@ -292,11 +292,6 @@ inline val MediaMetadataCompat.fullDescription: MediaDescriptionCompat
     displaySubtitle = songArtist
     displayDescription = songAlbum
 
-    // Add downloadStatus to force the creation of an "extras" bundle in the resulting
-    // MediaMetadataCompat object. This is needed to send accurate metadata to the
-    // media session during updates.
-    downloadStatus = MediaDescriptionCompat.STATUS_NOT_DOWNLOADED
-
     // Allow it to be used in the typical builder style.
     return this
 }

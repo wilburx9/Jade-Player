@@ -1,8 +1,8 @@
 // Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
 
-package com.jadebyte.jadeplayer.main.common.injection.component
+package com.jadebyte.jadeplayer.main.common.locator.component
 
-import com.jadebyte.jadeplayer.main.common.injection.module.commonModule
+import com.jadebyte.jadeplayer.main.common.locator.module.commonModule
 import org.koin.core.module.Module
 
 

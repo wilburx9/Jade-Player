@@ -1,6 +1,6 @@
 // Copyright (c) 2019 . Wilberforce Uwadiegwu. All Rights Reserved.
 
-package com.jadebyte.jadeplayer.main.common.injection.module
+package com.jadebyte.jadeplayer.main.common.locator.module
 
 import android.app.Application
 import android.content.ComponentName

@@ -17,7 +17,8 @@ import kotlinx.android.parcel.Parcelize
 data class MediaItemData(
     override val id: String,
     val title: String,
-    val subtitle: String,
+    val subtitle: String, // Artist
+    val  description: String, //Album
     val albumArtUri: Uri?,
     val isBrowsable: Boolean,
     var isPlaying: Boolean
@@ -28,6 +29,7 @@ data class MediaItemData(
         title = item.description.title!!.toString(),
         subtitle = item.description.subtitle!!.toString(),
         albumArtUri = item.description.iconUri,
+        description = item.description.description.toString(),
         isBrowsable = item.isBrowsable,
         isPlaying = isPlaying
     )
