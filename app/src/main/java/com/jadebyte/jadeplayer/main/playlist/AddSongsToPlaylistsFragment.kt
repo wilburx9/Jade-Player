@@ -106,9 +106,7 @@ class AddSongsToPlaylistsFragment : BaseFullscreenDialogFragment(), OnItemClickL
         val variables = SparseArrayCompat<Any>(1)
         variables.put(BR.selectable, true)
         val adapter = BaseAdapter(
-            playlists, activity!!, R.layout.item_playlist, BR.playlist, false,
-            this, variables
-        )
+            playlists, activity!!, R.layout.item_playlist, BR.playlist, this, variables = variables)
         playlistRV.adapter = adapter
         playlistRV.layoutManager = LinearLayoutManager(activity)
         closeButton.setOnClickListener(this)

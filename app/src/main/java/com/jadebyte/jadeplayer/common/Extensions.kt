@@ -10,6 +10,9 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -181,6 +184,15 @@ inline val String?.urlEncoded: String
         @Suppress("deprecation")
         URLEncoder.encode(this ?: "")
     }
+
+fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, object : Observer<T> {
+        override fun onChanged(t: T?) {
+            observer.onChanged(t)
+            removeObserver(this)
+        }
+    })
+}
 
 /**
  * Helper extension to convert a potentially null [String] to a [Uri] falling back to [Uri.EMPTY]

@@ -53,5 +53,6 @@ object Constants {
     const val MAX_MODEL_IMAGE_THUMB_WIDTH = 100
     val WHITESPACE_REGEX = "\\s|\\n".toRegex()
     const val IMAGE_URI_ROOT = "android.resource://com.jadebyte.jadeplayer/drawable/"
+    const val MAX_RECENTLY_PLAYED = 50
 
 }

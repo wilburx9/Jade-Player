@@ -55,8 +55,8 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
     override var viewModelVariableId: Int = BR.album
     override var navigationFragmentId: Int = R.id.action_albumsFragment_to_navigationDialogFragment
     override var numberOfDataRes: Int = R.plurals.numberOfAlbums
-    override var titleRes: Int = com.jadebyte.jadeplayer.R.string.albums
-    override var fadeInViewHolder: Boolean = true
+    override var titleRes: Int = R.string.albums
+    override var adapterItemAnimList = setOf(R.anim.fast_fade_in)
     override var longClickItems: Boolean = true
 
 }

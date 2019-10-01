@@ -12,7 +12,10 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.*
 import com.jadebyte.jadeplayer.main.common.data.Constants
-import timber.log.Timber
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayed
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRepository
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRoomDatabase
+import kotlinx.coroutines.launch
 
 /**
  * Created by Wilberforce on 2019-05-18 at 21:55.
@@ -25,6 +28,7 @@ class PlaybackViewModel(
 ) :
     AndroidViewModel(application) {
 
+    private val recentlyPlayedRepository: RecentlyPlayedRepository
     private val _mediaItems = MutableLiveData<List<MediaItemData>>()
     private val _currentItem = MutableLiveData<MediaItemData?>()
     private val _playbackState = MutableLiveData<PlaybackStateCompat>().apply { EMPTY_PLAYBACK_STATE }
@@ -36,6 +40,12 @@ class PlaybackViewModel(
     val currentItem: LiveData<MediaItemData?> = _currentItem
     val playbackState: LiveData<PlaybackStateCompat> = _playbackState
     val mediaPosition: LiveData<Long> = _mediaPosition
+
+
+    init {
+        val recentlyPlayed = RecentlyPlayedRoomDatabase.getDatabase(application).recentDao()
+        recentlyPlayedRepository = RecentlyPlayedRepository(recentlyPlayed)
+    }
 
 
     fun playMediaId(mediaId: String) {
@@ -83,8 +93,6 @@ class PlaybackViewModel(
     private val playbackStateObserver = Observer<PlaybackStateCompat> {
         val state = it ?: EMPTY_PLAYBACK_STATE
         val metadata = mediaSessionConnection.nowPlaying.value ?: NOTHING_PLAYING
-        Timber.w("State: IsPlaying: ${state.isPlayingOrBuffering}")
-        Timber.w("State: Song: ${metadata.description.title}")
         if (metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID) != null) {
             _mediaItems.postValue(updateState(state, metadata))
         }
@@ -93,11 +101,12 @@ class PlaybackViewModel(
     // When the session's [MediaMetadataCompat] changes, the [mediaItems] needs to be updated
     private val mediaMetadataObserver = Observer<MediaMetadataCompat> {
         val playbackState = mediaSessionConnection.playbackState.value ?: EMPTY_PLAYBACK_STATE
-        Timber.i("Data: IsPlaying: ${playbackState.isPlayingOrBuffering}")
-        Timber.i("Data: Song: ${it.description.title}")
         val metadata = it ?: NOTHING_PLAYING
         if (metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID) != null) {
             _mediaItems.postValue(updateState(playbackState, metadata))
+        }
+        if (metadata.duration != 0L) {
+            addToRecentlyPlayed(metadata)
         }
     }
 
@@ -115,10 +124,21 @@ class PlaybackViewModel(
                 isBuffering = state.isBuffering
                 duration = metadata.duration
             }
-            _currentItem.postValue(matchingItem)
+            // Update synchronously so addToRecentlyPlayed can pick up a valid currentItem
+            _currentItem.value = matchingItem
         }
         _playbackState.postValue(state)
         return items
+    }
+
+    private fun addToRecentlyPlayed(metadata: MediaMetadataCompat) {
+        val itemData = currentItem.value
+        if (itemData != null && (metadata.id == itemData.id && itemData.isPlaying)) return
+        viewModelScope.launch {
+            val played = RecentlyPlayed(metadata)
+            recentlyPlayedRepository.insert(played)
+            recentlyPlayedRepository.trim()
+        }
     }
 
     private val subscriptionCallback = object : SubscriptionCallback() {

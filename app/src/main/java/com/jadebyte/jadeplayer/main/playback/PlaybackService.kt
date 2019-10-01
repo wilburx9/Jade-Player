@@ -297,6 +297,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
         private fun loadLargeIcon() {
             GlideApp.with(this@PlaybackService)
                 .asBitmap()
+                .skipMemoryCache(false)
                 .load(mediaController.metadata.description.iconUri)
                 .into(notificationTarget)
         }

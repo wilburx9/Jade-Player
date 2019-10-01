@@ -105,10 +105,7 @@ class PlaylistSongsEditorDialogFragment : BaseFullscreenDialogFragment(), OnItem
         val variables = SparseArrayCompat<Any>(1)
         variables.put(BR.selectable, true)
         val adapter =
-            BaseAdapter(
-                items, activity!!, R.layout.item_song, BR.song,
-                false, this, variables
-            )
+            BaseAdapter(items, activity!!, R.layout.item_song, BR.song, this, variables = variables)
         songsRV.adapter = adapter
         songsRV.layoutManager = LinearLayoutManager(activity)
     }

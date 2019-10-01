@@ -14,6 +14,8 @@ import com.jadebyte.jadeplayer.main.common.network.image.artist.ArtistModelLoade
 import com.jadebyte.jadeplayer.main.common.network.image.genre.GenreModelLoaderFactory
 import com.jadebyte.jadeplayer.main.common.network.image.mediaitemdata.MediaItemDataLoaderFactory
 import com.jadebyte.jadeplayer.main.common.network.image.playlist.PlaylistModelLoaderFactory
+import com.jadebyte.jadeplayer.main.common.network.image.recentlyplayed.RecentlyPlayedLoaderFactory
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayed
 import com.jadebyte.jadeplayer.main.genres.Genre
 import com.jadebyte.jadeplayer.main.playback.MediaItemData
 import com.jadebyte.jadeplayer.main.playlist.Playlist
@@ -31,5 +33,6 @@ class MyAppGlideModule : AppGlideModule() {
         registry.prepend(Playlist::class.java, InputStream::class.java, PlaylistModelLoaderFactory())
         registry.prepend(Genre::class.java, InputStream::class.java, GenreModelLoaderFactory())
         registry.prepend(MediaItemData::class.java, InputStream::class.java, MediaItemDataLoaderFactory())
+        registry.prepend(RecentlyPlayed::class.java, InputStream::class.java, RecentlyPlayedLoaderFactory())
     }
 }

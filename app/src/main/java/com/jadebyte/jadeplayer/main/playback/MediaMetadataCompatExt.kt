@@ -253,10 +253,7 @@ inline var MediaMetadataCompat.Builder.flag: Int
  * These keys are used by the ExoPlayer MediaSession extension when announcing metadata changes.
  */
 inline val MediaMetadataCompat.fullDescription: MediaDescriptionCompat
-    get() =
-        description.also {
-            it.extras?.putAll(bundle)
-        }
+    get() = description.also { it.extras?.putAll(bundle) }
 
 /**
  * Extension method for [MediaMetadataCompat.Builder] to set the fields with

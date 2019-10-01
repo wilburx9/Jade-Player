@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
 /**
  * Created by Wilberforce on 2019-04-21 at 01:48.
  */
-abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListener, OnItemClickListener {
+abstract class BasePlayerFragment<T : Model> : BaseFragment(), View.OnClickListener, OnItemClickListener {
     var items = emptyList<T>()
     lateinit var viewModel: BaseMediaStoreViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int
@@ -31,7 +31,7 @@ abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListen
     @get: StringRes open var titleRes: Int = -1
     @get: LayoutRes abstract var itemLayoutId: Int
     abstract var viewModelVariableId: Int
-    open var fadeInViewHolder = false
+    open var adapterItemAnimList = setOf(R.anim.up_from_bottom, R.anim.down_from_top)
     open var longClickItems = false
 
 
@@ -76,7 +76,10 @@ abstract class BasePlayerFragment<T: Model> : BaseFragment(), View.OnClickListen
             sectionTitle.setText(titleRes)
         }
         val adapter =
-            BaseAdapter(items, activity!!, itemLayoutId, viewModelVariableId, fadeInViewHolder, this, longClick = longClickItems)
+            BaseAdapter(
+                items, activity!!, itemLayoutId, viewModelVariableId, this,
+                adapterItemAnimList, longClickItems
+            )
         dataRV.adapter = adapter
         dataRV.layoutManager = layoutManager()
     }

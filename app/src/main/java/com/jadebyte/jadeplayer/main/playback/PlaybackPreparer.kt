@@ -67,12 +67,10 @@ class PlaybackPreparer(
      *  This is done with expectation that "play" is just "prepare" + "play".
      */
     override fun onPrepareFromMediaId(mediaId: String?, playWhenReady: Boolean, extras: Bundle?) {
-        Timber.i("onPrepareFromMediaId: $mediaId :: $playWhenReady")
         musicSource.whenReady { _ ->
             val itemToPlay = musicSource.find { it.id == mediaId }
             if (itemToPlay == null) {
                 Timber.w("onPrepareFromMediaId: Song with id $mediaId not found")
-                // TODO: Notify caller of error
                 return@whenReady
             }
 

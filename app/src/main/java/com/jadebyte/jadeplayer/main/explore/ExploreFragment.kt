@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,17 +15,22 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.common.crossFadeWidth
+import com.jadebyte.jadeplayer.common.observeOnce
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_explore.*
+import timber.log.Timber
 
 
 class ExploreFragment : Fragment(), OnItemClickListener {
 
     private var albums: List<Album> = emptyList()
+    private var playedList: List<RecentlyPlayed> = emptyList()
     private lateinit var viewModel: ExploreViewModel
 
 
@@ -44,7 +48,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+        setupViews()
         observeViewModel()
         navigationIcon.setOnClickListener(
             Navigation.createNavigateOnClickListener(
@@ -56,26 +60,49 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
+
         if (albums.isEmpty()) {
             viewModel.init()
-            viewModel.items.observe(viewLifecycleOwner, Observer {
-                this.albums = it
-                (randomAlbumsRV.adapter as BaseAdapter<Album>).updateItems(it)
+            viewModel.items.observeOnce(viewLifecycleOwner, Observer {
+                albums = it
+                (randomAlbumsRV.adapter as BaseAdapter<Album>).updateItems(albums)
             })
         } else {
             viewModel.overrideCurrentItems(albums)
 
         }
+
+        viewModel.recentlyPlayed.observe(viewLifecycleOwner, Observer {
+            if (playedList.isEmpty()) {
+                // We only want to play the animation the first time a non empty result is returned
+                if (it.isEmpty()) {
+                    emptyPlaylist.crossFadeWidth(progressBar)
+                    return@Observer
+                } else {
+                    val otherView = if (emptyPlaylist.visibility == View.VISIBLE) emptyPlaylist else progressBar
+                    playedRV.crossFadeWidth(otherView)
+                }
+            }
+            playedList = it
+            (playedRV.adapter as BaseAdapter<RecentlyPlayed>).updateItems(playedList)
+            Timber.i("observeViewModel: Size = ${playedList.size}")
+        })
+
     }
 
-    private fun setupRecyclerView() {
-        // Important!! See https://rubensousa.com/2019/08/16/nested_recyclerview_part1/ for improving nested 
-        // scrolling in multiple fragments
-        val adapter = BaseAdapter(albums, activity!!, R.layout.item_album, BR.album, true, this, longClick = true)
-        randomAlbumsRV.adapter = adapter
-
-        val layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
+    private fun setupViews() {
+        val albumAdapter = BaseAdapter(
+            albums, activity!!, R.layout.item_album, BR.album, this,
+            setOf(R.anim.fast_fade_in), true
+        )
+        randomAlbumsRV.adapter = albumAdapter
+        val layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         randomAlbumsRV.layoutManager = layoutManager
+
+        val playedAdapter =
+            BaseAdapter(playedList, activity!!, R.layout.item_recently, BR.recentlyPlayed, animList = null)
+        playedRV.adapter = playedAdapter
+        playedRV.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {
@@ -89,7 +116,8 @@ class ExploreFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemLongClick(position: Int) {
-        val action = ExploreFragmentDirections.actionExploreFragmentToAlbumsMenuBottomSheetDialogFragment(album = albums[0])
+        val action =
+            ExploreFragmentDirections.actionExploreFragmentToAlbumsMenuBottomSheetDialogFragment(album = albums[0])
         findNavController().navigate(action)
     }
 }

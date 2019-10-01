@@ -25,10 +25,10 @@ class BaseAdapter<T : Model>(
     private val context: Context,
     private val layoutId: Int,
     private val variableId: Int,
-    private val fadeInViewHolder: Boolean = false,
-    private val itemClickListener: OnItemClickListener,
-    private var variables: SparseArrayCompat<Any>? = null,
-    private val longClick: Boolean = false
+    private val itemClickListener: OnItemClickListener? = null,
+    private val animList: Set<Int>? = setOf(R.anim.up_from_bottom, R.anim.down_from_top),
+    private val longClick: Boolean = false,
+    private var variables: SparseArrayCompat<Any>? = null
 ) : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
     private var lastPosition = -1
@@ -56,8 +56,8 @@ class BaseAdapter<T : Model>(
     fun updateItems(items: List<T>) {
         val diffCallback = BaseDiffCallback(this.items, items)
         val diffResult = DiffUtil.calculateDiff(diffCallback, false)
-        this.items = items
         diffResult.dispatchUpdatesTo(this)
+        this.items = items
     }
 
     override fun onViewDetachedFromWindow(holder: BaseViewHolder<T>) {
@@ -66,15 +66,17 @@ class BaseAdapter<T : Model>(
     }
 
     private fun animateItem(position: Int, holder: RecyclerView.ViewHolder) {
+        if (animList == null || animList.isEmpty()) return
+
         val animation = AnimationUtils.loadAnimation(
             context,
-            if (fadeInViewHolder) {
-                R.anim.fast_fade_in
+            if (animList.size == 1) {
+                animList.first()
             } else {
                 if (position > lastPosition)
-                    R.anim.up_from_bottom
+                    animList.first()
                 else
-                    R.anim.down_from_top
+                    animList.elementAt(1)
             }
         )
         holder.itemView.startAnimation(animation)

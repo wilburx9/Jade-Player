@@ -19,15 +19,17 @@ abstract class ImageUrlLoader<M>(concreteLoader: ModelLoader<GlideUrl, InputStre
     abstract var lastFmUrlKey: String
     abstract var spotifyUrlKey: String
 
-    override fun getUrl(model: M, width: Int, height: Int, options: Options?): String? {
+    final override fun getUrl(model: M, width: Int, height: Int, options: Options?): String? {
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().permitNetwork().build())
 
         val url = imageUrlFetcher.fetchLastFmUrl(lastFmUrlKey, getLastFmParams(model))
 
-        return if (url.isNullOrEmpty()) imageUrlFetcher.fetchSpotifyUrl(spotifyUrlKey, getSpotifyFmParams(model)) else url
+        return if (url.isNullOrEmpty())
+            imageUrlFetcher.fetchSpotifyUrl(spotifyUrlKey, getSpotifyFmParams(model)
+        ) else url
     }
 
-    override fun handles(model: M): Boolean = true
+    final override fun handles(model: M): Boolean = true
 
     abstract fun getLastFmParams(model: M): Map<String, String>?
 

@@ -18,6 +18,7 @@ import com.jadebyte.jadeplayer.common.GlideApp
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.common.image.CircularTransparentCenter
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayed
 import com.jadebyte.jadeplayer.main.genres.Genre
 import com.jadebyte.jadeplayer.main.playback.MediaItemData
 import com.jadebyte.jadeplayer.main.playlist.Playlist
@@ -35,44 +36,50 @@ object DataBindingAdapters {
     @BindingAdapter("android:src")
     @JvmStatic
     fun setAlbumCover(view: ImageView, song: Song?) {
-        if (song != null) {
-            GlideApp.with(view)
-                .load(song.album)
-                .transform(
-                    MultiTransformation(centerCrop, circleCrop)
-                )
-                .placeholder(R.drawable.thumb_circular_default)
-                .into(view)
-        }
+        GlideApp.with(view)
+            .load(song?.album)
+            .transform(
+                MultiTransformation(centerCrop, circleCrop)
+            )
+            .placeholder(R.drawable.thumb_circular_default)
+            .into(view)
     }
 
     @BindingAdapter("android:src")
     @JvmStatic
     fun setAlbumCover(view: ImageView, mediaItem: MediaItemData?) {
-        if (mediaItem != null) {
-            GlideApp.with(view)
-                .load(mediaItem)
-                .transform(
-                    MultiTransformation(centerCrop, circleCrop)
-                )
-                .placeholder(R.drawable.thumb_circular_default)
-                .into(view)
-        }
+        GlideApp.with(view)
+            .load(mediaItem)
+            .transform(
+                MultiTransformation(centerCrop, circleCrop)
+            )
+            .placeholder(R.drawable.thumb_circular_default)
+            .into(view)
+    }
+
+    @BindingAdapter("android:src")
+    @JvmStatic
+    fun setAlbumCover(view: ImageView, item: RecentlyPlayed?) {
+        GlideApp.with(view)
+            .load(item)
+            .transform(
+                MultiTransformation(centerCrop, circleCrop)
+            )
+            .placeholder(R.drawable.thumb_circular_default)
+            .into(view)
     }
 
 
     @BindingAdapter("mediaSrc")
     @JvmStatic
     fun setAlbumCoverCompat(view: ImageView, item: MediaItemData?) {
-        if (item != null) {
-            GlideApp.with(view)
-                .load(item)
-                .transform(
-                    MultiTransformation(centerCrop, circleCrop, CircularTransparentCenter(.3F))
-                )
-                .placeholder(R.drawable.thumb_circular_default_hollow)
-                .into(view)
-        }
+        GlideApp.with(view)
+            .load(item)
+            .transform(
+                MultiTransformation(centerCrop, circleCrop, CircularTransparentCenter(.3F))
+            )
+            .placeholder(R.drawable.thumb_circular_default_hollow)
+            .into(view)
 
 
     }

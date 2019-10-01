@@ -62,7 +62,7 @@ class ArtistsFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setupRecyclerView() {
-        val adapter = BaseAdapter(items, activity!!, R.layout.item_artist, BR.artist, false, this)
+        val adapter = BaseAdapter(items, activity!!, R.layout.item_artist, BR.artist, this)
         artistsRV.adapter = adapter
 
         val layoutManager = LinearLayoutManager(activity)

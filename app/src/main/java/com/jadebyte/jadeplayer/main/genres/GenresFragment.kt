@@ -58,7 +58,7 @@ class GenresFragment : BaseFragment(), OnItemClickListener {
 
     private fun setupViews() {
         genresRV.adapter =
-            BaseAdapter(items, activity!!, R.layout.item_genre, BR.genre, false, this, longClick = true)
+            BaseAdapter(items, activity!!, R.layout.item_genre, BR.genre, this, longClick = true)
         genresRV.layoutManager = LinearLayoutManager(activity)
         navigationIcon.setOnClickListener {
             it.findNavController().navigate(R.id.action_genresFragment_to_navigationDialogFragment)
