@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.*
 import android.media.ThumbnailUtils
 import android.net.Uri
+import androidx.core.content.ContextCompat
 import com.jadebyte.jadeplayer.main.common.data.Model
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -14,6 +15,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.lang.ref.WeakReference
+import java.util.*
 import kotlin.math.min
 
 
@@ -200,7 +202,7 @@ object ImageUtils {
     fun getImagePathForModel(model: Model, c: Context?): String? {
         val context = WeakReference<Context>(c).get()
         if (context != null) {
-            return "${context.filesDir}/images/${model.javaClass.name.toLowerCase()}/${model.id}"
+            return "${context.filesDir}/images/${model.javaClass.name.toLowerCase(Locale.ROOT)}/${model.id}"
         }
         return null
     }
@@ -233,6 +235,21 @@ object ImageUtils {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(src, 0F, 0F, paint)
         return output
+    }
+
+    fun getBitmapFromVectorDrawable(c: Context, drawableId: Int): Bitmap? {
+        val context = WeakReference<Context>(c).get() ?: return null
+        val drawable = ContextCompat.getDrawable(context, drawableId)
+
+        val bitmap = Bitmap.createBitmap(
+            drawable!!.intrinsicWidth,
+            drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+
+        return bitmap
     }
 
 

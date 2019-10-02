@@ -14,9 +14,9 @@ import org.json.JSONObject
 
 class ImageUrlFetcher(
     val application: Application,
-    val okHttpClient: OkHttpClient,
-    val cacheControl: CacheControl,
-    val cloudKeys: CloudKeys
+    private val okHttpClient: OkHttpClient,
+    private val cacheControl: CacheControl,
+    private val cloudKeys: CloudKeys
 ) {
 
     fun fetchLastFmUrl(key: String, params: Map<String, String>?): String? {

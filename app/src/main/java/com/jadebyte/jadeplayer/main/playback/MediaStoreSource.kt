@@ -7,7 +7,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.support.v4.media.MediaMetadataCompat
 import com.jadebyte.jadeplayer.R
-import com.jadebyte.jadeplayer.common.GlideApp
+import com.jadebyte.jadeplayer.main.common.utils.ImageUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -45,12 +45,7 @@ class MediaStoreSource(
 
     private suspend fun updateCatalog(): List<MediaMetadataCompat>? {
         return withContext(Dispatchers.IO) {
-
-            val art = GlideApp.with(context)
-                .asBitmap()
-                .load(R.drawable.thumb_circular_default)
-                .submit(NOTIFICATION_LARGE_ICON_SIZE, NOTIFICATION_LARGE_ICON_SIZE)
-                .get()
+            val art = ImageUtils.getBitmapFromVectorDrawable(context, R.drawable.thumb_circular_default)
 
             val results = mutableListOf<MediaMetadataCompat>()
             val cursor = context.contentResolver.query(uri, songsProjection, selection, selectionArgs, sortOrder)
@@ -62,6 +57,7 @@ class MediaStoreSource(
                     results.add(metadata.build())
                 }
             }
+
             return@withContext results
         }
     }

@@ -74,7 +74,7 @@ inline val MediaMetadataCompat.art: Bitmap
 inline val MediaMetadataCompat.artUri: Uri
     get() = this.getString(MediaMetadataCompat.METADATA_KEY_ART_URI).toUri()
 
-inline val MediaMetadataCompat.albumArt: Bitmap
+inline val MediaMetadataCompat.albumArt: Bitmap?
     get() = getBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART)
 
 inline val MediaMetadataCompat.albumArtUri: Uri
@@ -260,7 +260,7 @@ inline val MediaMetadataCompat.fullDescription: MediaDescriptionCompat
  * [MediaStore] result cursor
  */
 
- fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long, art: Bitmap): MediaMetadataCompat.Builder {
+ fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long, art: Bitmap?): MediaMetadataCompat.Builder {
     val durationMs = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
     val songTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
     val songArtist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))

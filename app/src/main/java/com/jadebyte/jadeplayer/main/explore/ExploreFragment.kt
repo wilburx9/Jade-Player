@@ -24,7 +24,6 @@ import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import kotlinx.android.synthetic.main.fragment_explore.*
-import timber.log.Timber
 
 
 class ExploreFragment : Fragment(), OnItemClickListener {
@@ -60,34 +59,35 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
+        // We want to load the random albums before the recently played
+
+        fun observePlayed() {
+            viewModel.recentlyPlayed.observe(viewLifecycleOwner, Observer {
+                if (playedList.isEmpty()) {
+                    // We only want to play the animation the first time a non empty result is returned
+                    if (it.isEmpty()) {
+                        emptyPlaylist.crossFadeWidth(progressBar)
+                        return@Observer
+                    } else {
+                        val otherView = if (emptyPlaylist.visibility == View.VISIBLE) emptyPlaylist else progressBar
+                        playedRV.crossFadeWidth(otherView)
+                    }
+                }
+                playedList = it
+                (playedRV.adapter as BaseAdapter<RecentlyPlayed>).updateItems(playedList)
+            })
+        }
 
         if (albums.isEmpty()) {
             viewModel.init()
             viewModel.items.observeOnce(viewLifecycleOwner, Observer {
                 albums = it
                 (randomAlbumsRV.adapter as BaseAdapter<Album>).updateItems(albums)
+                observePlayed()
             })
         } else {
             viewModel.overrideCurrentItems(albums)
-
         }
-
-        viewModel.recentlyPlayed.observe(viewLifecycleOwner, Observer {
-            if (playedList.isEmpty()) {
-                // We only want to play the animation the first time a non empty result is returned
-                if (it.isEmpty()) {
-                    emptyPlaylist.crossFadeWidth(progressBar)
-                    return@Observer
-                } else {
-                    val otherView = if (emptyPlaylist.visibility == View.VISIBLE) emptyPlaylist else progressBar
-                    playedRV.crossFadeWidth(otherView)
-                }
-            }
-            playedList = it
-            (playedRV.adapter as BaseAdapter<RecentlyPlayed>).updateItems(playedList)
-            Timber.i("observeViewModel: Size = ${playedList.size}")
-        })
-
     }
 
     private fun setupViews() {

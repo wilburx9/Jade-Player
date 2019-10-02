@@ -34,7 +34,7 @@ val commonModule = module {
     single { CloudKeys(get<SharedPreferences>()) }
     single { CacheControl.Builder().maxAge(30, TimeUnit.DAYS).build() }
     single { ImageUrlFetcher(get(), get(), get(), get()) }
-    single { MediaSessionConnection(get(), ComponentName(get(), PlaybackService::class.java)) }
+    single { MediaSessionConnection.getInstance(get(), ComponentName(get(), PlaybackService::class.java)) }
     viewModel { NavViewModel(get()) }
     viewModel { PlaybackViewModel(get(), get(), get(), Constants.SONGS_ROOT)}
     single {
