@@ -16,7 +16,10 @@ import com.jadebyte.jadeplayer.main.common.data.Constants
 @Dao
 interface RecentlyPlayedDao {
     @Query("SELECT * FROM recently_played_table ORDER BY entryDate DESC")
-    fun fetchRecentSongs(): LiveData<List<RecentlyPlayed>>
+    fun fetchAll(): LiveData<List<RecentlyPlayed>>
+
+    @Query("SELECT * FROM recently_played_table ORDER BY entryDate DESC LIMIT 1")
+    suspend fun fetchFirst(): RecentlyPlayed?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recentlyPlayed: RecentlyPlayed)
@@ -26,7 +29,7 @@ interface RecentlyPlayedDao {
      *
      * This will delete the rows whose id is greater than [Constants.MAX_RECENTLY_PLAYED]
      */
-    @Query("DELETE FROM recently_played_table where id NOT IN (SELECT id from recently_played_table LIMIT ${Constants.MAX_RECENTLY_PLAYED})")
+    @Query("DELETE FROM recently_played_table where id NOT IN (SELECT id from recently_played_table ORDER BY entryDate DESC LIMIT ${Constants.MAX_RECENTLY_PLAYED})")
     suspend fun trim()
 
 }

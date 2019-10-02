@@ -21,10 +21,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="80dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
-        android:padding="@dimen/padding_large"
+        android:paddingLeft="@dimen/padding_large"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_large"
+        android:paddingBottom="@dimen/padding_medium"
         tools:ignore="KeyboardInaccessibleWidget">
 
         <ImageView

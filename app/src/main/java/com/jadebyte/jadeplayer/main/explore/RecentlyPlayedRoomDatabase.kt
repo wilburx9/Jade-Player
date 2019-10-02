@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
  * Created by Wilberforce on 2019-09-15 at 07:13.
  */
 @Database(entities = [RecentlyPlayed::class], version = 1)
-public abstract class RecentlyPlayedRoomDatabase : RoomDatabase() {
+abstract class RecentlyPlayedRoomDatabase : RoomDatabase() {
 
     abstract fun recentDao(): RecentlyPlayedDao
 

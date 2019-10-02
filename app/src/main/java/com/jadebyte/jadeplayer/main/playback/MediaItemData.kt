@@ -6,6 +6,7 @@ package com.jadebyte.jadeplayer.main.playback
 import android.net.Uri
 import android.os.Parcelable
 import android.support.v4.media.MediaBrowserCompat.MediaItem
+import android.support.v4.media.MediaMetadataCompat
 import com.jadebyte.jadeplayer.main.common.data.Model
 import kotlinx.android.parcel.Parcelize
 
@@ -35,5 +36,17 @@ data class MediaItemData(
         isBrowsable = item.isBrowsable,
         isPlaying = isPlaying,
         isBuffering = isBuffering
+    )
+
+    constructor(item: MediaMetadataCompat, isPlaying: Boolean, isBuffering: Boolean) : this(
+        id = item.id!!,
+        title = item.description.title!!.toString(),
+        subtitle = item.description.subtitle!!.toString(),
+        albumArtUri = item.description.iconUri,
+        description = item.description.description.toString(),
+        isBrowsable = false,
+        isPlaying = isPlaying,
+        isBuffering = isBuffering,
+        duration = item.duration
     )
 }

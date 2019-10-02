@@ -12,10 +12,11 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.*
 import com.jadebyte.jadeplayer.main.common.data.Constants
-import com.jadebyte.jadeplayer.main.explore.RecentlyPlayed
 import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRepository
 import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRoomDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Wilberforce on 2019-05-18 at 21:55.
@@ -28,11 +29,12 @@ class PlaybackViewModel(
 ) :
     AndroidViewModel(application) {
 
-    private val recentlyPlayedRepository: RecentlyPlayedRepository
+    private val playedRepository: RecentlyPlayedRepository
     private val _mediaItems = MutableLiveData<List<MediaItemData>>()
     private val _currentItem = MutableLiveData<MediaItemData?>()
-    private val _playbackState = MutableLiveData<PlaybackStateCompat>().apply { EMPTY_PLAYBACK_STATE }
-    private val _mediaPosition = MutableLiveData<Long>().apply { postValue(0L) }
+    private val _playbackState = MutableLiveData<PlaybackStateCompat>().apply { value = EMPTY_PLAYBACK_STATE }
+    private val _mediaPosition =
+        MutableLiveData<Long>().apply { value = preferences.getLong(Constants.LAST_POSITION, 0) }
     private var updatePosition = true
     private val handler = Handler(Looper.getMainLooper())
 
@@ -44,7 +46,7 @@ class PlaybackViewModel(
 
     init {
         val recentlyPlayed = RecentlyPlayedRoomDatabase.getDatabase(application).recentDao()
-        recentlyPlayedRepository = RecentlyPlayedRepository(recentlyPlayed)
+        playedRepository = RecentlyPlayedRepository(recentlyPlayed)
     }
 
 
@@ -94,7 +96,7 @@ class PlaybackViewModel(
         val state = it ?: EMPTY_PLAYBACK_STATE
         val metadata = mediaSessionConnection.nowPlaying.value ?: NOTHING_PLAYING
         if (metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID) != null) {
-            _mediaItems.postValue(updateState(state, metadata))
+            _mediaItems.postValue(updateState(state, metadata, 10))
         }
     }
 
@@ -103,42 +105,40 @@ class PlaybackViewModel(
         val playbackState = mediaSessionConnection.playbackState.value ?: EMPTY_PLAYBACK_STATE
         val metadata = it ?: NOTHING_PLAYING
         if (metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID) != null) {
-            _mediaItems.postValue(updateState(playbackState, metadata))
-        }
-        if (metadata.duration != 0L) {
-            addToRecentlyPlayed(metadata)
+            _mediaItems.postValue(updateState(playbackState, metadata, 20))
         }
     }
 
 
-    private fun updateState(state: PlaybackStateCompat, metadata: MediaMetadataCompat): List<MediaItemData>? {
-
+    private fun updateState(state: PlaybackStateCompat, metadata: MediaMetadataCompat, source: Int):
+            List<MediaItemData>? {
         val items = (_mediaItems.value?.map { it.copy(isPlaying = it.id == metadata.id && state.isPlayingOrBuffering) }
             ?: emptyList())
 
-        // Only update media item once we have duration available
-        if (metadata.duration != 0L) {
-            val matchingItem = items.first { it.id == metadata.id }
-            matchingItem.apply {
-                isPlaying = state.isPlaying
-                isBuffering = state.isBuffering
-                duration = metadata.duration
+        val currentItem = if (items.isEmpty()) {
+            // Only update media item if playback has started
+            if (state.started) {
+                MediaItemData(metadata, state.isPlaying, state.isBuffering)
+            } else {
+                null
             }
-            // Update synchronously so addToRecentlyPlayed can pick up a valid currentItem
-            _currentItem.value = matchingItem
+        } else {
+            // Only update media item once we have duration available
+            if (metadata.duration != 0L && items.isNotEmpty()) {
+                val matchingItem = items.first { it.id == metadata.id }
+                matchingItem.apply {
+                    isPlaying = state.isPlaying
+                    isBuffering = state.isBuffering
+                    duration = metadata.duration
+                }
+            } else null
         }
-        _playbackState.postValue(state)
-        return items
-    }
 
-    private fun addToRecentlyPlayed(metadata: MediaMetadataCompat) {
-        val itemData = currentItem.value
-        if (itemData != null && (metadata.id == itemData.id && itemData.isPlaying)) return
-        viewModelScope.launch {
-            val played = RecentlyPlayed(metadata)
-            recentlyPlayedRepository.insert(played)
-            recentlyPlayedRepository.trim()
-        }
+        // Update synchronously so addToRecentlyPlayed can pick up a valid currentItem
+        if (currentItem != null) _currentItem.value = currentItem
+        _playbackState.postValue(state)
+        if (state.started) updatePlaybackPosition()
+        return items
     }
 
     private val subscriptionCallback = object : SubscriptionCallback() {
@@ -147,8 +147,25 @@ class PlaybackViewModel(
             val current = (items.firstOrNull { it.isPlaying }
                 ?: items.firstOrNull { it.id == preferences.getString(Constants.LAST_ID, null) }
                 ?: items.firstOrNull())
-            _currentItem.postValue(current)
-            _mediaItems.postValue(items)
+
+            viewModelScope.launch {
+                // Let's get the duration of the current playing song if it's the same as our filter above
+                val currentValue = currentItem.value
+                if (current != null) {
+                    if (currentValue != null && (current.id == currentValue.id)) {
+                        current.duration = currentValue.duration
+                    } else {
+                        val value = withContext(Dispatchers.IO) {
+                            playedRepository.fetchFirst()
+                        }
+                        current.duration = value?.duration ?: 0
+                    }
+                }
+                _currentItem.postValue(current)
+                _mediaItems.postValue(items)
+                // Re-post the media position so views like SeekBars can pickup the new view
+                _mediaPosition.postValue(mediaPosition.value)
+            }
         }
     }
 
@@ -184,7 +201,6 @@ class PlaybackViewModel(
         it.subscribe(mediaId, subscriptionCallback)
         it.playbackState.observeForever(playbackStateObserver)
         it.nowPlaying.observeForever(mediaMetadataObserver)
-        updatePlaybackPosition()
     }
 
 
@@ -195,8 +211,9 @@ class PlaybackViewModel(
      */
     private fun updatePlaybackPosition(): Boolean = handler.postDelayed({
         val currPosition = _playbackState.value?.currentPlayBackPosition
-        if (_mediaPosition.value != currPosition)
+        if (_mediaPosition.value != currPosition) {
             _mediaPosition.postValue(currPosition)
+        }
         if (updatePosition)
             updatePlaybackPosition()
     }, POSITION_UPDATE_INTERVAL_MILLIS)

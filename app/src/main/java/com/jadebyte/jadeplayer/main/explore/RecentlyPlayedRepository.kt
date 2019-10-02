@@ -9,10 +9,13 @@ import androidx.lifecycle.LiveData
  * Created by Wilberforce on 2019-09-15 at 07:39.
  */
 
-class RecentlyPlayedRepository(private val recentlyPlayedDao: RecentlyPlayedDao) {
-    val recentlyPlayed: LiveData<List<RecentlyPlayed>> = recentlyPlayedDao.fetchRecentSongs()
+class RecentlyPlayedRepository(private val playedDao: RecentlyPlayedDao) {
 
-    suspend fun insert(recentlyPlayed: RecentlyPlayed) = recentlyPlayedDao.insert(recentlyPlayed)
+    val recentlyPlayed: LiveData<List<RecentlyPlayed>> = playedDao.fetchAll()
 
-    suspend fun trim() = recentlyPlayedDao.trim()
+    suspend fun insert(recentlyPlayed: RecentlyPlayed) = playedDao.insert(recentlyPlayed)
+
+    suspend fun trim() = playedDao.trim()
+
+    suspend fun fetchFirst(): RecentlyPlayed? = playedDao.fetchFirst()
 }

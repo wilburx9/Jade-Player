@@ -29,7 +29,7 @@ data class RecentlyPlayed(
 ) : Model() {
 
     constructor(meta: MediaMetadataCompat) : this(
-        id = meta.id,
+        id = meta.id!!,
         path = meta.mediaUri.toString(),
         artist = meta.description.subtitle?.toString() ?: "",
         title = meta.title ?: "",

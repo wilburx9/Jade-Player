@@ -2,6 +2,7 @@
 
 package com.jadebyte.jadeplayer.main.playback
 
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.ResultReceiver
@@ -13,6 +14,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.DataSource
+import com.jadebyte.jadeplayer.main.common.data.Constants
 import timber.log.Timber
 
 
@@ -22,8 +24,9 @@ import timber.log.Timber
 class PlaybackPreparer(
     private val musicSource: MusicSource,
     private val exoPlayer: ExoPlayer,
-    private val dataSourceFactory: DataSource.Factory
-) : MediaSessionConnector.PlaybackPreparer {
+    private val dataSourceFactory: DataSource.Factory,
+    private val preferences: SharedPreferences
+    ) : MediaSessionConnector.PlaybackPreparer {
 
     /**
      *  Handles callbacks to both [MediaSessionCompat.Callback.onPrepareFromSearch] *AND*
@@ -77,13 +80,19 @@ class PlaybackPreparer(
             val metadataList = musicSource.toList()
             val mediaSource = metadataList.toMediaSource(dataSourceFactory)
 
+            val positionMs = if (itemToPlay.id == preferences.getString(Constants.LAST_ID, null)) {
+                preferences.getLong(Constants.LAST_POSITION, 0)
+            } else {
+                0
+            }
+
             // Since the playlist was probably based on some ordering (such as tracks
             // on an album), find which window index to play first so that the song the
             // user actually wants to hear plays first.
             val initialWindowIndex = metadataList.indexOf(itemToPlay)
             exoPlayer.playWhenReady = playWhenReady
             exoPlayer.prepare(mediaSource)
-            exoPlayer.seekTo(initialWindowIndex, 0)
+            exoPlayer.seekTo(initialWindowIndex, positionMs)
         }
     }
 

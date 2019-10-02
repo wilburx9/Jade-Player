@@ -34,6 +34,9 @@ import com.google.android.exoplayer2.upstream.FileDataSourceFactory
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.GlideApp
 import com.jadebyte.jadeplayer.main.common.data.Constants
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayed
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRepository
+import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRoomDatabase
 import com.jadebyte.jadeplayer.main.songs.basicSongsOrder
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelection
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelectionArg
@@ -57,6 +60,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
     private lateinit var notificationManager: NotificationManagerCompat
     private lateinit var notificationBuilder: NotificationBuilder
     private lateinit var mediaSessionConnector: MediaSessionConnector
+    private lateinit var recentRepo: RecentlyPlayedRepository
 
     private val serviceJob = SupervisorJob()
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
@@ -72,6 +76,8 @@ class PlaybackService : MediaBrowserServiceCompat() {
         val sessionActivityPendingActivity = packageManager?.getLaunchIntentForPackage(packageName)?.let {
             PendingIntent.getActivity(this, 0, it, 0)
         }
+
+        recentRepo = RecentlyPlayedRepository(RecentlyPlayedRoomDatabase.getDatabase(application).recentDao())
 
         // Create a MediaSession
         mediaSession = MediaSessionCompat(this, this.javaClass.name).apply {
@@ -111,7 +117,8 @@ class PlaybackService : MediaBrowserServiceCompat() {
             val playbackPreparer = PlaybackPreparer(
                 mediaSource,
                 exoPlayer,
-                dataSourceFactory
+                dataSourceFactory,
+                preferences
             )
             it.setPlayer(exoPlayer)
             it.setPlaybackPreparer(playbackPreparer)
@@ -237,18 +244,20 @@ class PlaybackService : MediaBrowserServiceCompat() {
 
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
+            addToRecentlyPlayed(metadata, mediaController.playbackState)
             updateNotification(mediaController.playbackState)
+            persistPosition()
         }
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
             updateNotification(state)
+            persistPosition()
         }
 
         private fun updateNotification(state: PlaybackStateCompat?) {
             if (state == null) return
-            val updatedState = state.state
 
-            when (updatedState) {
+            when (val updatedState = state.state) {
                 PlaybackStateCompat.STATE_PLAYING,
                 PlaybackStateCompat.STATE_BUFFERING -> initiatePlayback(updatedState)
                 else -> terminatePlayback(updatedState)
@@ -311,6 +320,24 @@ class PlaybackService : MediaBrowserServiceCompat() {
                 notificationBuilder.buildNotification(mediaSession.sessionToken, largeBitmap)
             } else {
                 null
+            }
+        }
+
+        private fun addToRecentlyPlayed(metadata: MediaMetadataCompat?, state: PlaybackStateCompat?) {
+            if (metadata?.id != null && (state?.isPlaying == true || state?.isBuffering == true)) {
+                serviceScope.launch {
+                    val played = RecentlyPlayed(metadata)
+                    recentRepo.insert(played)
+                    recentRepo.trim()
+                    preferences.edit().putString(Constants.LAST_ID, metadata.id).apply()
+                }
+
+            }
+        }
+
+        private fun persistPosition() {
+            if (mediaController.playbackState.started) {
+                preferences.edit().putLong(Constants.LAST_POSITION, exoPlayer.contentPosition).apply()
             }
         }
 
