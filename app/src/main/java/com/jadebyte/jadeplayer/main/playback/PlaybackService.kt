@@ -244,13 +244,14 @@ class PlaybackService : MediaBrowserServiceCompat() {
 
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
-            addToRecentlyPlayed(metadata, mediaController.playbackState)
             updateNotification(mediaController.playbackState)
+            addToRecentlyPlayed(metadata, mediaController.playbackState)
             persistPosition()
         }
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
             updateNotification(state)
+            addToRecentlyPlayed(mediaController.metadata, state)
             persistPosition()
         }
 
@@ -324,7 +325,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
         }
 
         private fun addToRecentlyPlayed(metadata: MediaMetadataCompat?, state: PlaybackStateCompat?) {
-            if (metadata?.id != null && (state?.isPlaying == true || state?.isBuffering == true)) {
+            if (metadata?.id != null && state?.isPlaying == true) {
                 serviceScope.launch {
                     val played = RecentlyPlayed(metadata)
                     recentRepo.insert(played)
