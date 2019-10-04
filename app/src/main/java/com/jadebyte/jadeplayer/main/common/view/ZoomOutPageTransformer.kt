@@ -4,6 +4,8 @@ package com.jadebyte.jadeplayer.main.common.view
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager
+import kotlin.math.abs
+import kotlin.math.max
 
 /**
  * Created by Wilberforce on 2019-05-02 at 01:58.
@@ -26,7 +28,7 @@ class ZoomOutPageTransformer : ViewPager.PageTransformer {
                 }
                 position <= 1 -> { // [-1,1]
                     // Modify the default slide transition to shrink the page as well
-                    val scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position))
+                    val scaleFactor = max(MIN_SCALE, 1 - abs(position))
                     val vertMargin = pageHeight * (1 - scaleFactor) / 2
                     val horzMargin = pageWidth * (1 - scaleFactor) / 2
                     translationX = if (position < 0) {

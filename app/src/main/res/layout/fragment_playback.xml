@@ -201,6 +201,8 @@
         android:layout_height="wrap_content"
         android:inAnimation="@anim/fast_fade_in"
         android:outAnimation="@anim/fast_fade_out"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_medium"
         app:layout_constraintBottom_toTopOf="@+id/songTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -232,7 +234,9 @@
         android:layout_height="wrap_content"
         android:inAnimation="@anim/fast_fade_in"
         android:outAnimation="@anim/fast_fade_out"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@+id/playPauseButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/songArtist">
@@ -269,24 +273,45 @@
         android:padding="@dimen/padding_medium"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_previous"
-        app:layout_constraintBottom_toBottomOf="@+id/playButton"
-        app:layout_constraintEnd_toStartOf="@+id/playButton"
+        app:layout_constraintBottom_toBottomOf="@+id/playPauseButton"
+        app:layout_constraintEnd_toStartOf="@+id/playPauseButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/playButton" />
+        app:layout_constraintTop_toTopOf="@+id/playPauseButton" />
 
 
-    <ImageButton
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
+    <ViewSwitcher
+        android:id="@+id/playPauseButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/play_and_pause_button"
-        android:padding="@dimen/padding_medium"
-        android:src="@drawable/ic_pause_accent"
+        android:background="@drawable/accent_circle"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:inAnimation="@anim/fade_in"
+        android:outAnimation="@anim/fade_out"
+        android:padding="@dimen/padding_x_large"
         app:layout_constraintBottom_toTopOf="@+id/shuffleButton"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/nextButton"
         app:layout_constraintStart_toEndOf="@+id/previousButton"
-        app:layout_constraintTop_toBottomOf="@+id/songTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/songTitle">
+
+        <ImageView
+            android:id="@+id/playButton"
+            android:layout_width="16dp"
+            android:layout_height="23dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/play_button"
+            android:src="@drawable/ic_play_white" />
+
+        <ImageView
+            android:id="@+id/pauseButton"
+            android:layout_width="16dp"
+            android:layout_height="23dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/pause_button"
+            android:src="@drawable/ic_pause_white" />
+
+    </ViewSwitcher>
+
 
     <ImageButton
         android:id="@+id/nextButton"
@@ -298,10 +323,10 @@
         android:padding="@dimen/padding_medium"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_next"
-        app:layout_constraintBottom_toBottomOf="@+id/playButton"
+        app:layout_constraintBottom_toBottomOf="@+id/playPauseButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/playButton"
-        app:layout_constraintTop_toTopOf="@+id/playButton" />
+        app:layout_constraintStart_toEndOf="@+id/playPauseButton"
+        app:layout_constraintTop_toTopOf="@+id/playPauseButton" />
 
 
     <ImageButton
@@ -332,7 +357,7 @@
         app:layout_constraintEnd_toStartOf="@+id/moreOptions"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@+id/repeatButton"
-        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+        app:layout_constraintTop_toBottomOf="@+id/playPauseButton" />
 
     <ImageButton
         android:id="@+id/moreOptions"
@@ -380,7 +405,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="viewPager, lyricsButton " />
+        app:constraint_referenced_ids="viewPager,lyricsButton " />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/lyricsGroup"

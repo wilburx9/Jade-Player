@@ -35,7 +35,8 @@ data class MediaItemData(
         description = item.description.description.toString(),
         isBrowsable = item.isBrowsable,
         isPlaying = isPlaying,
-        isBuffering = isBuffering
+        isBuffering = isBuffering,
+        duration = item.description.duration
     )
 
     constructor(item: MediaMetadataCompat, isPlaying: Boolean, isBuffering: Boolean) : this(
@@ -49,4 +50,6 @@ data class MediaItemData(
         isBuffering = isBuffering,
         duration = item.duration
     )
+
+
 }

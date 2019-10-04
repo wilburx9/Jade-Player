@@ -61,7 +61,7 @@ class BottomPlaybackFragment : BaseFragment() {
             viewModel.currentItem.value?.let {
                 val transitionName = ViewCompat.getTransitionName(sharableView)!!
                 val extras = FragmentNavigator.Extras.Builder().addSharedElement(sharableView, transitionName).build()
-                val action = MainFragmentDirections.actionMainFragmentToPlaybackFragment(it, transitionName)
+                val action = MainFragmentDirections.actionMainFragmentToPlaybackFragment(transitionName)
                 activity?.findNavController(R.id.mainNavHostFragment)?.navigate(action, extras)
             }
         }

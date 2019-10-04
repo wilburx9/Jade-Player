@@ -54,7 +54,9 @@ class MediaStoreSource(
                 while (it.moveToNext()) {
                     // Block on downloading artwork.
                     val metadata = MediaMetadataCompat.Builder().from(it, count, art)
-                    results.add(metadata.build())
+                    val build = metadata.build()
+                    build.description.extras?.putAll(build.bundle)
+                    results.add(build)
                 }
             }
 

@@ -34,7 +34,8 @@ class PlaybackAdapter(private var items: List<MediaItemData>?) : PagerAdapter() 
             DataBindingUtil.inflate<ItemPlaybackImageBinding>(inflater, R.layout.item_playback_image, container, false)
         val mediaItem = items?.get(position)
         binding.mediaItem = mediaItem
-        binding.root.tag = mediaItem
+        binding.executePendingBindings()
+        binding.root.tag = mediaItem?.id
         container.addView(binding.root)
         return binding.root
     }

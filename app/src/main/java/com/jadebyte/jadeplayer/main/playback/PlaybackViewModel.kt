@@ -49,8 +49,10 @@ class PlaybackViewModel(
         playedRepository = RecentlyPlayedRepository(recentlyPlayed)
     }
 
+    fun playCurrent() = playMediaId(currentItem.value?.id)
 
-    fun playMediaId(mediaId: String) {
+    fun playMediaId(mediaId: String?) {
+        if (mediaId == null) return
         val nowPlaying = mediaSessionConnection.nowPlaying.value
         val transportControls = mediaSessionConnection.transportControls
 
@@ -86,7 +88,7 @@ class PlaybackViewModel(
             _mediaItems.value?.let {
                 val i = it.indexOf(currentItem.value)
                 // Only skip to the previous item if the current item is not first item in the list
-                if (i > 1) _currentItem.postValue(it[(i + 1)])
+                if (i > 1) _currentItem.postValue(it[(i - 1)])
             }
         }
     }
@@ -96,7 +98,7 @@ class PlaybackViewModel(
         val state = it ?: EMPTY_PLAYBACK_STATE
         val metadata = mediaSessionConnection.nowPlaying.value ?: NOTHING_PLAYING
         if (metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID) != null) {
-            _mediaItems.postValue(updateState(state, metadata, 10))
+            _mediaItems.postValue(updateState(state, metadata))
         }
     }
 
@@ -105,12 +107,12 @@ class PlaybackViewModel(
         val playbackState = mediaSessionConnection.playbackState.value ?: EMPTY_PLAYBACK_STATE
         val metadata = it ?: NOTHING_PLAYING
         if (metadata.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID) != null) {
-            _mediaItems.postValue(updateState(playbackState, metadata, 20))
+            _mediaItems.postValue(updateState(playbackState, metadata))
         }
     }
 
 
-    private fun updateState(state: PlaybackStateCompat, metadata: MediaMetadataCompat, source: Int):
+    private fun updateState(state: PlaybackStateCompat, metadata: MediaMetadataCompat):
             List<MediaItemData>? {
         val items = (_mediaItems.value?.map { it.copy(isPlaying = it.id == metadata.id && state.isPlayingOrBuffering) }
             ?: emptyList())
@@ -161,8 +163,8 @@ class PlaybackViewModel(
                         current.duration = value?.duration ?: 0
                     }
                 }
-                _currentItem.postValue(current)
                 _mediaItems.postValue(items)
+                _currentItem.postValue(current)
                 // Re-post the media position so views like SeekBars can pickup the new view
                 _mediaPosition.postValue(mediaPosition.value)
             }

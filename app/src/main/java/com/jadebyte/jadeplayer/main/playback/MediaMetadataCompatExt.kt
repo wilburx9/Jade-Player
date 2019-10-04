@@ -20,6 +20,10 @@ import com.jadebyte.jadeplayer.main.common.utils.Utils
 /**
  * Useful extensions for [MediaMetadataCompat].
  */
+
+inline val MediaDescriptionCompat.duration: Long
+    get() = extras?.getLong(MediaMetadataCompat.METADATA_KEY_DURATION, 0L) ?: 0L
+
 inline val MediaMetadataCompat.id: String?
     get() = getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID)
 
@@ -246,21 +250,13 @@ inline var MediaMetadataCompat.Builder.flag: Int
         putLong(METADATA_KEY_FLAGS, value.toLong())
     }
 
-/**
- * Custom property for retrieving a [MediaDescriptionCompat] which also includes
- * all of the keys from the [MediaMetadataCompat] object in its extras.
- *
- * These keys are used by the ExoPlayer MediaSession extension when announcing metadata changes.
- */
-inline val MediaMetadataCompat.fullDescription: MediaDescriptionCompat
-    get() = description.also { it.extras?.putAll(bundle) }
 
 /**
  * Extension method for [MediaMetadataCompat.Builder] to set the fields with
  * [MediaStore] result cursor
  */
 
- fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long, art: Bitmap?): MediaMetadataCompat.Builder {
+fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long, art: Bitmap?): MediaMetadataCompat.Builder {
     val durationMs = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
     val songTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
     val songArtist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
@@ -288,6 +284,7 @@ inline val MediaMetadataCompat.fullDescription: MediaDescriptionCompat
     displayTitle = songTitle
     displaySubtitle = songArtist
     displayDescription = songAlbum
+    downloadStatus = MediaDescriptionCompat.STATUS_DOWNLOADED
 
     // Allow it to be used in the typical builder style.
     return this
@@ -300,7 +297,7 @@ inline val MediaMetadataCompat.fullDescription: MediaDescriptionCompat
  */
 fun MediaMetadataCompat.toMediaSource(dataSourceFactory: DataSource.Factory): ProgressiveMediaSource =
     ProgressiveMediaSource.Factory(dataSourceFactory)
-        .setTag(fullDescription)
+        .setTag(description)
         .createMediaSource(mediaUri)
 
 /**

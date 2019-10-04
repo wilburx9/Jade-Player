@@ -23,9 +23,6 @@
         android:label="fragment_playback"
         tools:layout="@layout/fragment_playback" >
         <argument
-            android:name="mediaItem"
-            app:argType="com.jadebyte.jadeplayer.main.playback.MediaItemData" />
-        <argument
             android:name="transitionName"
             app:argType="string" />
         <action

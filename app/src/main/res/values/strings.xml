@@ -34,6 +34,8 @@
     <string name="shuffle_playlist">Shuffle playlist</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="play_and_pause_button">Play and pause button</string>
+    <string name="pause_button">Pause button</string>
+    <string name="play_button">Play button</string>
     <string name="next_button">Next Button</string>
     <string name="previous_button">Previous button</string>
     <string name="current_playing_tracks">Current playing tracks</string>
