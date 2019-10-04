@@ -51,5 +51,21 @@ data class MediaItemData(
         duration = item.duration
     )
 
+    // We don't want to use all the feeds to check for equality because some of them might change.
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MediaItemData
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
 
 }

@@ -16,6 +16,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.SeekBar
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.*
 import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import com.jadebyte.jadeplayer.main.common.callbacks.OnPageChangeListener
+import com.jadebyte.jadeplayer.main.common.callbacks.OnSeekBarChangeListener
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.jadebyte.jadeplayer.main.common.view.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_playback.*
@@ -38,10 +40,11 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     private var userScrollChange = false
     private var previousState: Int = ViewPager.SCROLL_STATE_IDLE
+    private var userTouchingSeekBar = false
     private val viewModel: PlaybackViewModel by viewModel()
     private var items = emptyList<MediaItemData>()
     private lateinit var rotationAnimSet: AnimatorSet
-
+    private val handler = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
@@ -71,15 +74,18 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         })
 
         viewModel.currentItem.observe(viewLifecycleOwner, Observer {
+            Timber.w("observeViewData: List size = ${items.size}")
             val index = items.indexOf(it)
+            Timber.d("observeViewData: item change $index || ${items.size} || ${it?.title}")
             if (index < 0 || index > items.size) return@Observer
             viewPager.setCurrentItem(index, true)
             updateViews(it)
+            Timber.d("observeViewData: item change end")
         })
 
         viewModel.mediaPosition.observe(viewLifecycleOwner, Observer {
             countdownDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(it))
-            playbackSeekBar.progress = it.toInt()
+            if (!userTouchingSeekBar) playbackSeekBar.progress = it.toInt()
         })
 
         viewModel.playbackState.observe(viewLifecycleOwner, Observer { updateState(it) })
@@ -100,6 +106,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         moreOptions.setOnClickListener(this)
         viewPager.setOnTouchListener(this)
         playingTracks.setOnClickListener(this)
+        playbackSeekBar.setOnSeekBarChangeListener(onSeekBarChangeListener)
     }
 
     private fun updateViews(item: MediaItemData?) {
@@ -114,6 +121,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun updateState(state: PlaybackStateCompat) {
+        Timber.i("updateState: State = ${state.stateName} :: ${rotationAnimSet.isStarted} :: ${rotationAnimSet.isPaused}")
         if (state.isPlayingOrBuffering) {
             if (playPauseButton.currentView != pauseButton) playPauseButton.showNext()
             if (!rotationAnimSet.isStarted) rotationAnimSet.start() else rotationAnimSet.resume()
@@ -280,7 +288,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     private val onPageChangeCallback = object : OnPageChangeListener {
         override fun onPageSelected(position: Int) {
             if (userScrollChange) {
-                Timber.i("onPageSelected: $position")
                 val index = items.indexOf(viewModel.currentItem.value)
                 if (index < 0 || index > items.size) return
                 if (position > index) {
@@ -303,6 +310,21 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
             previousState = state
         }
+    }
+
+    private val onSeekBarChangeListener = object : OnSeekBarChangeListener {
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            userTouchingSeekBar = true
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            viewModel.seek(seekBar?.progress?.toLong() ?: 0)
+            // Let's delay the updating of the userTouchingSeekBar to ensure the seek has taken effect before
+            // continuing to update the progress bar
+            handler.postDelayed({ userTouchingSeekBar = false }, 200)
+        }
+
     }
 
     override fun onDestroyView() {

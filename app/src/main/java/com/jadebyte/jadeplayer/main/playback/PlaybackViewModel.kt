@@ -69,6 +69,12 @@ class PlaybackViewModel(
         }
     }
 
+    fun seek(time: Long) {
+        val transportControls = mediaSessionConnection.transportControls
+        transportControls.seekTo(time)
+        preferences.edit().putLong(Constants.LAST_POSITION, time).apply()
+    }
+
     fun skipToNext() {
         if (mediaSessionConnection.playbackState.value?.started == true) {
             mediaSessionConnection.transportControls.skipToNext()
