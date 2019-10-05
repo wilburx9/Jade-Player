@@ -33,6 +33,18 @@ class PlaybackViewModel(
     private val _mediaItems = MutableLiveData<List<MediaItemData>>()
     private val _currentItem = MutableLiveData<MediaItemData?>()
     private val _playbackState = MutableLiveData<PlaybackStateCompat>().apply { value = EMPTY_PLAYBACK_STATE }
+    private val _shuffleMode = MutableLiveData<Int>().apply {
+        value = preferences.getInt(
+            Constants.LAST_SHUFFLE_MODE,
+            PlaybackStateCompat.SHUFFLE_MODE_NONE
+        )
+    }
+    private val _repeatMode = MutableLiveData<Int>().apply {
+        value = preferences.getInt(
+            Constants.LAST_REPEAT_MODE,
+            PlaybackStateCompat.REPEAT_MODE_NONE
+        )
+    }
     private val _mediaPosition =
         MutableLiveData<Long>().apply { value = preferences.getLong(Constants.LAST_POSITION, 0) }
     private var updatePosition = true
@@ -42,6 +54,8 @@ class PlaybackViewModel(
     val currentItem: LiveData<MediaItemData?> = _currentItem
     val playbackState: LiveData<PlaybackStateCompat> = _playbackState
     val mediaPosition: LiveData<Long> = _mediaPosition
+    val shuffleMode: LiveData<Int> = _shuffleMode
+    val repeatMode: LiveData<Int> = _repeatMode
 
 
     init {
@@ -66,6 +80,8 @@ class PlaybackViewModel(
             }
         } else {
             transportControls.playFromMediaId(mediaId, null)
+            transportControls.setRepeatMode(repeatMode.value!!)
+            transportControls.setShuffleMode(shuffleMode.value!!)
         }
     }
 
@@ -73,6 +89,24 @@ class PlaybackViewModel(
         val transportControls = mediaSessionConnection.transportControls
         transportControls.seekTo(time)
         preferences.edit().putLong(Constants.LAST_POSITION, time).apply()
+    }
+
+    fun setShuffleMode() {
+        val newValue = when (shuffleMode.value) {
+            PlaybackStateCompat.SHUFFLE_MODE_ALL -> PlaybackStateCompat.SHUFFLE_MODE_NONE
+            else -> PlaybackStateCompat.SHUFFLE_MODE_ALL
+        }
+        mediaSessionConnection.transportControls.setShuffleMode(newValue)
+    }
+
+    fun setRepeatMode() {
+        val newValue = when (repeatMode.value) {
+            PlaybackStateCompat.REPEAT_MODE_NONE -> PlaybackStateCompat.REPEAT_MODE_ONE
+            PlaybackStateCompat.REPEAT_MODE_ONE -> PlaybackStateCompat.REPEAT_MODE_ALL
+            PlaybackStateCompat.REPEAT_MODE_ALL -> PlaybackStateCompat.REPEAT_MODE_NONE
+            else -> PlaybackStateCompat.REPEAT_MODE_NONE
+        }
+        mediaSessionConnection.transportControls.setRepeatMode(newValue)
     }
 
     fun skipToNext() {
@@ -116,6 +150,10 @@ class PlaybackViewModel(
             _mediaItems.postValue(updateState(playbackState, metadata))
         }
     }
+
+    private val shuffleObserver = Observer<Int>(_shuffleMode::postValue)
+
+    private val repeatObserver = Observer<Int>(_repeatMode::postValue)
 
 
     private fun updateState(state: PlaybackStateCompat, metadata: MediaMetadataCompat):
@@ -209,6 +247,8 @@ class PlaybackViewModel(
         it.subscribe(mediaId, subscriptionCallback)
         it.playbackState.observeForever(playbackStateObserver)
         it.nowPlaying.observeForever(mediaMetadataObserver)
+        it.repeatMode.observeForever(repeatObserver)
+        it.shuffleMode.observeForever(shuffleObserver)
     }
 
 
@@ -239,6 +279,8 @@ class PlaybackViewModel(
         // Remove the permanent observers from the MediaSessionConnection.
         mediaSessionConnection.playbackState.removeObserver(playbackStateObserver)
         mediaSessionConnection.nowPlaying.removeObserver(mediaMetadataObserver)
+        mediaSessionConnection.repeatMode.removeObserver(repeatObserver)
+        mediaSessionConnection.shuffleMode.removeObserver(shuffleObserver)
 
         // And then, finally, unsubscribe the media ID that was being watched.
         mediaSessionConnection.unsubscribe(mediaSessionConnection.rootMediaId, subscriptionCallback)

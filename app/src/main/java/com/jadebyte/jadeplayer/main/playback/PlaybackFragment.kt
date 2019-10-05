@@ -10,39 +10,32 @@ import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.media.session.PlaybackStateCompat
-import android.text.format.DateUtils
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.SeekBar
-import androidx.core.view.ViewCompat
+import android.widget.TextView
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import androidx.viewpager.widget.ViewPager
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.common.*
+import com.jadebyte.jadeplayer.databinding.FragmentPlaybackBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
-import com.jadebyte.jadeplayer.main.common.callbacks.OnPageChangeListener
 import com.jadebyte.jadeplayer.main.common.callbacks.OnSeekBarChangeListener
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
-import com.jadebyte.jadeplayer.main.common.view.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_playback.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 
-class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListener {
+class PlaybackFragment : BaseFragment(), View.OnClickListener {
 
-    private var userScrollChange = false
-    private var previousState: Int = ViewPager.SCROLL_STATE_IDLE
     private var userTouchingSeekBar = false
     private val viewModel: PlaybackViewModel by viewModel()
-    private var items = emptyList<MediaItemData>()
     private lateinit var rotationAnimSet: AnimatorSet
     private val handler = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,38 +47,26 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_playback, container, false)
+    ): View? = FragmentPlaybackBinding.inflate(inflater, container, false).let {
+        it.viewModel = viewModel
+        it.lifecycleOwner = this
+        return it.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ViewCompat.setTransitionName(viewPager, arguments!!.getString("transitionName"))
         setupView()
         observeViewData()
     }
 
     private fun observeViewData() {
-        viewModel.mediaItems.observe(viewLifecycleOwner, Observer { items ->
-            if (items.isEmpty()) return@Observer
-            this.items = items
-            (viewPager.adapter as PlaybackAdapter).updateItems(this.items)
+        viewModel.mediaPosition.observe(viewLifecycleOwner, Observer {
+            if (!userTouchingSeekBar) playbackSeekBar.progress = it.toInt()
         })
 
         viewModel.currentItem.observe(viewLifecycleOwner, Observer {
-            Timber.w("observeViewData: List size = ${items.size}")
-            val index = items.indexOf(it)
-            Timber.d("observeViewData: item change $index || ${items.size} || ${it?.title}")
-            if (index < 0 || index > items.size) return@Observer
-            viewPager.setCurrentItem(index, true)
-            updateViews(it)
-            Timber.d("observeViewData: item change end")
-        })
-
-        viewModel.mediaPosition.observe(viewLifecycleOwner, Observer {
-            countdownDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(it))
-            if (!userTouchingSeekBar) playbackSeekBar.progress = it.toInt()
+            playbackSeekBar.max = it?.duration?.toInt() ?: 0
         })
 
         viewModel.playbackState.observe(viewLifecycleOwner, Observer { updateState(it) })
@@ -94,35 +75,19 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     private fun setupView() {
         rotationAnimSet = AnimatorInflater.loadAnimator(activity, R.animator.album_art_rotation) as AnimatorSet
-        viewPager.adapter = PlaybackAdapter(items)
-        viewPager.addOnPageChangeListener(onPageChangeCallback)
-        viewPager.setPageTransformer(true, ZoomOutPageTransformer())
+        rotationAnimSet.setTarget(albumArt)
+        songTitle.children.forEach { (it as TextView).isSelected = true }
         sectionBackButton.setOnClickListener(this)
-        nextButton.setOnClickListener(this)
-        previousButton.setOnClickListener(this)
-        playPauseButton.setOnClickListener(this)
         lyricsButton.setOnClickListener(this)
         closeButton.setOnClickListener(this)
         moreOptions.setOnClickListener(this)
-        viewPager.setOnTouchListener(this)
         playingTracks.setOnClickListener(this)
         playbackSeekBar.setOnSeekBarChangeListener(onSeekBarChangeListener)
     }
 
-    private fun updateViews(item: MediaItemData?) {
-        item?.let {
-            val view = viewPager.findViewWithTag<View>(it.id)
-            rotationAnimSet.setTarget(view)
-            songArtist.setText(it.subtitle)
-            songTitle.setText(it.title)
-            playbackSeekBar.max = item.duration.toInt()
-            totalDuration.text = DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(it.duration))
-        }
-    }
 
     private fun updateState(state: PlaybackStateCompat) {
-        Timber.i("updateState: State = ${state.stateName} :: ${rotationAnimSet.isStarted} :: ${rotationAnimSet.isPaused}")
-        if (state.isPlayingOrBuffering) {
+        if (state.isPlaying) {
             if (playPauseButton.currentView != pauseButton) playPauseButton.showNext()
             if (!rotationAnimSet.isStarted) rotationAnimSet.start() else rotationAnimSet.resume()
         } else {
@@ -134,9 +99,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.sectionBackButton -> findNavController().popBackStack()
-            R.id.previousButton -> viewModel.skipToPrevious()
-            R.id.nextButton -> viewModel.skipToNext()
-            R.id.playPauseButton -> viewModel.playCurrent()
             R.id.lyricsButton -> showFindingLyrics()
             R.id.closeButton -> closeLyrics()
             R.id.moreOptions -> showMenuBottomSheet()
@@ -166,15 +128,15 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
     }
 
     private fun showMenuBottomSheet() {
-        val action =
-            PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(items[viewPager.currentItem])
-        findNavController().navigate(action)
+        //        val action =
+        //            PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(items[viewPager.currentItem])
+        //        findNavController().navigate(action)
     }
 
     private fun closeLyrics() {
         val animatorSet = AnimatorSet()
         animatorSet.playTogether(
-            viewPager.fadeInSlideDown(translationY, slideDuration),
+            albumArt.fadeInSlideDown(translationY, slideDuration),
             lyricsButton.fadeInSlideDown(translationY, slideDuration),
             closeButton.fadeOutSlideDown(translationY, slideDuration),
             quoteImg.fadeOutSlideDown(translationY, slideDuration),
@@ -203,7 +165,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         }
         val animatorSet = AnimatorSet()
         animatorSet.playTogether(
-            viewPager.fadeOutSlideUp(translationY, slideDuration),
+            albumArt.fadeOutSlideUp(translationY, slideDuration),
             lyricsButton.fadeOutSlideUp(translationY, slideDuration),
             progressBar.fadeInSlideUp(translationY, slideDuration),
             findingLyrics.fadeInSlideUp(translationY, slideDuration)
@@ -236,7 +198,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
         val animatorSet = AnimatorSet()
         animatorSet.playTogether(
             if (!lyricsIsEmpty) progressBar.fadeOutSlideUp(translationY, slideDuration) else
-                viewPager.fadeOutSlideUp(translationY, slideDuration),
+                albumArt.fadeOutSlideUp(translationY, slideDuration),
             if (!lyricsIsEmpty) findingLyrics.fadeOutSlideUp(translationY, slideDuration) else
                 lyricsButton.fadeOutSlideUp(translationY, slideDuration),
             closeButton.fadeInSlideUp(translationY, slideDuration),
@@ -262,56 +224,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     private fun hasLyrics() = !lyricsText.text.isNullOrEmpty()
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        return when (v?.id) {
-            R.id.viewPager -> handleViewPagerTouch(event)
-            else -> {
-                v?.performClick()
-                false
-            }
-        }
-    }
-
-    private fun handleViewPagerTouch(event: MotionEvent?): Boolean {
-        if (event?.action == MotionEvent.ACTION_UP || event?.action == MotionEvent.ACTION_CANCEL) {
-            if (rotationAnimSet.isStarted && rotationAnimSet.isPaused) {
-                rotationAnimSet.resume()
-            }
-        } else {
-            if (rotationAnimSet.isStarted && !rotationAnimSet.isPaused) {
-                rotationAnimSet.pause()
-            }
-        }
-        return false
-    }
-
-    private val onPageChangeCallback = object : OnPageChangeListener {
-        override fun onPageSelected(position: Int) {
-            if (userScrollChange) {
-                val index = items.indexOf(viewModel.currentItem.value)
-                if (index < 0 || index > items.size) return
-                if (position > index) {
-                    viewModel.skipToNext()
-                } else {
-                    viewModel.skipToPrevious()
-                }
-            }
-        }
-
-        override fun onPageScrollStateChanged(state: Int) {
-            if (previousState == ViewPager.SCROLL_STATE_DRAGGING
-                && state == ViewPager.SCROLL_STATE_SETTLING
-            )
-                userScrollChange = true
-            else if (previousState == ViewPager.SCROLL_STATE_SETTLING
-                && state == ViewPager.SCROLL_STATE_IDLE
-            )
-                userScrollChange = false
-
-            previousState = state
-        }
-    }
-
     private val onSeekBarChangeListener = object : OnSeekBarChangeListener {
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -329,7 +241,6 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener, View.OnTouchListe
 
     override fun onDestroyView() {
         rotationAnimSet.cancel()
-        viewPager.removeOnPageChangeListener(onPageChangeCallback)
         super.onDestroyView()
     }
 

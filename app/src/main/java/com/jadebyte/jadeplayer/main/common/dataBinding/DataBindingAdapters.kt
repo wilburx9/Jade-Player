@@ -2,6 +2,7 @@
 
 package com.jadebyte.jadeplayer.main.common.dataBinding
 
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -80,8 +81,6 @@ object DataBindingAdapters {
             )
             .placeholder(R.drawable.thumb_circular_default_hollow)
             .into(view)
-
-
     }
 
     @BindingAdapter("android:src")
@@ -154,6 +153,28 @@ object DataBindingAdapters {
             )
             .placeholder(R.drawable.thumb_default_short)
             .into(view)
+    }
+
+    @BindingAdapter("repeatSrc")
+    @JvmStatic
+    fun setRepeatModeSrc(view: ImageView, repeat: Int?) {
+        val src = when (repeat) {
+            PlaybackStateCompat.REPEAT_MODE_ALL -> R.drawable.ic_repeat_all
+            PlaybackStateCompat.REPEAT_MODE_ONE -> R.drawable.ic_repeat_once
+            else -> R.drawable.ic_repeat_none
+        }
+        view.setImageResource(src)
+    }
+
+    @BindingAdapter("shuffleSrc")
+    @JvmStatic
+    fun setShuffleModeSrc(view: ImageView, shuffle: Int?) {
+        val src = if (shuffle == PlaybackStateCompat.SHUFFLE_MODE_NONE) {
+            R.drawable.ic_shuffle_off
+        } else {
+            R.drawable.ic_shuffle_on
+        }
+        view.setImageResource(src)
     }
 
     @BindingAdapter("android:src")

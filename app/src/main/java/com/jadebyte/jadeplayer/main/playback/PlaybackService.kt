@@ -124,6 +124,9 @@ class PlaybackService : MediaBrowserServiceCompat() {
             it.setPlaybackPreparer(playbackPreparer)
             it.setQueueNavigator(QueueNavigator(mediaSession))
         }
+
+        exoPlayer.repeatMode = 0
+
         packageValidator = PackageValidator(this, R.xml.allowed_media_browser_callers)
     }
 
@@ -380,5 +383,6 @@ private class QueueNavigator(mediaSession: MediaSessionCompat) : TimelineQueueNa
 
     override fun getMediaDescription(player: Player, windowIndex: Int) =
         player.currentTimeline.getWindow(windowIndex, window, true).tag as MediaDescriptionCompat
+
 }
 

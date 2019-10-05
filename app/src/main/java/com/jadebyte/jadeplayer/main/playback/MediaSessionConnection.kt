@@ -5,13 +5,13 @@ package com.jadebyte.jadeplayer.main.playback
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
-import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.media.MediaBrowserServiceCompat
@@ -24,7 +24,7 @@ import com.jadebyte.jadeplayer.main.common.data.Constants
  * Class that manages a connection to a [MediaBrowserServiceCompat] instance.
  *
  */
-class MediaSessionConnection(context: Context, serviceComponent: ComponentName) {
+class MediaSessionConnection(context: Context, serviceComponent: ComponentName, val preferences: SharedPreferences) {
 
     private val connectionCallback = MediaBrowserConnectionCallback(context)
     private val mediaBrowser =
@@ -37,6 +37,12 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
 
     val playbackState = MutableLiveData<PlaybackStateCompat>().apply { postValue(EMPTY_PLAYBACK_STATE) }
     val nowPlaying = MutableLiveData<MediaMetadataCompat>().apply { postValue(NOTHING_PLAYING) }
+    val shuffleMode = MutableLiveData<Int>().apply {
+        postValue(preferences.getInt(Constants.LAST_SHUFFLE_MODE, PlaybackStateCompat.SHUFFLE_MODE_NONE))
+    }
+    val repeatMode = MutableLiveData<Int>().apply {
+        postValue(preferences.getInt(Constants.LAST_REPEAT_MODE, PlaybackStateCompat.REPEAT_MODE_NONE))
+    }
 
     val transportControls: MediaControllerCompat.TransportControls get() = mediaController.transportControls
 
@@ -89,12 +95,10 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
     }
 
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
-        override fun onQueueChanged(queue: MutableList<MediaSessionCompat.QueueItem>?) {
-            // Do nothing for now
-        }
 
         override fun onRepeatModeChanged(repeatMode: Int) {
-            // Do nothing for now
+            this@MediaSessionConnection.repeatMode.postValue(repeatMode)
+            preferences.edit().putInt(Constants.LAST_REPEAT_MODE, repeatMode).apply()
         }
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
@@ -106,7 +110,8 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
         }
 
         override fun onShuffleModeChanged(shuffleMode: Int) {
-            // Do nothing for now
+            this@MediaSessionConnection.shuffleMode.postValue(shuffleMode)
+            preferences.edit().putInt(Constants.LAST_SHUFFLE_MODE, shuffleMode).apply()
         }
 
         /**
@@ -131,9 +136,9 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
         @Volatile
         private var instance: MediaSessionConnection? = null
 
-        fun getInstance(context: Context, serviceComponent: ComponentName) =
+        fun getInstance(context: Context, serviceComponent: ComponentName, preferences: SharedPreferences) =
             instance ?: synchronized(this) {
-                instance ?: MediaSessionConnection(context, serviceComponent).also { instance = it }
+                instance ?: MediaSessionConnection(context, serviceComponent, preferences).also { instance = it }
             }
     }
 }
