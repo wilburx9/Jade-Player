@@ -5,10 +5,7 @@ package com.jadebyte.jadeplayer.main.common.dataBinding
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -187,12 +184,6 @@ object DataBindingAdapters {
     @JvmStatic
     fun setBackgroundResource(view: View, @DrawableRes resource: Int) {
         view.setBackgroundResource(resource)
-    }
-
-    @BindingAdapter("android:textColor")
-    @JvmStatic
-    fun setTextColor(view: TextView, @ColorRes color: Int) {
-        view.setTextColor(ContextCompat.getColor(view.context, color))
     }
 
     @BindingAdapter("enabled")

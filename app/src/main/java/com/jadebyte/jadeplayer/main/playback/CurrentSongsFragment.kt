@@ -8,19 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
+import com.jadebyte.jadeplayer.main.common.callbacks.MediaItemDataDiffCallback
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_current_songs.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
-    private lateinit var viewModel: PlaybackViewModel
+    private val viewModel: PlaybackViewModel by viewModel()
     private var items = emptyList<MediaItemData>()
 
 
@@ -34,28 +35,31 @@ class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!)[PlaybackViewModel::class.java]
         setupViewViews()
         observeViewModel()
     }
 
     private fun setupViewViews() {
         currentRV.layoutManager = LinearLayoutManager(activity)
-        val adapter = BaseAdapter(items, activity!!, BR.mediaItem, R.layout.item_media, itemClickListener = this)
+        val adapter = BaseAdapter(items, activity!!, R.layout.item_current, BR.mediaItem, this, null)
         currentRV.adapter = adapter
     }
 
     @Suppress("UNCHECKED_CAST")
     private fun observeViewModel() {
         viewModel.mediaItems.observe(viewLifecycleOwner, Observer {
+            (currentRV.adapter as BaseAdapter<MediaItemData>).updateItems(it, MediaItemDataDiffCallback(items, it))
             items = it
-            (currentRV.adapter as BaseAdapter<MediaItemData>).updateItems(items)
+        })
+
+        viewModel.currentItem.observe(viewLifecycleOwner, Observer {
+            val index = items.indexOf(it)
+            if (index < 0) return@Observer
+            currentRV.smoothScrollToPosition(index)
         })
     }
 
 
-    override fun onItemClick(position: Int, sharableView: View?) {
-        viewModel.playMediaId(items[position].id)
-    }
+    override fun onItemClick(position: Int, sharableView: View?) = viewModel.playMediaId(items[position].id)
 
 }

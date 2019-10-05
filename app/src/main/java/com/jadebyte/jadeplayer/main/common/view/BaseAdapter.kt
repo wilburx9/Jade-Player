@@ -53,8 +53,7 @@ class BaseAdapter<T : Model>(
         if (payloads.isEmpty()) animateItem(position, holder)
     }
 
-    fun updateItems(items: List<T>) {
-        val diffCallback = BaseDiffCallback(this.items, items)
+    fun updateItems(items: List<T>, diffCallback: BaseDiffCallback<T> = BaseDiffCallback(this.items, items)) {
         val diffResult = DiffUtil.calculateDiff(diffCallback, false)
         diffResult.dispatchUpdatesTo(this)
         this.items = items

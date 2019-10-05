@@ -12,6 +12,8 @@
 
         <import type="java.util.concurrent.TimeUnit" />
 
+        <import type="android.view.View" />
+
         <variable
             name="recentlyPlayed"
             type="com.jadebyte.jadeplayer.main.explore.RecentlyPlayed" />
@@ -55,22 +57,36 @@
             android:textSize="@dimen/text_size_x_small"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guideLine"
-            app:layout_constraintEnd_toStartOf="@+id/songDuration"
+            app:layout_constraintEnd_toStartOf="@+id/nowPlaying"
             app:layout_constraintStart_toEndOf="@+id/sharableView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.9"
             tools:text="Midnight Dogs" />
 
         <TextView
+            android:id="@+id/nowPlaying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playing_now"
+            android:textAllCaps="true"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="bold"
+            android:visibility="@{recentlyPlayed.playing? View.VISIBLE: View.GONE}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/songArtist"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
             android:id="@+id/songTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{recentlyPlayed.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/songArtist"
+            app:layout_constraintEnd_toStartOf="@+id/songDuration"
             app:layout_constraintStart_toStartOf="@+id/songArtist"
             app:layout_constraintTop_toBottomOf="@+id/guideLine"
             app:layout_constraintVertical_bias="0.1"
@@ -85,9 +101,8 @@
             android:maxLines="1"
             android:text="@{DateUtils.formatElapsedTime(TimeUnit.MILLISECONDS.toSeconds(recentlyPlayed.duration))}"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/songTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="04:57 " />
 
         <androidx.constraintlayout.widget.Guideline

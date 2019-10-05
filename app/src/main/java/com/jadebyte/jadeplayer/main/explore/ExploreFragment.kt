@@ -74,6 +74,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
                     }
                 }
                 playedList = it
+                playedList.forEachIndexed { index, played -> played.isPlaying = index == 0 }
                 (playedRV.adapter as BaseAdapter<RecentlyPlayed>).updateItems(playedList)
             })
         }

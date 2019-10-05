@@ -4,6 +4,7 @@ package com.jadebyte.jadeplayer.main.explore
 
 import android.support.v4.media.MediaMetadataCompat
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.jadebyte.jadeplayer.main.common.data.Model
 import com.jadebyte.jadeplayer.main.playback.duration
@@ -25,8 +26,20 @@ data class RecentlyPlayed(
     val album: String,
     val title: String,
     val duration: Long,
-    val entryDate: Long
+    val entryDate: Long,
+    @Ignore
+    var isPlaying: Boolean = false
 ) : Model() {
+
+    constructor(
+        id: String,
+        path: String,
+        artist: String,
+        album: String,
+        title: String,
+        duration: Long,
+        entryDate: Long
+    ) : this(id, path, artist, album, title, duration, entryDate, false)
 
     constructor(meta: MediaMetadataCompat) : this(
         id = meta.id!!,
@@ -35,6 +48,7 @@ data class RecentlyPlayed(
         title = meta.title ?: "",
         album = meta.description.description?.toString() ?: "",
         duration = meta.duration,
-        entryDate = System.currentTimeMillis()
+        entryDate = System.currentTimeMillis(),
+        isPlaying = false
     )
 }

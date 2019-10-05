@@ -67,5 +67,18 @@ data class MediaItemData(
         return id.hashCode()
     }
 
+    fun areContentsTheSame(other: MediaItemData?): Boolean {
+        if (this != other) return false
+        return id == other.id
+                && title == other.title
+                && subtitle == other.subtitle
+                && duration == other.duration
+                && isPlaying == other.isPlaying
+                && albumArtUri == other.albumArtUri
+                && description == other.description
+                && isBrowsable == other.isBrowsable
+                && isBuffering == other.isBuffering
+    }
+
 
 }
