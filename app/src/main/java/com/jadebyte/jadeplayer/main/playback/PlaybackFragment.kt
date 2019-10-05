@@ -128,9 +128,10 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun showMenuBottomSheet() {
-        //        val action =
-        //            PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(items[viewPager.currentItem])
-        //        findNavController().navigate(action)
+        val mediaItem = viewModel.currentItem.value ?: return
+        val action =
+            PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(mediaItem)
+        findNavController().navigate(action)
     }
 
     private fun closeLyrics() {

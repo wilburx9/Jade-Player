@@ -13,16 +13,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.view.BaseMenuBottomSheet
+import com.jadebyte.jadeplayer.main.playback.MediaItemData
 
 
 class SongsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
 
-    lateinit var song: Song
+    lateinit var mediaItem: MediaItemData
     @IdRes var popUpTo: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        song = arguments!!.getParcelable("mediaItem")!!
+        mediaItem = arguments!!.getParcelable("mediaItem")!!
         popUpTo = arguments!!.getInt("popUpTo")
     }
 
@@ -49,7 +50,7 @@ class SongsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
 
     private fun addTrackToPlayList() {
         val selection = "$basicSongsSelection AND ${MediaStore.Audio.Media._ID} = ?"
-        val selectionArgs = arrayOf(basicSongsSelectionArg, song.id.toString())
+        val selectionArgs = arrayOf(basicSongsSelectionArg, mediaItem.id)
         val action = SongsMenuBottomSheetDialogFragmentDirections
             .actionSongsMenuBottomSheetDialogFragmentToAddSongsToPlaylistsFragment(selectionArgs, selection)
         val navOptions = NavOptions.Builder().setPopUpTo(popUpTo, false).build()
