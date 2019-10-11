@@ -18,11 +18,11 @@ import com.jadebyte.jadeplayer.databinding.FragmentBottomPlaybackBinding
 import com.jadebyte.jadeplayer.main.MainFragmentDirections
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_bottom_playback.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class BottomPlaybackFragment : BaseFragment() {
 
-    private val viewModel: PlaybackViewModel by viewModel()
+    private val viewModel: PlaybackViewModel by sharedViewModel()
 
 
     override fun onCreateView(

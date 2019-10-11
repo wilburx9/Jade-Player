@@ -39,6 +39,9 @@ inline val MediaMetadataCompat.duration
 inline val MediaMetadataCompat.album: String?
     get() = getString(MediaMetadataCompat.METADATA_KEY_ALBUM)
 
+inline val MediaMetadataCompat.albumId: Long
+    get() = getLong(METADATA_KEY_ALBUM_ID)
+
 inline val MediaMetadataCompat.author: String?
     get() = getString(MediaMetadataCompat.METADATA_KEY_AUTHOR)
 
@@ -154,6 +157,13 @@ inline var MediaMetadataCompat.Builder.album: String?
         putString(MediaMetadataCompat.METADATA_KEY_ALBUM, value)
     }
 
+inline var MediaMetadataCompat.Builder.albumId: Long
+    @Deprecated(NO_GET, level = DeprecationLevel.ERROR)
+    get() = throw IllegalAccessException("Cannot get from MediaMetadataCompat.Builder")
+    set(value) {
+        putLong(METADATA_KEY_ALBUM_ID, value)
+    }
+
 inline var MediaMetadataCompat.Builder.duration: Long
     @Deprecated(NO_GET, level = DeprecationLevel.ERROR)
     get() = throw IllegalAccessException("Cannot get from MediaMetadataCompat.Builder")
@@ -261,6 +271,7 @@ fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long, art: Bitmap?):
     val songTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
     val songArtist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
     val songAlbum = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))
+    val songAlbumId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
     val artWorkUri = ContentUris.withAppendedId(
         Utils.artworkUri,
         cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
@@ -273,6 +284,7 @@ fun MediaMetadataCompat.Builder.from(cursor: Cursor, count: Long, art: Bitmap?):
     title = songTitle
     artist = songArtist
     album = songAlbum
+    albumId = songAlbumId
     duration = durationMs
     mediaUri = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
     trackNumber = songNumber
@@ -320,3 +332,4 @@ fun List<MediaMetadataCompat>.toMediaSource(
  * [MediaItem.FLAG_PLAYABLE].
  */
 const val METADATA_KEY_FLAGS = "com.jadebyte.jadeplayer.playback.METADATA_KEY_FLAGS"
+const val METADATA_KEY_ALBUM_ID = "com.jadebyte.jadeplayer.playback.METADATA_KEY_ALBUM_ID"

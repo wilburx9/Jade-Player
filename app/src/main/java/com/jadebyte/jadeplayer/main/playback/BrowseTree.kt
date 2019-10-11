@@ -79,7 +79,7 @@ class BrowseTree(context: Context, musicSource: MusicSource) {
         rootList += artistsMetadata
         mediaIdToChildren[Constants.BROWSABLE_ROOT] = rootList
         musicSource.forEach {
-            val albumMediaId = it.album.urlEncoded
+            val albumMediaId = it.albumId.urlEncoded
             val albumChildren = mediaIdToChildren[albumMediaId] ?: buildAlbumRoot(it)
             albumChildren += it
 
@@ -102,7 +102,7 @@ class BrowseTree(context: Context, musicSource: MusicSource) {
      */
     private fun buildAlbumRoot(metadata: MediaMetadataCompat): MutableList<MediaMetadataCompat> {
         val albumMetadata = MediaMetadataCompat.Builder().apply {
-            id = metadata.album.urlEncoded
+            id = metadata.albumId.urlEncoded
             title = metadata.album
             artist = metadata.artist
             albumArt = metadata.albumArt

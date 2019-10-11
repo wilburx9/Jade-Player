@@ -10,18 +10,17 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
-import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.MediaItemDataDiffCallback
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_current_songs.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
-    private val viewModel: PlaybackViewModel by viewModel()
+    private val viewModel: PlaybackViewModel by sharedViewModel()
     private var items = emptyList<MediaItemData>()
 
 
@@ -29,7 +28,7 @@ class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_current_songs, container, false)
+        return inflater.inflate(com.jadebyte.jadeplayer.R.layout.fragment_current_songs, container, false)
     }
 
 
@@ -41,7 +40,7 @@ class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
     private fun setupViewViews() {
         currentRV.layoutManager = LinearLayoutManager(activity)
-        val adapter = BaseAdapter(items, activity!!, R.layout.item_current, BR.mediaItem, this, null)
+        val adapter = BaseAdapter(items, activity!!, com.jadebyte.jadeplayer.R.layout.item_current, BR.mediaItem, this, null)
         currentRV.adapter = adapter
     }
 
@@ -55,7 +54,7 @@ class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
         viewModel.currentItem.observe(viewLifecycleOwner, Observer {
             val index = items.indexOf(it)
             if (index < 0) return@Observer
-            currentRV.smoothScrollToPosition(index)
+            currentRV.scrollToPosition(index)
         })
     }
 

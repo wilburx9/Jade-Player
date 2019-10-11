@@ -184,6 +184,7 @@ inline val String?.urlEncoded: String
         @Suppress("deprecation")
         URLEncoder.encode(this ?: "")
     }
+internal val Long.urlEncoded: String get() = this.toString().urlEncoded
 
 fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
     observe(lifecycleOwner, object : Observer<T> {

@@ -11,12 +11,15 @@ import android.support.v4.media.MediaBrowserCompat.SubscriptionCallback
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.*
+import com.jadebyte.jadeplayer.common.urlEncoded
+import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRepository
 import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * Created by Wilberforce on 2019-05-18 at 21:55.
@@ -49,6 +52,7 @@ class PlaybackViewModel(
         MutableLiveData<Long>().apply { value = preferences.getLong(Constants.LAST_POSITION, 0) }
     private var updatePosition = true
     private val handler = Handler(Looper.getMainLooper())
+    private var playAfterLoad = false
 
     val mediaItems: LiveData<List<MediaItemData>> = _mediaItems
     val currentItem: LiveData<MediaItemData?> = _currentItem
@@ -83,6 +87,12 @@ class PlaybackViewModel(
             transportControls.setRepeatMode(repeatMode.value!!)
             transportControls.setShuffleMode(shuffleMode.value!!)
         }
+    }
+
+    fun playAlbum(album: Album) {
+        playAfterLoad = true
+        mediaSessionConnection.unsubscribe(mediaId, subscriptionCallback)
+        mediaSessionConnection.subscribe(album.id.urlEncoded, subscriptionCallback)
     }
 
     fun seek(time: Long) {
@@ -171,8 +181,8 @@ class PlaybackViewModel(
         } else {
             // Only update media item once we have duration available
             if (metadata.duration != 0L && items.isNotEmpty()) {
-                val matchingItem = items.first { it.id == metadata.id }
-                matchingItem.apply {
+                val matchingItem = items.firstOrNull { it.id == metadata.id }
+                matchingItem?.apply {
                     isPlaying = state.isPlaying
                     isBuffering = state.isBuffering
                     duration = metadata.duration
@@ -207,10 +217,15 @@ class PlaybackViewModel(
                         current.duration = value?.duration ?: 0
                     }
                 }
+                children.forEach { Timber.w("Posting: ${it.description.title}") }
                 _mediaItems.postValue(items)
                 _currentItem.postValue(current)
                 // Re-post the media position so views like SeekBars can pickup the new view
                 _mediaPosition.postValue(mediaPosition.value)
+                if (playAfterLoad && current != null) {
+                    playMediaId(current.id)
+                    playAfterLoad = false
+                }
             }
         }
     }

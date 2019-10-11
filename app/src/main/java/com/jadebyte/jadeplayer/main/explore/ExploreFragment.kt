@@ -118,7 +118,7 @@ class ExploreFragment : Fragment(), OnItemClickListener {
 
     override fun onItemLongClick(position: Int) {
         val action =
-            ExploreFragmentDirections.actionExploreFragmentToAlbumsMenuBottomSheetDialogFragment(album = albums[0])
+            ExploreFragmentDirections.actionExploreFragmentToAlbumsMenuBottomSheetDialogFragment(album = albums[position])
         findNavController().navigate(action)
     }
 }

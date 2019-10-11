@@ -28,14 +28,14 @@ import com.jadebyte.jadeplayer.main.common.callbacks.AnimatorListener
 import com.jadebyte.jadeplayer.main.common.callbacks.OnSeekBarChangeListener
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_playback.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.concurrent.TimeUnit
 
 
 class PlaybackFragment : BaseFragment(), View.OnClickListener {
 
     private var userTouchingSeekBar = false
-    private val viewModel: PlaybackViewModel by viewModel()
+    private val viewModel: PlaybackViewModel by sharedViewModel()
     private lateinit var rotationAnimSet: AnimatorSet
     private val handler = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {

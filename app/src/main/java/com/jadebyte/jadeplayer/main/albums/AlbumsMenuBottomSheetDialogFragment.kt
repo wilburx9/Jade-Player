@@ -13,14 +13,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.view.BaseMenuBottomSheet
+import com.jadebyte.jadeplayer.main.playback.PlaybackViewModel
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelection
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelectionArg
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class AlbumsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
 
     lateinit var album: Album
     @IdRes var popUpTo: Int = 0
+    private val viewModel: PlaybackViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,7 @@ class AlbumsMenuBottomSheetDialogFragment : BaseMenuBottomSheet() {
     }
 
     private fun play() {
+        viewModel.playAlbum(album)
         findNavController().popBackStack()
     }
 
