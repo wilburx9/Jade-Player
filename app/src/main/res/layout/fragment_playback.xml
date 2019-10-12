@@ -323,7 +323,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/accent_circle"
             android:inAnimation="@anim/fade_in"
-            android:onClick="@{(v) -> viewModel.playCurrent()}"
+            android:onClick="@{(v) -> viewModel.playPause()}"
             android:outAnimation="@anim/fade_out"
             android:padding="@dimen/padding_x_large"
             app:layout_constraintBottom_toTopOf="@+id/shuffleButton"

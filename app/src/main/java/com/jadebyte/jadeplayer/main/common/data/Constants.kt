@@ -44,12 +44,11 @@ object Constants {
     const val NETWORK_FAILURE = "com.jadebyte.jadeplayer.playback.NETWORK_FAILURE"
     const val LAST_SHUFFLE_MODE = "com.jadebyte.jadeplayer.playback.LAST_SHUFFLE_MODE"
     const val LAST_REPEAT_MODE = "com.jadebyte.jadeplayer.playback.LAST_REPEAT_MODE"
-    const val LAST_URI = "com.jadebyte.jadeplayer.playback.LAST_URI"
     const val LAST_ID = "com.jadebyte.jadeplayer.playback.LAST_ID"
     const val LAST_POSITION = "com.jadebyte.jadeplayer.playback.LAST_POSITION"
-    const val LAST_SELECTION = "com.jadebyte.jadeplayer.playback.LAST_SELECTION"
-    const val LAST_SELECTION_ARGS = "com.jadebyte.jadeplayer.playback.LAST_SELECTION_ARGS"
-    const val LAST_SORT_ORDER = "com.jadebyte.jadeplayer.playback.LAST_SORT_ORDER"
+    const val LAST_PARENT_ID = "com.jadebyte.jadeplayer.playback.LAST_PARENT_ID"
+    const val PLAY_FIRST = "com.jadebyte.jadeplayer.playback.PLAY_FIRST"
+    const val PLAY_RANDOM = "com.jadebyte.jadeplayer.playback.PLAY_RANDOM"
     const val PLAYBACK_NOTIFICATION: Int = 0xb2017
 
     // Other constants

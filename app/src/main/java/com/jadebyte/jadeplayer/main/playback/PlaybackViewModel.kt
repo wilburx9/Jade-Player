@@ -19,7 +19,6 @@ import com.jadebyte.jadeplayer.main.explore.RecentlyPlayedRoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 /**
  * Created by Wilberforce on 2019-05-18 at 21:55.
@@ -27,8 +26,7 @@ import timber.log.Timber
 class PlaybackViewModel(
     application: Application,
     mediaSessionConnection: MediaSessionConnection,
-    private val preferences: SharedPreferences,
-    private val mediaId: String
+    private val preferences: SharedPreferences
 ) :
     AndroidViewModel(application) {
 
@@ -52,7 +50,7 @@ class PlaybackViewModel(
         MutableLiveData<Long>().apply { value = preferences.getLong(Constants.LAST_POSITION, 0) }
     private var updatePosition = true
     private val handler = Handler(Looper.getMainLooper())
-    private var playAfterLoad = false
+    private var playMediaAfterLoad: String? = null
 
     val mediaItems: LiveData<List<MediaItemData>> = _mediaItems
     val currentItem: LiveData<MediaItemData?> = _currentItem
@@ -67,7 +65,13 @@ class PlaybackViewModel(
         playedRepository = RecentlyPlayedRepository(recentlyPlayed)
     }
 
-    fun playCurrent() = playMediaId(currentItem.value?.id)
+    fun playPause() {
+        if (mediaSessionConnection.playbackState.value?.isPlayingOrBuffering == true) {
+            mediaSessionConnection.transportControls.pause()
+        } else {
+            playMediaId(currentItem.value?.id)
+        }
+    }
 
     fun playMediaId(mediaId: String?) {
         if (mediaId == null) return
@@ -76,11 +80,8 @@ class PlaybackViewModel(
 
         val isPrepared = mediaSessionConnection.playbackState.value?.isPrepared ?: false
         if (isPrepared && mediaId == nowPlaying?.id) {
-            mediaSessionConnection.playbackState.value?.let {
-                when {
-                    it.isPlayingOrBuffering -> transportControls.pause()
-                    it.isPauseEnabled -> transportControls.play()
-                }
+            if (mediaSessionConnection.playbackState.value?.isPauseEnabled == true) {
+                mediaSessionConnection.transportControls.play()
             }
         } else {
             transportControls.playFromMediaId(mediaId, null)
@@ -89,10 +90,28 @@ class PlaybackViewModel(
         }
     }
 
-    fun playAlbum(album: Album) {
-        playAfterLoad = true
-        mediaSessionConnection.unsubscribe(mediaId, subscriptionCallback)
-        mediaSessionConnection.subscribe(album.id.urlEncoded, subscriptionCallback)
+    fun playAlbum(album: Album, playId: String = Constants.PLAY_FIRST) {
+        val parentId = lastParendId
+        val list = mediaItems.value
+        if (parentId == album.id.urlEncoded && list != null) {
+            playMediaId(getItemFrmPlayId(playId, list)?.id)
+        } else {
+            playMediaAfterLoad = playId
+            mediaSessionConnection.unsubscribe(parentId, subscriptionCallback)
+            mediaSessionConnection.subscribe(album.id.urlEncoded, subscriptionCallback)
+        }
+    }
+
+    fun playAll(playId: String = Constants.PLAY_RANDOM) {
+        val parentId = lastParendId
+        val list = mediaItems.value
+        if (parentId == Constants.SONGS_ROOT && list != null) {
+            playMediaId(getItemFrmPlayId(playId, list)?.id)
+        } else {
+            playMediaAfterLoad = playId
+            mediaSessionConnection.unsubscribe(parentId, subscriptionCallback)
+            mediaSessionConnection.subscribe(Constants.SONGS_ROOT, subscriptionCallback)
+        }
     }
 
     fun seek(time: Long) {
@@ -200,9 +219,13 @@ class PlaybackViewModel(
     private val subscriptionCallback = object : SubscriptionCallback() {
         override fun onChildrenLoaded(parentId: String, children: MutableList<MediaBrowserCompat.MediaItem>) {
             val items = children.map { MediaItemData(it, isItemPlaying(it.mediaId!!), isItemBuffering(it.mediaId!!)) }
-            val current = (items.firstOrNull { it.isPlaying }
-                ?: items.firstOrNull { it.id == preferences.getString(Constants.LAST_ID, null) }
-                ?: items.firstOrNull())
+            val current = if (!playMediaAfterLoad.isNullOrBlank()) {
+                getItemFrmPlayId(playMediaAfterLoad!!, items)
+            } else {
+                (items.firstOrNull { it.isPlaying }
+                    ?: items.firstOrNull { it.id == preferences.getString(Constants.LAST_ID, null) }
+                    ?: items.firstOrNull())
+            }
 
             viewModelScope.launch {
                 // Let's get the duration of the current playing song if it's the same as our filter above
@@ -217,16 +240,24 @@ class PlaybackViewModel(
                         current.duration = value?.duration ?: 0
                     }
                 }
-                children.forEach { Timber.w("Posting: ${it.description.title}") }
                 _mediaItems.postValue(items)
                 _currentItem.postValue(current)
                 // Re-post the media position so views like SeekBars can pickup the new view
                 _mediaPosition.postValue(mediaPosition.value)
-                if (playAfterLoad && current != null) {
+
+                if (!playMediaAfterLoad.isNullOrBlank() && current != null) {
                     playMediaId(current.id)
-                    playAfterLoad = false
+                    playMediaAfterLoad = null
                 }
             }
+        }
+    }
+
+    private fun getItemFrmPlayId(playId: String, items: List<MediaItemData>): MediaItemData? {
+        return when (playId) {
+            Constants.PLAY_FIRST -> items.firstOrNull()
+            Constants.PLAY_RANDOM -> items.random()
+            else -> items.firstOrNull { it.id == playId }
         }
     }
 
@@ -259,7 +290,7 @@ class PlaybackViewModel(
      *  which can also change [MediaItemData.isPlaying]s in the list.
      */
     private val mediaSessionConnection = mediaSessionConnection.also {
-        it.subscribe(mediaId, subscriptionCallback)
+        it.subscribe(lastParendId, subscriptionCallback)
         it.playbackState.observeForever(playbackStateObserver)
         it.nowPlaying.observeForever(mediaMetadataObserver)
         it.repeatMode.observeForever(repeatObserver)
@@ -305,6 +336,8 @@ class PlaybackViewModel(
 
         handler.removeCallbacksAndMessages(null)
     }
+
+    private val lastParendId: String get() = preferences.getString(Constants.LAST_PARENT_ID, Constants.SONGS_ROOT)!!
 
 }
 

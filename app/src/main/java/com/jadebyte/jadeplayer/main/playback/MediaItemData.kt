@@ -27,6 +27,8 @@ data class MediaItemData(
     var duration: Long = 0L
 ) : Model(), Parcelable {
 
+    val playingOrBuffering get() = isPlaying || isBuffering
+
     constructor(item: MediaItem, isPlaying: Boolean, isBuffering: Boolean) : this(
         id = item.mediaId!!,
         title = item.description.title!!.toString(),

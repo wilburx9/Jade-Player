@@ -7,7 +7,6 @@ import android.content.ComponentName
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.jadebyte.jadeplayer.main.common.data.CloudKeys
-import com.jadebyte.jadeplayer.main.common.data.Constants
 import com.jadebyte.jadeplayer.main.common.network.DelegatingSocketFactory
 import com.jadebyte.jadeplayer.main.common.network.HttpInterceptor
 import com.jadebyte.jadeplayer.main.common.network.image.ImageUrlFetcher
@@ -36,7 +35,7 @@ val commonModule = module {
     single { ImageUrlFetcher(get(), get(), get(), get()) }
     single { MediaSessionConnection.getInstance(get(), ComponentName(get(), PlaybackService::class.java), get()) }
     viewModel { NavViewModel(get()) }
-    viewModel { PlaybackViewModel(get(), get(), get(), Constants.SONGS_ROOT)}
+    viewModel { PlaybackViewModel(get(), get(), get())}
     single {
         OkHttpClient.Builder()
             .socketFactory(DelegatingSocketFactory(SocketFactory.getDefault()))

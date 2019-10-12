@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.media.MediaBrowserCompat.MediaItem
@@ -104,7 +103,10 @@ class PlaybackService : MediaBrowserServiceCompat() {
 
         // The media library is built from the MediaStore. We'll create the source here, and then use
         // a suspend function to perform the query and initialization off the main thread
-        mediaSource = initMediaSource()
+        mediaSource = MediaStoreSource(
+            this, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, basicSongsSelection, arrayOf(basicSongsSelectionArg),
+            basicSongsOrder
+        )
         serviceScope.launch {
             mediaSource.load()
         }
@@ -124,9 +126,6 @@ class PlaybackService : MediaBrowserServiceCompat() {
             it.setPlaybackPreparer(playbackPreparer)
             it.setQueueNavigator(QueueNavigator(mediaSession))
         }
-
-        exoPlayer.repeatMode = 0
-
         packageValidator = PackageValidator(this, R.xml.allowed_media_browser_callers)
     }
 
@@ -230,16 +229,6 @@ class PlaybackService : MediaBrowserServiceCompat() {
         }
     }
 
-    // We are creating the MediaSource with the query parameters used from the last created playback
-    private fun initMediaSource(): MusicSource {
-        val uri =
-            Uri.parse(preferences.getString(Constants.LAST_URI, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString()))
-        val selectionArgs =
-            preferences.getStringSet(Constants.LAST_SELECTION_ARGS, mutableSetOf(basicSongsSelectionArg))
-        val selection = preferences.getString(Constants.LAST_SELECTION, basicSongsSelection)
-        val sortOrder = preferences.getString(Constants.LAST_SORT_ORDER, basicSongsOrder)
-        return MediaStoreSource(this, uri, selection!!, selectionArgs!!.toTypedArray(), sortOrder!!)
-    }
 
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
         val notificationTarget = NotificationTarget()

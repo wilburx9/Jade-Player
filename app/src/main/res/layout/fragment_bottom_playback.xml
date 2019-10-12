@@ -110,7 +110,7 @@
             android:layout_marginEnd="@dimen/margin_medium"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/play_and_pause_button"
-            android:onClick="@{(v) -> viewModel.playCurrent()}"
+            android:onClick="@{(v) -> viewModel.playPause()}"
             android:padding="@dimen/padding_large"
             android:src="@{viewModel.currentItem.playing? @drawable/ic_pause_tertiary :@drawable/ic_play_tertiary }"
             app:layout_constraintEnd_toStartOf="@+id/nextButton"

@@ -121,4 +121,11 @@ class ExploreFragment : Fragment(), OnItemClickListener {
             ExploreFragmentDirections.actionExploreFragmentToAlbumsMenuBottomSheetDialogFragment(album = albums[position])
         findNavController().navigate(action)
     }
+
+
+    override fun onDestroyView() {
+        randomAlbumsRV.adapter = null
+        playedRV.adapter = null
+        super.onDestroyView()
+    }
 }

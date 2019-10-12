@@ -19,12 +19,15 @@ import com.jadebyte.jadeplayer.databinding.FragmentAlbumSongsBinding
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
+import com.jadebyte.jadeplayer.main.playback.PlaybackViewModel
 import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.android.synthetic.main.fragment_album_songs.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AlbumSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickListener {
 
     private lateinit var viewModel: AlbumSongsViewModel
+    private val playbackViewModel: PlaybackViewModel by sharedViewModel()
     private lateinit var album: Album
     private var items = emptyList<Song>()
 
@@ -87,6 +90,6 @@ class AlbumSongsFragment : BaseFragment(), OnItemClickListener, View.OnClickList
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {
-
+        playbackViewModel.playAlbum(album, items[position].id.toString())
     }
 }
