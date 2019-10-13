@@ -11,6 +11,7 @@ import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
 import com.jadebyte.jadeplayer.main.genres.Genre
 import com.jadebyte.jadeplayer.main.playlist.Playlist
+import com.jadebyte.jadeplayer.main.playlist.PlaylistRepository
 import com.jadebyte.jadeplayer.main.songs.Song
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     val playlistResults: LiveData<List<Playlist>> get() = _playlists
 
     val repository = SearchRepository(application)
+    val playlistRepository = PlaylistRepository(application)
 
     fun query(query: String, ascend: Boolean) {
         viewModelScope.launch {
@@ -43,7 +45,11 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             val albums = async { repository.queryAlbums(query, ascend) }
             val artists = async { repository.queryArtists(query, ascend) }
             val genres = async { repository.queryGenres(query, ascend) }
-            val playlists = async { repository.queryPlaylists(query, ascend) }
+            val playlists = async {
+                repository.queryPlaylists(query, ascend).apply {
+                    this.forEach { it.songsCount = playlistRepository.fetchSongCount(it.id) }
+                }
+            }
 
             _songs.value = songs.await()
             _albums.value = albums.await()
