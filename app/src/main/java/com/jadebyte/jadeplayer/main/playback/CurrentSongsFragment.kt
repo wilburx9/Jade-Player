@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jadebyte.jadeplayer.BR
+import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.MediaItemDataDiffCallback
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
@@ -28,7 +29,7 @@ class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(com.jadebyte.jadeplayer.R.layout.fragment_current_songs, container, false)
+        return inflater.inflate(R.layout.fragment_current_songs, container, false)
     }
 
 
@@ -40,7 +41,7 @@ class CurrentSongsFragment : BaseFragment(), OnItemClickListener {
 
     private fun setupViewViews() {
         currentRV.layoutManager = LinearLayoutManager(activity)
-        val adapter = BaseAdapter(items, activity!!, com.jadebyte.jadeplayer.R.layout.item_current, BR.mediaItem, this, null)
+        val adapter = BaseAdapter(items, activity!!,R.layout.item_current, BR.mediaItem, this, null)
         currentRV.adapter = adapter
     }
 

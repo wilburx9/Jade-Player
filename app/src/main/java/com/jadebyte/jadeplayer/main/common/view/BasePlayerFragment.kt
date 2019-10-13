@@ -34,7 +34,7 @@ abstract class BasePlayerFragment<T : Model> : BaseFragment(), View.OnClickListe
     @get: StringRes open var titleRes: Int = -1
     @get: LayoutRes abstract var itemLayoutId: Int
     abstract var viewModelVariableId: Int
-    open var adapterItemAnimList = setOf(R.anim.up_from_bottom, R.anim.down_from_top)
+    open var adapterItemAnimSet = setOf(R.anim.up_from_bottom, R.anim.down_from_top)
     open var longClickItems = false
 
 
@@ -81,7 +81,7 @@ abstract class BasePlayerFragment<T : Model> : BaseFragment(), View.OnClickListe
         val adapter =
             BaseAdapter(
                 items, activity!!, itemLayoutId, viewModelVariableId, this,
-                adapterItemAnimList, longClickItems
+                adapterItemAnimSet, longClickItems
             )
         dataRV.adapter = adapter
         dataRV.layoutManager = layoutManager()

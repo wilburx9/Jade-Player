@@ -14,7 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.event.Event
 import com.jadebyte.jadeplayer.main.songs.SongsRepository
-import com.jadebyte.jadeplayer.main.songs.basicSongUri
+import com.jadebyte.jadeplayer.main.songs.baseSongUri
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelection
 import com.jadebyte.jadeplayer.main.songs.basicSongsSelectionArgs
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +38,7 @@ class AddSongsToPlaylistsViewModel(application: Application) : PlaylistViewModel
     override fun init(
         vararg params: Any?
     ) {
-        this.songsUri = params[0] as Uri? ?: basicSongUri
+        this.songsUri = params[0] as Uri? ?: baseSongUri
         this.songsSelection = params[1] as String? ?: basicSongsSelection
         this.songsSelectionArgs = params[2] as Array<String>? ?: basicSongsSelectionArgs
 

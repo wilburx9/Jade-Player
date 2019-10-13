@@ -21,6 +21,7 @@ import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
 import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.fragment_genres.*
+import java.util.*
 
 
 class GenresFragment : BaseFragment(), OnItemClickListener {
@@ -64,7 +65,7 @@ class GenresFragment : BaseFragment(), OnItemClickListener {
             it.findNavController().navigate(R.id.action_genresFragment_to_navigationDialogFragment)
         }
         fastScroller.setupWithRecyclerView(genresRV, {
-            FastScrollItemIndicator.Text(items[it].name.substring(0, 1).toUpperCase())
+            FastScrollItemIndicator.Text(items[it].name.substring(0, 1).toUpperCase(Locale.getDefault()))
         })
         fastScrollerThumb.setupWithFastScroller(fastScroller)
     }
@@ -88,4 +89,5 @@ class GenresFragment : BaseFragment(), OnItemClickListener {
         findNavController().navigate(action)
 
     }
+
 }

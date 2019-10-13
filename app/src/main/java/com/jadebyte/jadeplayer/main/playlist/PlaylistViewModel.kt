@@ -7,7 +7,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.lifecycle.viewModelScope
 import com.hunter.library.debug.HunterDebug
-import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
+import com.jadebyte.jadeplayer.main.common.data.MediaStoreRepository
 import com.jadebyte.jadeplayer.main.common.view.BaseMediaStoreViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,17 +18,13 @@ import kotlinx.coroutines.withContext
  */
 open class PlaylistViewModel(application: Application) : BaseMediaStoreViewModel<Playlist>(application) {
 
-    override var repository: BaseMediaStoreRepository<Playlist> = PlaylistRepository(application)
+    override var repository: MediaStoreRepository<Playlist> = PlaylistRepository(application)
 
     override var sortOrder: String? = "${MediaStore.Audio.Playlists.DATE_MODIFIED} COLLATE NOCASE DESC"
 
-    override var uri: Uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI
+    override var uri: Uri = basePlaylistUri
 
-    override var projection: Array<String>? = arrayOf(
-        MediaStore.Audio.Playlists._ID,
-        MediaStore.Audio.Playlists.NAME,
-        MediaStore.Audio.Playlists.DATE_MODIFIED
-    )
+    override var projection: Array<String>? = basePlaylistProjection
 
 
     override fun init(vararg params: Any?) {
@@ -62,3 +58,11 @@ open class PlaylistViewModel(application: Application) : BaseMediaStoreViewModel
     }
 
 }
+
+val basePlaylistProjection = arrayOf(
+    MediaStore.Audio.Playlists._ID,
+    MediaStore.Audio.Playlists.NAME,
+    MediaStore.Audio.Playlists.DATE_MODIFIED
+)
+
+val  basePlaylistUri: Uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI

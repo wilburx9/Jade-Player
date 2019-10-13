@@ -5,7 +5,7 @@ package com.jadebyte.jadeplayer.main.songs
 import android.app.Application
 import android.net.Uri
 import android.provider.MediaStore
-import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
+import com.jadebyte.jadeplayer.main.common.data.MediaStoreRepository
 import com.jadebyte.jadeplayer.main.common.view.BaseMediaStoreViewModel
 
 /**
@@ -13,7 +13,7 @@ import com.jadebyte.jadeplayer.main.common.view.BaseMediaStoreViewModel
  */
 open class SongsViewModel(application: Application) : BaseMediaStoreViewModel<Song>(application) {
 
-    override var repository: BaseMediaStoreRepository<Song> = SongsRepository(application)
+    override var repository: MediaStoreRepository<Song> = SongsRepository(application)
 
     override var selection: String? = basicSongsSelection
 
@@ -21,12 +21,12 @@ open class SongsViewModel(application: Application) : BaseMediaStoreViewModel<So
 
     override var sortOrder: String? = basicSongsOrder
 
-    override var uri: Uri = basicSongUri
+    override var uri: Uri = baseSongUri
 
-    override var projection: Array<String>? = basicSongsProjection
+    override var projection: Array<String>? = baseSongsProjection
 }
 
-val basicSongsProjection = arrayOf(
+val baseSongsProjection = arrayOf(
     MediaStore.Audio.Media.TITLE,
     MediaStore.Audio.Media.ARTIST,
     MediaStore.Audio.Media.ALBUM_ID,
@@ -47,7 +47,7 @@ const val basicSongsOrder = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ASC"
 
 const val basicSongsSelection = "${MediaStore.Audio.Media.IS_MUSIC} != ?"
 
-val basicSongUri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+val baseSongUri: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 
 val basicSongsSelectionArgs get() = arrayOf(basicSongsSelectionArg)
 

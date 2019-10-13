@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -18,10 +17,11 @@ import com.jadebyte.jadeplayer.BR
 import com.jadebyte.jadeplayer.R
 import com.jadebyte.jadeplayer.main.common.callbacks.OnItemClickListener
 import com.jadebyte.jadeplayer.main.common.view.BaseAdapter
+import com.jadebyte.jadeplayer.main.common.view.BaseFragment
 import kotlinx.android.synthetic.main.fragment_artists.*
 import kotlinx.android.synthetic.main.fragment_explore.navigationIcon
 
-class ArtistsFragment : Fragment(), OnItemClickListener {
+class ArtistsFragment : BaseFragment(), OnItemClickListener {
 
     private var items: List<Artist> = emptyList()
     private lateinit var viewModel: ArtistsViewModel

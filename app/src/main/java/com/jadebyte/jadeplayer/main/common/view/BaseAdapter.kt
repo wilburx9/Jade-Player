@@ -26,7 +26,7 @@ class BaseAdapter<T : Model>(
     private val layoutId: Int,
     private val variableId: Int,
     private val itemClickListener: OnItemClickListener? = null,
-    private val animList: Set<Int>? = setOf(R.anim.up_from_bottom, R.anim.down_from_top),
+    private val animSet: Set<Int>? = setOf(R.anim.up_from_bottom, R.anim.down_from_top),
     private val longClick: Boolean = false,
     private var variables: SparseArrayCompat<Any>? = null
 ) : RecyclerView.Adapter<BaseViewHolder<T>>() {
@@ -65,17 +65,17 @@ class BaseAdapter<T : Model>(
     }
 
     private fun animateItem(position: Int, holder: RecyclerView.ViewHolder) {
-        if (animList == null || animList.isEmpty()) return
+        if (animSet == null || animSet.isEmpty()) return
 
         val animation = AnimationUtils.loadAnimation(
             context,
-            if (animList.size == 1) {
-                animList.first()
+            if (animSet.size == 1) {
+                animSet.first()
             } else {
                 if (position > lastPosition)
-                    animList.first()
+                    animSet.first()
                 else
-                    animList.elementAt(1)
+                    animSet.elementAt(1)
             }
         )
         holder.itemView.startAnimation(animation)

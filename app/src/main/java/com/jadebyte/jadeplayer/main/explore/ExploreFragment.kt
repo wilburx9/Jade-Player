@@ -101,9 +101,10 @@ class ExploreFragment : Fragment(), OnItemClickListener {
         randomAlbumsRV.layoutManager = layoutManager
 
         val playedAdapter =
-            BaseAdapter(playedList, activity!!, R.layout.item_recently, BR.recentlyPlayed, animList = null)
+            BaseAdapter(playedList, activity!!, R.layout.item_recently, BR.recentlyPlayed, animSet = null)
         playedRV.adapter = playedAdapter
         playedRV.layoutManager = LinearLayoutManager(activity)
+        scrollView.isNestedScrollingEnabled = true
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {

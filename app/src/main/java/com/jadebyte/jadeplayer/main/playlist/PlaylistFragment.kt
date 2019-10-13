@@ -66,7 +66,8 @@ class PlaylistFragment : BaseFragment(), OnItemClickListener, View.OnClickListen
 
     private fun setupViews() {
         playlistRV.adapter = BaseAdapter(
-            items, activity!!, R.layout.item_playlist, BR.playlist, this, longClick = true)
+            items, activity!!, R.layout.item_playlist, BR.playlist, this, longClick = true
+        )
         val layoutManager = LinearLayoutManager(activity)
         playlistRV.layoutManager = layoutManager
 
@@ -100,5 +101,4 @@ class PlaylistFragment : BaseFragment(), OnItemClickListener, View.OnClickListen
             )
         }
     }
-
 }

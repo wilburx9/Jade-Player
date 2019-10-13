@@ -14,7 +14,7 @@ import com.hunter.library.debug.HunterDebug
 import com.jadebyte.jadeplayer.main.common.event.Event
 import com.jadebyte.jadeplayer.main.songs.Song
 import com.jadebyte.jadeplayer.main.songs.SongsViewModel
-import com.jadebyte.jadeplayer.main.songs.basicSongsProjection
+import com.jadebyte.jadeplayer.main.songs.baseSongsProjection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 class PlaylistSongsEditorViewModel(application: Application) : SongsViewModel(application) {
     private val playlistSongsRepository = PlaylistSongsRepository(application)
     private val playlistSongsProjection =
-        listOf(*basicSongsProjection, MediaStore.Audio.Playlists.Members.AUDIO_ID).toTypedArray()
+        listOf(*baseSongsProjection, MediaStore.Audio.Playlists.Members.AUDIO_ID).toTypedArray()
     private lateinit var playlistSongsUri: Uri
     private lateinit var initiallySelectedItems: List<Song>
     private val _playlistValue = MutableLiveData<Event<Boolean>>()

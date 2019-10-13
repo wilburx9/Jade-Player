@@ -11,7 +11,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jadebyte.jadeplayer.main.common.data.BaseMediaStoreRepository
+import com.jadebyte.jadeplayer.main.common.data.MediaStoreRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,7 +28,7 @@ abstract class BaseMediaStoreViewModel<T>(application: Application) : AndroidVie
 
     protected val data = MutableLiveData<List<T>>()
     val items: LiveData<List<T>> get() = data
-    abstract var repository: BaseMediaStoreRepository<T>
+    abstract var repository: MediaStoreRepository<T>
     open var projection: Array<String>? = null
     open var selection: String? = null
     open var selectionArgs: Array<String>? = null
