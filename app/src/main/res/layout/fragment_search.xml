@@ -53,6 +53,8 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/filter_results"
         android:padding="@dimen/padding_medium"
+        android:visibility="gone"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
