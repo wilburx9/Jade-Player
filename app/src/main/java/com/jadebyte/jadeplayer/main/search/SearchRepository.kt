@@ -31,7 +31,7 @@ class SearchRepository(application: Application) : BaseMediaStoreRepository(appl
         val selection = "$basicSongsSelection AND ${MediaStore.Audio.Media.TITLE} LIKE ?"
         val selectionArgs = arrayOf(basicSongsSelectionArg, "%$query%")
         val order = "${MediaStore.Audio.Media.TITLE} COLLATE NOCASE ${if (ascend) "ASC" else "DESC"}"
-        return loadData(baseSongUri, baseSongsProjection, selection, selectionArgs, order) { Song(it) }
+        return loadData(baseSongUri, baseSongsProjection, selection, selectionArgs, order, ::Song)
     }
 
     @WorkerThread
@@ -39,7 +39,7 @@ class SearchRepository(application: Application) : BaseMediaStoreRepository(appl
         val selection = "${MediaStore.Audio.Media.ALBUM} LIKE ?"
         val selectionArgs = arrayOf("%$query%")
         val order = "${MediaStore.Audio.Media.ALBUM} COLLATE NOCASE ${if (ascend) "ASC" else "DESC"}"
-        return loadData(baseAlbumUri, baseAlbumProjection, selection, selectionArgs, order) { Album(it) }
+        return loadData(baseAlbumUri, baseAlbumProjection, selection, selectionArgs, order, ::Album)
     }
 
     @WorkerThread
@@ -47,7 +47,7 @@ class SearchRepository(application: Application) : BaseMediaStoreRepository(appl
         val selection = "${MediaStore.Audio.Media.ARTIST} LIKE ?"
         val selectionArgs = arrayOf("%$query%")
         val order = "${MediaStore.Audio.Media.ARTIST} COLLATE NOCASE ${if (ascend) "ASC" else "DESC"}"
-        return loadData(baseArtistUri, baseArtistProjection, selection, selectionArgs, order) { Artist(it) }
+        return loadData(baseArtistUri, baseArtistProjection, selection, selectionArgs, order, ::Artist)
     }
 
     @WorkerThread
@@ -55,7 +55,7 @@ class SearchRepository(application: Application) : BaseMediaStoreRepository(appl
         val selection = "${MediaStore.Audio.Genres.NAME} LIKE ?"
         val selectionArgs = arrayOf("%$query%")
         val order = "${MediaStore.Audio.Genres.NAME} COLLATE NOCASE ${if (ascend) "ASC" else "DESC"}"
-        return loadData(baseGenreUri, baseGenreProjection, selection, selectionArgs, order) { Genre(it) }
+        return loadData(baseGenreUri, baseGenreProjection, selection, selectionArgs, order, ::Genre)
     }
 
 
@@ -64,7 +64,7 @@ class SearchRepository(application: Application) : BaseMediaStoreRepository(appl
         val selection = "${MediaStore.Audio.Playlists.NAME} LIKE ?"
         val selectionArgs = arrayOf("%$query%")
         val order = "${MediaStore.Audio.Playlists.NAME} COLLATE NOCASE ${if (ascend) "ASC" else "DESC"}"
-        return loadData(basePlaylistUri, basePlaylistProjection, selection, selectionArgs, order) { Playlist(it) }
+        return loadData(basePlaylistUri, basePlaylistProjection, selection, selectionArgs, order, ::Playlist)
     }
 
 }

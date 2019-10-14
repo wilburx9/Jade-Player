@@ -26,7 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
  * Created by Wilberforce on 2019-04-21 at 01:48.
  */
 abstract class BasePlayerFragment<T : Model> : BaseFragment(), View.OnClickListener, OnItemClickListener {
-    private val playbackViewModel: PlaybackViewModel by sharedViewModel()
+    val playbackViewModel: PlaybackViewModel by sharedViewModel()
     var items = emptyList<T>()
     lateinit var viewModel: BaseMediaStoreViewModel<T>
     @get: IdRes abstract var navigationFragmentId: Int
@@ -98,6 +98,7 @@ abstract class BasePlayerFragment<T : Model> : BaseFragment(), View.OnClickListe
         }
     }
 
+    // Derived classed will be forced to implemebt this
     abstract override fun onItemClick(position: Int, sharableView: View?)
 
 }

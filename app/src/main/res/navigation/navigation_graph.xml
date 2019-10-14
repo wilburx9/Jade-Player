@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
+    android:label="MainNavFragment"
     app:startDestination="@id/mainFragment">
 
     <fragment
@@ -35,7 +36,7 @@
         android:label="fragment_songs_menu_bottom_sheet_dialog"
         tools:layout="@layout/fragment_songs_menu_bottom_sheet_dialog" >
         <argument
-            android:name="mediaItem"
-            app:argType="com.jadebyte.jadeplayer.main.playback.MediaItemData" />
+            android:name="mediaId"
+            app:argType="long" />
     </dialog>
 </navigation>

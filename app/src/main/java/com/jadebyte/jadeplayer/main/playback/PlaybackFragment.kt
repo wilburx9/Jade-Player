@@ -130,7 +130,7 @@ class PlaybackFragment : BaseFragment(), View.OnClickListener {
     private fun showMenuBottomSheet() {
         val mediaItem = viewModel.currentItem.value ?: return
         val action =
-            PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(mediaItem)
+            PlaybackFragmentDirections.actionPlaybackFragmentToSongsMenuBottomSheetDialogFragment(mediaItem.id.toLong())
         findNavController().navigate(action)
     }
 

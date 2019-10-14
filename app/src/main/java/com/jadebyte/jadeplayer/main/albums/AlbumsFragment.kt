@@ -3,7 +3,6 @@
 package com.jadebyte.jadeplayer.main.albums
 
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
@@ -26,7 +25,7 @@ class AlbumsFragment : BasePlayerFragment<Album>() {
         viewModel = ViewModelProviders.of(this)[AlbumsViewModel::class.java]
     }
 
-    @SuppressLint("WrongConstant")
+
     override fun layoutManager(): RecyclerView.LayoutManager {
         return FlexboxLayoutManager(activity).apply {
             flexDirection = FlexDirection.ROW

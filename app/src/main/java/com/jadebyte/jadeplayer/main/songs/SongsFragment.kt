@@ -19,12 +19,12 @@ class SongsFragment : BasePlayerFragment<Song>() {
     }
 
     override fun onItemClick(position: Int, sharableView: View?) {
-
+        playbackViewModel.playAll(items[position].id.toString())
     }
 
     override fun onOverflowMenuClick(position: Int) {
         val action =
-            SongsFragmentDirections.actionSongsFragmentToSongsMenuBottomSheetDialogFragment(song = items[position])
+            SongsFragmentDirections.actionSongsFragmentToSongsMenuBottomSheetDialogFragment(mediaId = items[position].id)
         findNavController().navigate(action)
     }
 

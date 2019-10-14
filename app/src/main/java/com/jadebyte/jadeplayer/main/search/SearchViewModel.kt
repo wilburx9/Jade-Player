@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jadebyte.jadeplayer.main.albums.Album
 import com.jadebyte.jadeplayer.main.artists.Artist
+import com.jadebyte.jadeplayer.main.common.event.Event
 import com.jadebyte.jadeplayer.main.genres.Genre
 import com.jadebyte.jadeplayer.main.playlist.Playlist
 import com.jadebyte.jadeplayer.main.playlist.PlaylistRepository
@@ -21,6 +22,7 @@ import kotlinx.coroutines.launch
  * Created by Wilberforce on 2019-10-12 at 03:07.
  */
 class SearchViewModel(application: Application) : AndroidViewModel(application) {
+
     private val _songs = MutableLiveData<List<Song>>()
     val songsResults: LiveData<List<Song>> get() = _songs
 
@@ -37,7 +39,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     val playlistResults: LiveData<List<Playlist>> get() = _playlists
 
     val repository = SearchRepository(application)
-    val playlistRepository = PlaylistRepository(application)
+    private val playlistRepository = PlaylistRepository(application)
 
     fun query(query: String, ascend: Boolean) {
         viewModelScope.launch {
@@ -58,4 +60,12 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             _playlists.value = playlists.await()
         }
     }
+
+
+    private val _searchNavigation =
+        MutableLiveData<Event<SearchNavigation>>()
+    val searchNavigation: LiveData<Event<SearchNavigation>> get() = _searchNavigation
+
+    fun navigateFrmSearchFragment(navigation: SearchNavigation) = _searchNavigation.postValue(Event(navigation))
+
 }

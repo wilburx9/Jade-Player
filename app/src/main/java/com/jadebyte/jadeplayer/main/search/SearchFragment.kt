@@ -62,6 +62,16 @@ class SearchFragment : Fragment(), View.OnClickListener {
         viewModel.genresResults.observe(viewLifecycleOwner, Observer { updateResultState(Type.Genres, it) })
 
         viewModel.playlistResults.observe(viewLifecycleOwner, Observer { updateResultState(Type.Playlists, it) })
+
+        viewModel.searchNavigation.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                if (it.navigatorExtras == null) {
+                    findNavController().navigate(it.directions)
+                } else {
+                    findNavController().navigate(it.directions, it.navigatorExtras)
+                }
+            }
+        })
     }
 
     private fun setupViews() {
