@@ -61,10 +61,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0-alpha04'
+    implementation 'androidx.core:core-ktx:1.2.0-beta01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha10'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
+    implementation 'com.google.android.material:material:1.1.0-beta01'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
     implementation 'com.google.firebase:firebase-core:17.2.0'
@@ -91,8 +91,6 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     kapt "androidx.room:room-compiler:$roomVersion"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
-    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$leakcanary_version"
     testImplementation 'junit:junit:4.13-beta-3'
     testImplementation 'org.robolectric:robolectric:4.3-beta-1'
     testImplementation 'androidx.test:core:1.2.0'

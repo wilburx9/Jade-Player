@@ -21,6 +21,6 @@ open class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialog.window!!.attributes.windowAnimations = R.style.BottomSheetTheme
+        dialog?.window!!.attributes.windowAnimations = R.style.BottomSheetTheme
     }
 }
