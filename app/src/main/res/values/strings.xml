@@ -30,7 +30,6 @@
     <string name="genre_art">Genre art</string>
     <string name="more_options">More options</string>
     <string name="go_back">Go back</string>
-    <string name="enter_search_query">Enter search query</string>
     <string name="shuffle_playlist">Shuffle playlist</string>
     <string name="repeat_playlist">Repeat playlist</string>
     <string name="play_and_pause_button">Play and pause button</string>
@@ -157,6 +156,8 @@
     <string name="notification_channel">Now Playing</string>
     <string name="notification_channel_description">Shows what music is currently playing in Jade Player</string>
     <string name="playing_now">Playing Now</string>
+    <string name="search_hint">Search title, album, artist, genre or playlist</string>
+    <string name="no_results">No results found for \"%s\"</string>
 
 
 </resources>

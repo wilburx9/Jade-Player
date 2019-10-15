@@ -5,9 +5,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rootView"
     tools:context=".main.search.SearchFragment">
 
     <ImageButton
@@ -38,8 +38,9 @@
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:maxLines="1"
+        android:textSize="@dimen/text_size_small"
         app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"
-        app:layout_constraintEnd_toStartOf="@+id/filterButton"
+        app:layout_constraintEnd_toStartOf="@+id/barrier"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/sectionBackButton"
         app:layout_constraintTop_toTopOf="@+id/sectionBackButton" />
@@ -52,15 +53,71 @@
         android:layout_margin="@dimen/margin_medium"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/filter_results"
+        android:enabled="false"
         android:padding="@dimen/padding_medium"
         android:visibility="gone"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/searchText"
         app:layout_constraintTop_toTopOf="@+id/sectionBackButton"
-        app:srcCompat="@drawable/ic_filter_list" />
+        app:srcCompat="@drawable/ic_filter_list"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:indeterminateDrawable="@drawable/progress"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sectionBackButton"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/searchIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:contentDescription="@string/search"
+        android:src="@drawable/ic_search"
+        android:tint="@color/search_icon_tint"
+        app:layout_constraintBottom_toTopOf="@+id/guideLine"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.3" />
+
+
+    <TextSwitcher
+        android:id="@+id/searchStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_x_large"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:inAnimation="@anim/fade_in"
+        android:outAnimation="@anim/fade_out"
+        android:text="@string/search_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideLine">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/search_hint" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="@string/search_hint"
+            tools:text="@string/search_hint" />
+    </TextSwitcher>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/resultsTab"
@@ -82,4 +139,36 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resultsTab" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/emptySearchGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="searchIcon,searchStatus" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/resultsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="resultsPager,resultsTab" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="progressBar,filterButton"
+        app:layout_constraintBottom_toBottomOf="@+id/sectionBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="@+id/sectionBackButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

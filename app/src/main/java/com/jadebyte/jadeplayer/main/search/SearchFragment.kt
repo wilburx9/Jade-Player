@@ -9,8 +9,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -29,7 +27,9 @@ class SearchFragment : Fragment(), View.OnClickListener {
     private var ascendingSortOrder = true
     private val minCharacterLength = 2
     private val queryDelayInMills = 500L
-    private var animator: Animator? = null
+    private var filterAnimator: Animator? = null
+    private var progressAnimator: Animator? = null
+    private var query: String = ""
     private val results = mutableListOf(
         Result(R.string.songs, Type.Songs),
         Result(R.string.albums, Type.Albums),
@@ -72,14 +72,29 @@ class SearchFragment : Fragment(), View.OnClickListener {
                 }
             }
         })
+
+        viewModel.resultSize.observe(viewLifecycleOwner, Observer {
+            hideProgressBar()
+            filterAnimator?.cancel()
+            filterAnimator = if (it == 0) {
+                searchStatus.setText(getString(R.string.no_results, query))
+                resultsGroup.visibility = View.INVISIBLE
+                emptySearchGroup.visibility = View.VISIBLE
+                if (filterButton.visibility == View.VISIBLE) filterButton.fadeOutSlideOutHorizontally(duration = 500) else null
+
+            } else {
+                emptySearchGroup.visibility = View.INVISIBLE
+                resultsGroup.visibility = View.VISIBLE
+                if (filterButton.visibility != View.VISIBLE) filterButton.fadeInSlideInHorizontally(duration = 500) else null
+            }
+            filterAnimator?.start()
+        })
     }
 
     private fun setupViews() {
         // Show keyboard
         searchText.requestFocus()
         searchText.addTextChangedListener(searchTextWatcher)
-        val service = ContextCompat.getSystemService(activity!!, InputMethodManager::class.java)
-        service!!.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 
         // Setup viewpager
         resultsPager.adapter = SearchAdapter(childFragmentManager, activity, results)
@@ -101,15 +116,20 @@ class SearchFragment : Fragment(), View.OnClickListener {
             if (s == null || s.length <= minCharacterLength) {
                 // Remove all fragments
                 results.forEach { it.hasResults = false }
+                searchStatus.setText(getString(R.string.search_hint))
+                resultsGroup.visibility = View.INVISIBLE
+                emptySearchGroup.visibility = View.VISIBLE
                 updateAdapter()
+                hideProgressBar()
                 if (filterButton.visibility == View.VISIBLE) filterButton.fadeOutSlideOutHorizontally().start()
                 return
             }
 
+            showProgressBar()
+            filterAnimator?.cancel()
+            filterAnimator = filterButton.fadeOutSlideOutHorizontally(duration = 500).apply { start() }
             // Schedule execution of search to queryDelayInMills after query text changes
-            handler.postDelayed({
-                viewModel.query(s.toString().trim(), ascendingSortOrder)
-            }, queryDelayInMills)
+            handler.postDelayed({ query(s.toString()) }, queryDelayInMills)
         }
     }
 
@@ -118,13 +138,6 @@ class SearchFragment : Fragment(), View.OnClickListener {
     private fun updateResultState(t: Type, items: List<Model>) {
         results.first { it.type == t }.hasResults = items.isNotEmpty()
         updateAdapter()
-        animator?.cancel()
-        animator = if (results.withResult.isEmpty()) {
-            if (filterButton.visibility == View.VISIBLE) filterButton.fadeOutSlideOutHorizontally(duration = 500) else null
-        } else {
-            if (filterButton.visibility != View.VISIBLE) filterButton.fadeInSlideInHorizontally(duration = 500) else null
-        }
-        animator?.start()
     }
 
     override fun onClick(v: View?) {
@@ -136,16 +149,32 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     private fun toggleFilter() {
         ascendingSortOrder = !ascendingSortOrder
-        viewModel.query(searchText.text.toString().trim(), ascendingSortOrder)
+        query(searchText.text.toString())
+    }
+
+    private fun query(query: String) {
+        val trim = query.trim()
+        this.query = trim
+        viewModel.query(trim, ascendingSortOrder)
+    }
+
+    private fun showProgressBar() {
+        progressAnimator?.cancel()
+        progressAnimator = progressBar.fadeInSlideInHorizontally(duration = 500)
+        progressAnimator?.start()
+    }
+
+    private fun hideProgressBar() {
+        progressAnimator?.cancel()
+        progressAnimator = progressBar.fadeOutSlideOutHorizontally(duration = 500)
+        progressAnimator?.start()
     }
 
     override fun onDestroyView() {
-        animator?.cancel()
+        filterAnimator?.cancel()
+        progressAnimator?.cancel()
         handler.removeCallbacksAndMessages(null)
         searchText.removeTextChangedListener(searchTextWatcher)
-        // Close keyboard
-        val service = ContextCompat.getSystemService(activity!!, InputMethodManager::class.java)
-        service?.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
         super.onDestroyView()
     }
 

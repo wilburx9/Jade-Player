@@ -19,4 +19,5 @@
     <color name="fadedColorPrimary">#161C2C</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorSecondary">#B2FFFFFF</color>
+    <color name="search_icon_tint">#3A424D</color>
 </resources>

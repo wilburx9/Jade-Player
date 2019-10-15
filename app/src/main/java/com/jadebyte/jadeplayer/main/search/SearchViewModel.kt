@@ -38,8 +38,12 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     private val _playlists = MutableLiveData<List<Playlist>>()
     val playlistResults: LiveData<List<Playlist>> get() = _playlists
 
+    private val _resultSize = MutableLiveData<Int>()
+    val resultSize: LiveData<Int> get() = _resultSize
+
     val repository = SearchRepository(application)
     private val playlistRepository = PlaylistRepository(application)
+
 
     fun query(query: String, ascend: Boolean) {
         viewModelScope.launch {
@@ -58,6 +62,9 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             _artists.value = artists.await()
             _genres.value = genres.await()
             _playlists.value = playlists.await()
+            val totalSize = (_songs.value?.size ?: 0) + (_albums.value?.size ?: 0) + (_artists.value?.size
+                ?: 0) + (_genres.value?.size ?: 0) + (_playlists.value?.size ?: 0)
+            _resultSize.postValue(totalSize)
         }
     }
 

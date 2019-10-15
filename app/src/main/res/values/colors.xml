@@ -18,4 +18,5 @@
     <color name="fadedColorPrimary">#EEEEEE</color>
     <color name="textColorPrimary">#DD000000</color>
     <color name="textColorSecondary">#89000000</color>
+    <color name="search_icon_tint">#BABFCF</color>
 </resources>

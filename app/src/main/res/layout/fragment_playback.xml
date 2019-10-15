@@ -448,21 +448,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:constraint_referenced_ids="albumArt,lyricsButton " />
+            app:constraint_referenced_ids="albumArt,lyricsButton" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/lyricsGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="closeButton, quoteImg, lyricsText, lyricsSource" />
+            app:constraint_referenced_ids="closeButton,quoteImg,lyricsText,lyricsSource" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/loadingLyricsGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="findingLyrics, progressBar" />
+            app:constraint_referenced_ids="findingLyrics,progressBar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

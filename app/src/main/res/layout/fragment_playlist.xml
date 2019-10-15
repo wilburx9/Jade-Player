@@ -156,7 +156,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         tools:visibility="visible"
-        app:constraint_referenced_ids="manHoldingBox, noPlaylist, addPlaylistSuggestion, addPlayList" />
+        app:constraint_referenced_ids="manHoldingBox,noPlaylist,addPlaylistSuggestion,addPlayList" />
 
     <androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
@@ -164,6 +164,6 @@
         android:id="@+id/playlistsGroup"
         android:visibility="gone"
         tools:visibility="visible"
-        app:constraint_referenced_ids="playlistsNum, playButton, playlistRV"/>
+        app:constraint_referenced_ids="playlistsNum,playButton,playlistRV"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
