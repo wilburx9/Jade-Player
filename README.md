@@ -1,11 +1,11 @@
 # :musical_note: Jade Player
 
 <p>
-    <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/explore.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
-    <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/songs.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
-   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/current.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
-   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/player.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
-   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/album.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
+    <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/explore.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
+    <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/songs.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
+   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/current.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
+   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/player.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
+   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/album.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
 </p>
 
 Jade Player is a media player for Android. The goal is to implement a local audio & video playback while doing online radio streaming. However, only audio playback has been fully implemented. I also hope to integrate lyrics and sound identification
