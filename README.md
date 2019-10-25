@@ -1,4 +1,13 @@
 # :musical_note: Jade Player
+
+<p>
+    <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/explore.jpg" width="180px" height="auto" hspace="20" vspace="20"/>
+    <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/songs.jpg" width="180px" height="auto" hspace="20" vspace="20"/>
+   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/current.jpg" width="180px" height="auto" hspace="20" vspace="20"/>
+   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/player.jpg" width="180px" height="auto" hspace="20" vspace="20"/>
+   <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/screenshots/album.jpg" width="180px" height="auto" hspace="20" vspace="20"/>
+</p>
+
 Jade Player is a media player for Android. The goal is to implement a local audio & video playback while doing online radio streaming. However, only audio playback has been fully implemented. I also hope to integrate lyrics and sound identification
 
 ## Design
