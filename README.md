@@ -1,6 +1,6 @@
 <img align="left" src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/icon.svg?sanitize=true" width="50px" style="pointer-events: none;cursor: default;">
 
-#  Jade Player
+# Jade Player
 
 <p>
     <img src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/explore.jpg" width="150px" height="auto" hspace="5" vspace="20"/>
