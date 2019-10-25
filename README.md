@@ -1,3 +1,5 @@
+<img align="right" src="https://raw.githubusercontent.com/wilburt/Jade-Player/master/images/icon.svg?sanitize=true" width="50px" style="pointer-events: none;cursor: default;">
+
 # :musical_note: Jade Player
 
 <p>
